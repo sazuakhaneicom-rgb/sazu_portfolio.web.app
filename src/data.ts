@@ -512,22 +512,22 @@ export const timelineBn: TimelineItem[] = [
 
 export const timelineEn: TimelineItem[] = [
   {
-    period: "2023 — Present (2026)",
+    period: "2024 — Present (2026)",
     role: "Senior Digital Marketing Consultant",
-    org: "Freelance & Remote",
-    desc: "Formulating performance strategies and identity designs for 15+ global clients to scale high-intent customer acquisition."
+    org: "Freelance & Remote — Bangladesh & International",
+    desc: "Currently managing full-cycle digital marketing, brand strategy, and visual identity for 20+ local and international brands. Consistently delivering an average 3x ROAS improvement per client project."
   },
   {
-    period: "2021 — 2023",
-    role: "Graphic Designer & Marketer",
-    org: "Creative Social Agency",
-    desc: "Leading visual design sets, asset packages and social campaign structures for mid-size consumer goods."
+    period: "2021 — 2024",
+    role: "Graphic Designer & Digital Marketer",
+    org: "Creative Social Media Agency",
+    desc: "Designed brand logos, complete visual kits, Facebook and Instagram ad creatives, and independently managed paid campaign strategies for multiple multinational clients."
   },
   {
     period: "2019 — 2021",
     role: "Junior Graphic Designer",
     org: "Startup Design Studio",
-    desc: "Gaining robust layout experience in vector tracing, layout print templates, presentation decks, and branding drafts."
+    desc: "Built a strong design foundation through hands-on work in vector logos, corporate stationery, print banners, and packaging design — delivering real value from day one."
   }
 ];
 
@@ -567,19 +567,19 @@ export const testimonialsBn: TestimonialItem[] = [
 
 export const testimonialsEn: TestimonialItem[] = [
   {
-    quote: "Did an incredible job with our cafe rebranding. Both our sales and social media engagement surged. Highly professional work!",
+    quote: "Sazu completely revamped our cafe brand identity — from logo to social media creatives. The response was immediate: customers started sharing our pages on their own, and footfall visibly increased. Best investment we made this year.",
     name: "Sabrina Akter",
     role: "Founder, Leaf Coffee House",
     rating: 5
   },
   {
-    quote: "Our e-commerce conversion rates doubled since handing over our Meta Ads and creative designs to him. Absolute growth partner.",
+    quote: "Within 30 days of handing over our Meta Ads to him, our conversion rate doubled. The ad budget that was previously wasting now directly generates sales. He works as if it's his own business on the line.",
     name: "Imran Khan",
     role: "Marketing Manager, ShopExpress",
     rating: 5
   },
   {
-    quote: "On-time premium delivery, exceptionally clear communication, and an outstanding design intuition. Highly recommended!",
+    quote: "Delivered before the deadline, transparent updates at every step, and the packaging design he created makes every client ask 'who designed this?' — A truly rare partner who combines professionalism with genuine creative excellence.",
     name: "Tanveer Hasan",
     role: "CEO, NextGen Apparel",
     rating: 5

@@ -58,7 +58,7 @@ import {
   ProjectItem
 } from './data';
 import sazuProfile from './assets/sazu_profile.jpg';
-import sazuLogo from './assets/logo.png';
+import sazuLogo from './assets/sazu_logo.svg';
 
 function getCategoryIcon(iconType: string) {
   switch (iconType) {
