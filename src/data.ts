@@ -168,8 +168,8 @@ export const bnData: TranslationSet = {
   about: {
     title: "পরিচিতি ও কাজের দর্শন",
     subtitle: "আমার সাথে আপনার ব্র্যান্ডের পথচলা কেন দীর্ঘস্থায়ী ও বিশ্বস্ত হবে?",
-    bioParagraph1: "আমি <strong>আসাদুজ্জামান (সাজু)</strong>। বিগত ৮ বছরেরও বেশি সময় ধরে ডিজিটাল মার্কেটিং এবং প্রফেশনাল গ্রাফিক ডিজাইন নিয়ে নিরলসভাবে কাজ করছি। আমার কাজের মূল দর্শন হলো—শুধু কিছু সুন্দর ছবি বা পোস্ট তৈরি করা নয়, বরং আপনার ব্র্যান্ডের জন্য এমন একটি নির্ভরযোগ্য ও বিশ্বস্ত সেলস ফানেল গড়ে তোলা, যা সরাসরি আপনার ব্যবসার দীর্ঘমেয়াদী প্রবৃদ্ধি নিশ্চিত করবে।",
-    bioParagraph2: "একটি সফল ব্র্যান্ড তৈরি হয় গ্রাহকের বিশ্বাসের ওপর ভিত্তি করে। আমি বিশ্বাস করি, নান্দনিক ডিজাইন এবং সঠিক মার্কেটিং কৌশলের সমন্বয়ে একটি সাধারণ ব্যবসাকেও মানুষের কাছে একটি বিশ্বস্ত ব্র্যান্ডে পরিণত করা সম্ভব। আমি কেবল একজন ফ্রিল্যান্সার হিসেবে নয়, বরং আপনার বিজনেসের একজন বিশ্বস্ত গ্রোথ-পার্টনার হিসেবে কাজ করি। স্বচ্ছতা, সততা এবং শতভাগ পেশাদারিত্বের সাথে আপনার প্রজেক্টের শুরু থেকে শেষ পর্যন্ত আমি নিজেই পরিচালনা করি।",
+    bioParagraph1: "আমি <strong>M. Asaduzzaman Sazu</strong>। বিগত ৫ বছর ধরে ডিজিটাল মার্কেটিং এবং গ্রাফিক ডিজাইনের মাধ্যমে বিভিন্ন ব্যবসাকে সফল ব্র্যান্ডে পরিণত করতে সাহায্য করছি। আমার কাজের উদ্দেশ্য খুব সাধারণ—আপনার ব্যবসাকে মানুষের কাছে একটি বিশ্বস্ত ও জনপ্রিয় নাম হিসেবে প্রতিষ্ঠিত করা।",
+    bioParagraph2: "আমি বিশ্বাস করি, একটি সুন্দর ডিজাইন মানুষের নজর কাড়ে, কিন্তু সঠিক মার্কেটিং কৌশল তাদের মন জয় করে। আমি শুধু একটি সার্ভিস দিই না, বরং আপনার ব্যবসার একজন বিশ্বস্ত 'গ্রোথ-পার্টনার' হিসেবে কাজ করি। সততা, স্বচ্ছতা এবং কাজের প্রতি শতভাগ নিষ্ঠা দিয়ে আপনার ব্যবসাকে লাভজনক করে তোলাই আমার প্রধান লক্ষ্য।",
     experienceBadge: "বছরের অভিজ্ঞতা"
   },
   services: {
@@ -242,7 +242,7 @@ export const enData: TranslationSet = {
     headlineHighlight1: "stories",
     headlineHighlight2: "growth",
     sub: ", and stories into ",
-    tagline: "Crafting data-driven marketing strategies and premium visual designs for over 8+ years. My goal is to build deep customer trust and ensure your brand doesn't just look exquisite, but delivers highly profitable business results.",
+    tagline: "Crafting data-driven marketing strategies and premium visual designs for over 5+ years. My goal is to build deep customer trust and ensure your brand doesn't just look exquisite, but delivers highly profitable business results.",
     ctaPrimary: "View Projects",
     ctaSecondary: "Get in Touch",
     side1: "01 — Based in Kurigram, Rangpur, Bangladesh, working with clients globally.",
@@ -252,7 +252,7 @@ export const enData: TranslationSet = {
   about: {
     title: "About & Work Philosophy",
     subtitle: "Why Trust Your Brand's Digital Journey with Me?",
-    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist and graphic designer with over 8+ years of hands-on experience. My core philosophy isn't just about creating visually appealing graphics—it's about building an integrated, high-converting digital foundation that earns customer trust and drives scalable business growth.",
+    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist and graphic designer with over 5+ years of hands-on experience. My core philosophy isn't just about creating visually appealing graphics—it's about building an integrated, high-converting digital foundation that earns customer trust and drives scalable business growth.",
     bioParagraph2: "Every successful brand is built on uncompromising trust and credibility. I believe that when world-class aesthetic design meets data-driven marketing precision, an unforgettable and highly profitable brand experience is born. I work not just as a service provider, but as your dedicated growth partner—ensuring transparent communication, flawless execution, and absolute integrity in every project we undertake.",
     experienceBadge: "Years of Trust"
   },
@@ -310,14 +310,14 @@ export const enData: TranslationSet = {
 };
 
 export const statsBn: StatItem[] = [
-  { num: "৮+", label: "বছরের অভিজ্ঞতা" },
+  { num: "৫+", label: "বছরের অভিজ্ঞতা" },
   { num: "৮০+", label: "সম্পন্ন প্রজেক্ট" },
   { num: "৪০+", label: "সন্তুষ্ট ক্লায়েন্ট" },
   { num: "১২+", label: "ইন্ডাস্ট্রি সেক্টর" },
 ];
 
 export const statsEn: StatItem[] = [
-  { num: "8+", label: "Years Experience" },
+  { num: "5+", label: "Years Experience" },
   { num: "80+", label: "Projects Completed" },
   { num: "40+", label: "Happy Clients" },
   { num: "12+", label: "Industry Sectors" },
@@ -491,22 +491,22 @@ export const projectsEn: ProjectItem[] = [
 
 export const timelineBn: TimelineItem[] = [
   {
-    period: "২০২৩ — বর্তমান (২০২৬)",
+    period: "২০২৪ — বর্তমান (২০২৬)",
     role: "সিনিয়র ডিজিটাল মার্কেটিং কনসালট্যান্ট",
     org: "ফ্রিল্যান্স · রিমোট",
-    desc: "১৫+ বৈশ্বিক ও দেশীয় ব্র্যান্ডের জন্য পূর্ণাঙ্গ মার্কেটিং এবং ডিজাইন স্ট্র্যাটেজি পরিচালনা করে আরওআই বৃদ্ধি নিশ্চিত করা।"
+    desc: "বর্তমানে ২০+ দেশীয় ও আন্তর্জাতিক ব্র্যান্ডের সম্পূর্ণ ডিজিটাল মার্কেটিং, ব্র্যান্ড স্ট্র্যাটেজি এবং ভিজ্যুয়াল আইডেন্টিটি পরিচালনা করছি। গড়ে প্রতিটি ক্লায়েন্টের ROAS ৩x বৃদ্ধি নিশ্চিত করা হয়েছে।"
   },
   {
-    period: "২০২১ — ২০২৩",
-    role: "গ্রাফিক ডিজাইনার ও মার্কেটিং এক্সিকিউটিভ",
+    period: "২০২২ — ২০২৪",
+    role: "গ্রাফিক ডিজাইনার ও ডিজিটাল মার্কেটার",
     org: "ক্রিয়েটিভ সোশাল মিডিয়া এজেন্সি",
-    desc: "মাল্টি-ন্যাশনাল ব্র্যান্ডগুলোর জন্য ক্যাম্পেইন লোগো, ভিজ্যুয়াল কিট এবং ফেসবুক/ইনস্টাগ্রাম অ্যাড ক্রিয়েটিভস ডিজাইন করা।"
+    desc: "একাধিক মাল্টি-ন্যাশনাল ক্লায়েন্টের জন্য ব্র্যান্ড লোগো, ভিজ্যুয়াল কিট, ফেসবুক ও ইনস্টাগ্রাম অ্যাড ক্রিয়েটিভস ডিজাইন এবং পেইড ক্যাম্পেইন পরিচালনা করেছি।"
   },
   {
-    period: "২০১৯ — ২০২১",
+    period: "২০২১ — ২০২২",
     role: "জুনিয়র গ্রাফিক ডিজাইনার",
     org: "স্টার্টআপ ডিজাইন স্টুডিও",
-    desc: "কর্পোরেট স্টেশনারি, লোগো ট্রেসিং, ব্যানার এবং কাস্টম প্রিন্ট ডিজাইন দিয়ে সফলভাবে পেশাদারি যাত্রা শুরু।"
+    desc: "কর্পোরেট স্টেশনারি, লোগো ডিজাইন, প্রিন্ট ব্যানার এবং প্যাকেজিং ডিজাইনে হাতে-কলমে কাজ করে পেশাদার ক্যারিয়ার শুরু করি।"
   }
 ];
 
@@ -518,13 +518,13 @@ export const timelineEn: TimelineItem[] = [
     desc: "Currently managing full-cycle digital marketing, brand strategy, and visual identity for 20+ local and international brands. Consistently delivering an average 3x ROAS improvement per client project."
   },
   {
-    period: "2021 — 2024",
+    period: "2022 — 2024",
     role: "Graphic Designer & Digital Marketer",
     org: "Creative Social Media Agency",
     desc: "Designed brand logos, complete visual kits, Facebook and Instagram ad creatives, and independently managed paid campaign strategies for multiple multinational clients."
   },
   {
-    period: "2019 — 2021",
+    period: "2021 — 2022",
     role: "Junior Graphic Designer",
     org: "Startup Design Studio",
     desc: "Built a strong design foundation through hands-on work in vector logos, corporate stationery, print banners, and packaging design — delivering real value from day one."
