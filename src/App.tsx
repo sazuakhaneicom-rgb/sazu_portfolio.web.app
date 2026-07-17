@@ -791,6 +791,14 @@ export default function App() {
                           </span>
                         </div>
                       </div>
+                      <div className="mt-4 mb-2 text-center">
+                        <h3 className="font-bold text-slate-900 dark:text-white text-lg font-serif tracking-wide leading-tight">
+                          {lang === 'bn' ? 'এম. আসাদুজ্জামান সাজু' : 'M. Asaduzzaman Sazu'}
+                        </h3>
+                        <p className="text-xs font-mono font-medium text-purple-600 dark:text-purple-400 mt-1 uppercase tracking-widest">
+                           {lang === 'bn' ? 'ডিজিটাল স্ট্র্যাটেজিস্ট' : 'Digital Strategist'}
+                        </p>
+                      </div>
                     </motion.div>
                   </div>
 
