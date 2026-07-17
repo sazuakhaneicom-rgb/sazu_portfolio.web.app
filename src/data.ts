@@ -339,7 +339,16 @@ export const servicesBn: ServiceCategory[] = [
       { title: "লোগো ও ব্র্যান্ড আইডেন্টিটি", desc: "এমন একটি ইউনিক এবং প্রফেশনাল লোগো ডিজাইন, যা মানুষের মনে আপনার ব্র্যান্ডের পরিচয় গেঁথে দেবে।" },
       { title: "সোশ্যাল মিডিয়া ডিজাইন", desc: "অত্যন্ত আকর্ষণীয় এবং মানসম্মত পোস্ট ও ব্যানার ডিজাইন, যা স্ক্রলিং থামিয়ে মানুষের নজর কাড়বে।" },
       { title: "প্রিন্ট ও প্যাকেজিং", desc: "আন্তর্জাতিক মানের নিখুঁত প্যাকেজিং ও বিজনেস কার্ড ডিজাইন, যা আপনার পেশাদারিত্ব প্রমাণ করবে।" },
-      { title: "ইউআই/ইউএক্স (ওয়েব ডিজাইন)", desc: "ওয়েবসাইট বা অ্যাপের জন্য সহজ ও আধুনিক ইন্টারফেস ডিজাইন, যা গ্রাহকদের মুগ্ধ করবে।" },
+      { title: "ইউআই/ইউএক্স ডিজাইন", desc: "অ্যাপ বা ওয়েবসাইটের জন্য সহজ ও আধুনিক ইন্টারফেস ডিজাইন, যা গ্রাহকদের মুগ্ধ করবে।" },
+    ]
+  },
+  {
+    title: "অ্যাপস ডেভেলপমেন্ট",
+    items: [
+      { title: "অ্যান্ড্রয়েড ও আইওএস অ্যাপ", desc: "উন্নত প্রযুক্তিতে তৈরি দ্রুতগতিসম্পন্ন এবং সিকিউর মোবাইল অ্যাপ্লিকেশন।" },
+      { title: "ই-কমার্স ও বিজনেস অ্যাপ", desc: "আপনার ব্যবসার সেলস বাড়াতে ইউজার-ফ্রেন্ডলি ই-কমার্স এবং কর্পোরেট অ্যাপ ডেভেলপমেন্ট।" },
+      { title: "ইউআই/ইউএক্স অপটিমাইজেশন", desc: "গ্রাহকের ব্যবহারবিধি বিশ্লেষণ করে অ্যাপের ইন্টারফেস ও পারফরম্যান্স উন্নত করা।" },
+      { title: "এপিআই ও ব্যাকএন্ড সিস্টেম", desc: "অ্যাপের ডেটা দ্রুত ও নিরাপদে পরিচালনা করার জন্য শক্তিশালী ব্যাকএন্ড সাপোর্ট।" },
     ]
   }
 ];
@@ -360,7 +369,16 @@ export const servicesEn: ServiceCategory[] = [
       { title: "Logo & Brand Identity", desc: "Designing memorable and highly professional brand identities that implant trust instantly in your customers' minds." },
       { title: "Social Media Creatives", desc: "Creating scroll-stopping, premium quality graphics and ad creatives that demand attention and drive clicks." },
       { title: "Print & Packaging", desc: "Delivering world-class, pixel-perfect print and packaging designs that elevate your product's perceived value." },
-      { title: "UI/UX & Web Layouts", desc: "Architecting sleek, modern, and user-friendly interfaces that provide a flawless experience for your website visitors." },
+      { title: "UI/UX Layouts", desc: "Architecting sleek, modern, and user-friendly interfaces that provide a flawless experience." },
+    ]
+  },
+  {
+    title: "App Development",
+    items: [
+      { title: "Android & iOS Apps", desc: "Developing lightning-fast, highly secure, and scalable mobile applications for both platforms." },
+      { title: "E-Commerce & Business Apps", desc: "Building conversion-focused mobile apps designed specifically to scale your business operations." },
+      { title: "UI/UX Optimization", desc: "Analyzing user behavior to refine app interfaces and ensure seamless user experiences." },
+      { title: "Backend & API Integration", desc: "Robust and secure backend architecture to seamlessly manage app data and functionalities." },
     ]
   }
 ];
@@ -380,19 +398,19 @@ export const skillsData: SkillItem[] = [
 
 export const skillsCategoriesData: SkillCategoryData[] = [
   {
-    id: "web-development",
-    titleEn: "Web Development",
-    titleBn: "ওয়েব ডেভেলপমেন্ট",
-    iconType: "web",
-    colorTheme: "violet",
+    id: "graphic-design",
+    titleEn: "Graphic Design",
+    titleBn: "গ্রাফিক ডিজাইন",
+    iconType: "design",
+    colorTheme: "rose",
     skills: [
-      { name: "React.js", level: 90 },
-      { name: "Next.js", level: 82 },
-      { name: "Tailwind CSS", level: 94 },
-      { name: "TypeScript", level: 85 },
-      { name: "Node.js & Express", level: 80 },
-      { name: "HTML & CSS", level: 95 },
-      { name: "Firebase & MongoDB", level: 88 }
+      { name: "Adobe Photoshop", level: 95 },
+      { name: "Adobe Illustrator", level: 90 },
+      { name: "Figma (UI/UX)", level: 85 },
+      { name: "Brand Identity Design", level: 92 },
+      { name: "Social Media Creatives", level: 95 },
+      { name: "Print & Packaging", level: 88 },
+      { name: "Typography & Color Theory", level: 90 }
     ]
   },
   {
@@ -431,12 +449,12 @@ export const skillsCategoriesData: SkillCategoryData[] = [
 
 export const projectsBn: ProjectItem[] = [
   {
-    title: "ই-কমার্স ওয়েবসাইট ডেভেলপমেন্ট",
-    desc: "রিয়েক্ট এবং নোড জেএস ব্যবহার করে একটি সম্পূর্ণ ফুল-স্ট্যাক ই-কমার্স ওয়েবসাইট তৈরি। পেমেন্ট গেটওয়ে ইন্টিগ্রেশন এবং ফাস্ট লোডিং স্পিড।",
-    category: "web",
-    tag: "Web Dev",
+    title: "বিজনেস ও ই-কমার্স অ্যাপ ডেভেলপমেন্ট",
+    desc: "উন্নত পারফরম্যান্স এবং মসৃণ ইউজার এক্সপেরিয়েন্স সমৃদ্ধ একটি ফুল-স্ট্যাক বিজনেস অ্যাপ। কাস্টম পেমেন্ট ইন্টিগ্রেশন এবং ফাস্ট লোডিং স্পিড।",
+    category: "app",
+    tag: "App Dev",
     metric: "লোডিং স্পিড ২x ফাস্ট",
-    thumbClass: "Code",
+    thumbClass: "Smartphone",
     bgGradient: "from-blue-600 to-indigo-600"
   },
   {
@@ -461,12 +479,12 @@ export const projectsBn: ProjectItem[] = [
 
 export const projectsEn: ProjectItem[] = [
   {
-    title: "E-Commerce Website Development",
-    desc: "A complete full-stack e-commerce website built with React and Node.js. Includes payment gateway integration and blazing fast loading speed.",
-    category: "web",
-    tag: "Web Dev",
+    title: "Business & E-Commerce App Development",
+    desc: "A high-performance, full-stack business application focusing on smooth user experience. Features custom payment integration and blazing fast speeds.",
+    category: "app",
+    tag: "App Dev",
     metric: "2x Faster Load Time",
-    thumbClass: "Code",
+    thumbClass: "Smartphone",
     bgGradient: "from-blue-600 to-indigo-600"
   },
   {

@@ -59,6 +59,9 @@ import {
 } from './data';
 import sazuProfile from './assets/sazu_profile.jpg';
 import sazuLogo from './assets/sazu_logo.png';
+import appMockup from './assets/app_mockup.png';
+import graphicMockup from './assets/graphic_mockup.png';
+import marketingMockup from './assets/marketing_mockup.png';
 
 function getCategoryIcon(iconType: string) {
   switch (iconType) {
@@ -211,7 +214,7 @@ interface PremiumService {
   bulletsEn: string[];
   outcomeBn: string;
   outcomeEn: string;
-  category: 'marketing' | 'web' | 'app';
+  category: 'marketing' | 'graphic' | 'app';
 }
 
 const premiumServicesData: PremiumService[] = [
@@ -326,7 +329,7 @@ export default function App() {
   // Unique project categories for tab generation
   const projectCategories = [
     { id: 'all', label: lang === 'bn' ? 'সব কাজ' : 'All Projects' },
-    { id: 'web', label: lang === 'bn' ? 'ওয়েব ডেভেলপমেন্ট' : 'Web Dev' },
+    { id: 'app', label: lang === 'bn' ? 'অ্যাপস ডেভেলপমেন্ট' : 'App Dev' },
     { id: 'graphic', label: lang === 'bn' ? 'গ্রাফিক ডিজাইন' : 'Graphic Design' },
     { id: 'marketing', label: lang === 'bn' ? 'ডিজিটাল মার্কেটিং' : 'Marketing' },
   ];
@@ -953,7 +956,7 @@ export default function App() {
                       <div className="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-purple-950/80 flex items-center justify-center shrink-0 shadow-sm text-purple-600 dark:text-purple-400">
                         {svc.category === 'marketing' ? (
                           <TrendingUp className="w-6 h-6" />
-                        ) : svc.category === 'web' ? (
+                        ) : svc.category === 'app' ? (
                           <Code className="w-6 h-6" />
                         ) : (
                           <Smartphone className="w-6 h-6" />
@@ -961,7 +964,7 @@ export default function App() {
                       </div>
                       <div>
                         <span className="text-[10px] font-mono tracking-wider text-purple-600 dark:text-purple-400 uppercase font-bold">
-                          {svc.category === 'marketing' ? 'Marketing' : svc.category === 'web' ? 'Web Development' : 'App Development'}
+                          {svc.category === 'marketing' ? 'Marketing' : svc.category === 'app' ? 'App Development' : 'Graphic Design'}
                         </span>
                         <h4 className="text-2xl font-bold text-slate-900 dark:text-purple-50 font-serif mt-0.5 leading-tight">
                           {lang === 'bn' ? svc.titleBn : svc.titleEn}
@@ -1803,17 +1806,24 @@ export default function App() {
                   <X className="w-4 h-4" />
                 </button>
 
-                {/* Banner Thumbnail */}
-                <div className={`relative h-48 bg-gradient-to-br ${selectedProject.bgGradient} flex items-center justify-center p-6 text-white`}>
-                  <div className="relative z-10 text-center">
-                    <span className="inline-block px-2.5 py-1 text-[10px] font-mono font-bold uppercase rounded-md bg-black/20 backdrop-blur-sm text-purple-200 mb-2">
+                {/* Banner Thumbnail with Image */}
+                <div className={`relative h-56 bg-gradient-to-br ${selectedProject.bgGradient} flex flex-col items-center justify-center p-6 text-white overflow-hidden`}>
+                  <div className="absolute inset-0 z-0">
+                     <img 
+                       src={selectedProject.category === 'app' ? appMockup : selectedProject.category === 'graphic' ? graphicMockup : marketingMockup} 
+                       alt="Project Mockup" 
+                       className="w-full h-full object-cover opacity-60 mix-blend-overlay hover:opacity-100 hover:mix-blend-normal transition-all duration-500 cursor-pointer" 
+                     />
+                     <div className="absolute inset-0 bg-black/40 z-0" />
+                  </div>
+                  <div className="relative z-10 text-center flex flex-col items-center drop-shadow-xl">
+                    <span className="inline-block px-3 py-1.5 text-xs font-mono font-bold uppercase rounded-xl bg-black/40 backdrop-blur-md text-white/90 mb-3 border border-white/20">
                       {selectedProject.tag}
                     </span>
-                    <h3 className="font-serif text-3xl font-bold tracking-wide">
+                    <h3 className="font-serif text-3xl sm:text-4xl font-bold tracking-wide">
                       {selectedProject.title}
                     </h3>
                   </div>
-                  <div className="absolute inset-0 bg-black/10 z-0" />
                 </div>
 
                 {/* Content Details */}
@@ -1849,11 +1859,9 @@ export default function App() {
                         {lang === 'bn' ? 'ডেলিভারেবলস:' : 'Key Deliverables:'}
                       </div>
                       <div className="text-xs font-bold text-slate-700 dark:text-purple-200">
-                        {selectedProject.category === 'branding' && (lang === 'bn' ? 'লোগো, ভেক্টর কিট, গাইডবুক' : 'Brand Book, Vectors, Brand Assets')}
-                        {selectedProject.category === 'marketing' && (lang === 'bn' ? 'অ্যাড ক্যাম্পেইন, অডিটিং, ট্র্যাকিং' : 'CPC Ads, Setup, Retargeting')}
-                        {selectedProject.category === 'social' && (lang === 'bn' ? 'কন্টেন্ট রিলস, ক্রিয়েটিভস গ্রিড' : 'IG Grids, Stories, Ad Copies')}
-                        {selectedProject.category === 'uiux' && (lang === 'bn' ? 'ল্যান্ডিং পেজ, রেসপন্সিভ ফিগমা' : 'Figma Prototypes, UI Mockups')}
-                        {selectedProject.category === 'design' && (lang === 'bn' ? 'লেবেল প্যাকেজ, প্রিন্ট মকআপ' : 'Packaging Box, Cdr/Ai Vector Templates')}
+                        {selectedProject.category === 'graphic' && (lang === 'bn' ? 'লোগো, ব্র্যান্ড আইডেন্টিটি, প্রিন্ট ডিজাইন' : 'Logo, Brand Identity, UI/UX')}
+                        {selectedProject.category === 'marketing' && (lang === 'bn' ? 'অ্যাড ক্যাম্পেইন, লিড জেনারেশন, ফানেল' : 'Ad Campaigns, SEO, Lead Gen')}
+                        {selectedProject.category === 'app' && (lang === 'bn' ? 'অ্যান্ড্রয়েড অ্যাপ, আইওএস অ্যাপ, এপিআই' : 'Android App, iOS App, API Backend')}
                       </div>
                     </div>
                   </div>
