@@ -418,10 +418,10 @@ export default function App() {
                 A
               </div>
               <span className="font-serif text-2xl tracking-tight dark:text-white text-purple-950 font-bold ml-1">
-                {lang === 'bn' ? 'আসাদুজ্জামান' : 'Asaduzzaman'}
+                {lang === 'bn' ? 'আসাদুজ্জামান' : 'M. Asaduzzaman'}
                 <span className="text-purple-600 font-sans font-bold">.</span>
                 <span className="text-sm font-sans font-normal opacity-85 text-slate-500 dark:text-purple-300/80 ml-1">
-                  {lang === 'bn' ? 'সাজু' : 'Saju'}
+                  {lang === 'bn' ? 'সাজু' : 'Sazu'}
                 </span>
               </span>
             </motion.a>
@@ -776,7 +776,7 @@ export default function App() {
                       <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-slate-100">
                         <img 
                           src={sazuProfile} 
-                          alt="Asaduzzaman Saju" 
+                          alt="M. Asaduzzaman Sazu" 
                           className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
                         />
                         {/* Status tag */}
@@ -1710,7 +1710,7 @@ export default function App() {
                             const subjectLine = lang === 'bn' ? `পোর্টফোলিও যোগাযোগ: ${formSubject || 'নতুন প্রজেক্ট'}` : `Portfolio Contact: ${formSubject || 'New Project'}`;
                             const emailBody = lang === 'bn'
                               ? `হ্যালো আসাদুজ্জামান,\n\nআমার নাম ${formName} (${formEmail}).\n\nবার্তা:\n${formMsg}\n\nধন্যবাদ!`
-                              : `Hello Asaduzzaman,\n\nMy name is ${formName} (${formEmail}).\n\nMessage:\n${formMsg}\n\nBest regards!`;
+                              : `Hello M. Asaduzzaman Sazu,\n\nMy name is ${formName} (${formEmail}).\n\nMessage:\n${formMsg}\n\nBest regards!`;
                             window.location.href = `mailto:freelancersazu03@gmail.com?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(emailBody)}`;
                           }}
                           className="px-5 py-3 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5"
@@ -1755,7 +1755,7 @@ export default function App() {
                   A
                 </div>
                 <span className="font-serif text-lg tracking-tight dark:text-white text-purple-950 font-bold">
-                  {lang === 'bn' ? 'আসাদুজ্জামান (সাজু)' : 'Asaduzzaman (Saju)'}
+                  {lang === 'bn' ? 'আসাদুজ্জামান (সাজু)' : 'M. Asaduzzaman Sazu'}
                 </span>
               </div>
 

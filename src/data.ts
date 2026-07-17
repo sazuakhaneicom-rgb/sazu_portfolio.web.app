@@ -226,7 +226,7 @@ export const bnData: TranslationSet = {
 };
 
 export const enData: TranslationSet = {
-  name: "Asaduzzaman (Saju)",
+  name: "M. Asaduzzaman Sazu",
   nav: {
     about: "About",
     services: "Services",
@@ -252,7 +252,7 @@ export const enData: TranslationSet = {
   about: {
     title: "About & Work Philosophy",
     subtitle: "Why Trust Your Brand's Digital Journey with Me?",
-    bioParagraph1: "I am <strong>Asaduzzaman (Saju)</strong>, a professional digital marketing strategist and graphic designer with over 5+ years of hands-on experience. My core philosophy isn't just about crafting pretty visual designs or writing social media posts—it is about building an integrated, high-converting digital system and a robust brand identity that directly triggers scalable business growth. From strategic marketing architecture to aesthetic high-end designs, I independently manage your brand's digital presence with absolute transparency, meticulous execution, and trust.",
+    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist and graphic designer with over 5+ years of hands-on experience. My core philosophy isn't just about crafting pretty visual designs or writing social media posts—it is about building an integrated, high-converting digital system and a robust brand identity that directly triggers scalable business growth. From strategic marketing architecture to aesthetic high-end designs, I independently manage your brand's digital presence with absolute transparency, meticulous execution, and trust.",
     bioParagraph2: "Every successful brand is built on deep trust, pristine credibility, and uncompromising quality. I believe that when world-class creative design meets data-driven campaign precision, an unforgettable brand experience is born. This conviction drives me to act not merely as a service provider, but as your dedicated growth partner, maintaining seamless real-time communication and absolute integrity at every step of our collaboration.",
     experienceBadge: "Years of Trust"
   },
@@ -304,7 +304,7 @@ export const enData: TranslationSet = {
     copySuccess: "Copied successfully!",
   },
   footer: {
-    rights: "Asaduzzaman (Saju). All Rights Reserved.",
+    rights: "M. Asaduzzaman Sazu. All Rights Reserved.",
     backToTop: "Back to Top",
   },
 };
