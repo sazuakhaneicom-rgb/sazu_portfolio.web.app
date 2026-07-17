@@ -419,21 +419,11 @@ export const skillsCategoriesData: SkillCategoryData[] = [
       { name: "Search Engine Optimization (SEO)", level: 88 },
       { name: "Content Strategy", level: 90 },
       { name: "Lead Generation", level: 86 },
-      { name: "Brand Marketing", level: 92 }
-    ]
-  },
-  {
-    id: "digital-marketer",
-    titleEn: "Digital Marketer",
-    titleBn: "ডিজিটাল মার্কেটার",
-    iconType: "marketing",
-    colorTheme: "sky",
-    skills: [
+      { name: "Brand Marketing", level: 92 },
       { name: "Meta Ads & Business Suite", level: 95 },
       { name: "Google PPC Ad Campaigns", level: 90 },
       { name: "Conversion Funnel Design", level: 92 },
       { name: "Ad Copywriting & Creatives", level: 88 },
-      { name: "Audience Targeting & Analytics", level: 94 },
       { name: "ROI Optimization Strategy", level: 95 }
     ]
   }

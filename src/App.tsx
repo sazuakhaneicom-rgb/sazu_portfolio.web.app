@@ -1350,15 +1350,15 @@ export default function App() {
         {/* ===================== TOOLS USED SECTION ===================== */}
         <section className="py-16 bg-white dark:bg-[#090514] border-b border-purple-50 dark:border-purple-950/40 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.h2 
+            <motion.div 
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
               className="font-mono text-sm font-bold tracking-widest text-purple-600 dark:text-purple-400 uppercase mb-8"
             >
-              {lang === 'bn' ? 'যেসব প্রফেশনাল টুল ব্যবহার করি' : 'Platforms We Master'}
-            </motion.h2>
+              {lang === 'bn' ? 'যেসব প্রফেশনাল টুল ব্যবহার করি' : 'Tools I Master'}
+            </motion.div>
 
             <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
               {toolsList.map((tool, idx) => (
