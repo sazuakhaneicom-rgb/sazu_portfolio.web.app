@@ -359,23 +359,22 @@ export default function App() {
     };
   }).filter((cat): cat is SkillCategoryData => cat !== null && cat.skills.length > 0);
 
-  // Form submission handler (triggers custom overlay and generates mailto link)
+  // Form submission handler (triggers custom overlay and generates WhatsApp link)
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!formName || !formEmail || !formMsg) return;
 
     setFormSubmitted(true);
     
-    // Construct pre-filled email
-    const subjectLine = lang === 'bn' ? `পোর্টফোলিও যোগাযোগ: ${formSubject || 'নতুন প্রজেক্ট'}` : `Portfolio Contact: ${formSubject || 'New Project'}`;
-    const emailBody = lang === 'bn'
-      ? `হ্যালো আসাদুজ্জামান,\n\nআমার নাম ${formName} (${formEmail}).\n\nবার্তা:\n${formMsg}\n\nধন্যবাদ!`
-      : `Hello Asaduzzaman,\n\nMy name is ${formName} (${formEmail}).\n\nMessage:\n${formMsg}\n\nBest regards!`;
+    // Construct pre-filled WhatsApp message
+    const messageBody = lang === 'bn'
+      ? `হ্যালো আসাদুজ্জামান,\n\nআমার নাম ${formName}।\nইমেইল: ${formEmail}\nবিষয়: ${formSubject || 'নতুন প্রজেক্ট'}\n\nবার্তা:\n${formMsg}`
+      : `Hello Asaduzzaman,\n\nMy name is ${formName}.\nEmail: ${formEmail}\nSubject: ${formSubject || 'New Project'}\n\nMessage:\n${formMsg}`;
 
-    const mailtoUrl = `mailto:freelancersazu03@gmail.com?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(emailBody)}`;
+    const whatsappUrl = `https://wa.me/8801772570807?text=${encodeURIComponent(messageBody)}`;
     
-    // Open in new tab/redirect
-    window.location.href = mailtoUrl;
+    // Open WhatsApp in new tab
+    window.open(whatsappUrl, '_blank');
   };
 
   // Copy email template to clipboard
@@ -1507,7 +1506,7 @@ export default function App() {
                     <div>
                       <span className="block text-[10px] uppercase text-slate-400 dark:text-purple-400/40 font-bold tracking-wider">{t.contact.phoneLabel}</span>
                       <a href="tel:+8801772570807" className="text-sm text-slate-800 dark:text-purple-200 hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold font-sans">
-                        {lang === 'bn' ? '+৮৮০ ১৭৭২৫-৭০৮০৭' : '+880 17725-70807'}
+                        +880 17725-70807
                       </a>
                     </div>
                   </motion.div>
@@ -1534,7 +1533,7 @@ export default function App() {
                         rel="noopener noreferrer"
                         className="text-sm text-emerald-800 dark:text-emerald-300 hover:underline transition-colors font-semibold font-sans block mt-0.5"
                       >
-                        {lang === 'bn' ? '+৮৮০ ১৭৭২৫-৭০৮০৭' : '+880 17725-70807'}
+                        +880 17725-70807
                       </a>
                     </div>
                   </motion.div>
