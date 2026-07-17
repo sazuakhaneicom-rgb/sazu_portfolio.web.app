@@ -517,56 +517,56 @@ export const projectsEn: ProjectItem[] = [
 export const timelineBn: TimelineItem[] = [
   {
     period: "২০২৪ — বর্তমান (২০২৬)",
-    role: "সিনিয়র ডিজিটাল মার্কেটিং কনসালট্যান্ট",
-    org: "ফ্রিল্যান্স · রিমোট",
-    desc: "বর্তমানে ২০+ দেশীয় ও আন্তর্জাতিক ব্র্যান্ডের সম্পূর্ণ ডিজিটাল মার্কেটিং, ব্র্যান্ড স্ট্র্যাটেজি এবং ভিজ্যুয়াল আইডেন্টিটি পরিচালনা করছি। গড়ে প্রতিটি ক্লায়েন্টের ROAS ৩x বৃদ্ধি নিশ্চিত করা হয়েছে।"
+    role: "লিড ডিজিটাল স্ট্র্যাটেজিস্ট ও অ্যাপ ডেভেলপার",
+    org: "ফ্রিল্যান্স · গ্লোবাল ক্লায়েন্টবেস",
+    desc: "বর্তমানে দেশীয় ও আন্তর্জাতিক ব্র্যান্ডের জন্য ফুল-স্ট্যাক ডিজিটাল মার্কেটিং, প্রিমিয়াম ব্র্যান্ডিং এবং কাস্টম মোবাইল অ্যাপ ডেভেলপমেন্ট নিয়ে কাজ করছি। প্রতিটি প্রজেক্টে ক্লায়েন্টের সেলস ও ব্র্যান্ড ভ্যালু বহুগুণ বৃদ্ধি করাই আমার প্রধান লক্ষ্য।"
   },
   {
     period: "২০২২ — ২০২৪",
     role: "গ্রাফিক ডিজাইনার ও ডিজিটাল মার্কেটার",
     org: "ক্রিয়েটিভ সোশাল মিডিয়া এজেন্সি",
-    desc: "একাধিক মাল্টি-ন্যাশনাল ক্লায়েন্টের জন্য ব্র্যান্ড লোগো, ভিজ্যুয়াল কিট, ফেসবুক ও ইনস্টাগ্রাম অ্যাড ক্রিয়েটিভস ডিজাইন এবং পেইড ক্যাম্পেইন পরিচালনা করেছি।"
+    desc: "মাল্টি-ন্যাশনাল ক্লায়েন্টদের জন্য ব্র্যান্ড লোগো, ভিজ্যুয়াল কিট, সোশ্যাল মিডিয়া ক্রিয়েটিভস ডিজাইন এবং পেইড অ্যাড ক্যাম্পেইন পরিচালনার মাধ্যমে ব্র্যান্ডের পরিচিতি ও বিক্রি বৃদ্ধি করেছি।"
   },
   {
     period: "২০২১ — ২০২২",
     role: "জুনিয়র গ্রাফিক ডিজাইনার",
     org: "স্টার্টআপ ডিজাইন স্টুডিও",
-    desc: "কর্পোরেট স্টেশনারি, লোগো ডিজাইন, প্রিন্ট ব্যানার এবং প্যাকেজিং ডিজাইনে হাতে-কলমে কাজ করে পেশাদার ক্যারিয়ার শুরু করি।"
+    desc: "কর্পোরেট স্টেশনারি, লোগো ডিজাইন, প্রিন্ট ব্যানার এবং প্যাকেজিং ডিজাইনে হাতে-কলমে কাজ করার মধ্য দিয়ে পেশাদার ক্যারিয়ারের একটি শক্ত ভিত্তি তৈরি করি।"
   }
 ];
 
 export const timelineEn: TimelineItem[] = [
   {
     period: "2024 — Present (2026)",
-    role: "Senior Digital Marketing Consultant",
-    org: "Freelance & Remote — Bangladesh & International",
-    desc: "Currently managing full-cycle digital marketing, brand strategy, and visual identity for 20+ local and international brands. Consistently delivering an average 3x ROAS improvement per client project."
+    role: "Lead Digital Strategist & App Developer",
+    org: "Freelance — Global Client Base",
+    desc: "Currently leading full-stack digital marketing, premium branding, and custom mobile app development for local and international brands. My primary focus is scaling clients' sales, user acquisition, and overall brand value."
   },
   {
     period: "2022 — 2024",
     role: "Graphic Designer & Digital Marketer",
     org: "Creative Social Media Agency",
-    desc: "Designed brand logos, complete visual kits, Facebook and Instagram ad creatives, and independently managed paid campaign strategies for multiple multinational clients."
+    desc: "Designed comprehensive brand identities, visual kits, and social media creatives while independently managing high-converting paid ad campaigns for multinational clients."
   },
   {
     period: "2021 — 2022",
     role: "Junior Graphic Designer",
     org: "Startup Design Studio",
-    desc: "Built a strong design foundation through hands-on work in vector logos, corporate stationery, print banners, and packaging design — delivering real value from day one."
+    desc: "Built a solid professional foundation by focusing on vector logos, corporate stationery, print banners, and product packaging design—delivering real value from day one."
   }
 ];
 
 export const toolsList = [
   "Adobe Photoshop",
   "Adobe Illustrator",
-  "Figma",
-  "Canva Pro",
+  "Figma (UI/UX)",
   "Meta Business Suite",
-  "Google Ads",
-  "Google Analytics 4",
-  "SEMrush",
-  "Mailchimp",
-  "Adobe Premiere Pro"
+  "Google Ads & Analytics",
+  "SEMrush (SEO)",
+  "React Native / Flutter",
+  "Android Studio",
+  "Firebase / MongoDB",
+  "VS Code / Git"
 ];
 
 export const testimonialsBn: TestimonialItem[] = [
