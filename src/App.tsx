@@ -706,7 +706,7 @@ export default function App() {
                         ))}
                       </div>
                       <span className="text-xs font-mono text-slate-600 dark:text-purple-300">
-                        {lang === 'bn' ? '৫.০ স্টার রেটিং (৪০+ ক্লায়েন্ট)' : '5.0 Star Rating (40+ clients)'}
+                        {lang === 'bn' ? '৫.০ স্টার রেটিং (২০০+ ক্লায়েন্ট)' : '5.0 Star Rating (200+ clients)'}
                       </span>
                     </div>
                   </div>

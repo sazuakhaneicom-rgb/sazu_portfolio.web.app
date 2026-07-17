@@ -312,14 +312,14 @@ export const enData: TranslationSet = {
 export const statsBn: StatItem[] = [
   { num: "৫+", label: "বছরের অভিজ্ঞতা" },
   { num: "৮০+", label: "সম্পন্ন প্রজেক্ট" },
-  { num: "৪০+", label: "সন্তুষ্ট ক্লায়েন্ট" },
+  { num: "২০০+", label: "সন্তুষ্ট ক্লায়েন্ট" },
   { num: "১২+", label: "ইন্ডাস্ট্রি সেক্টর" },
 ];
 
 export const statsEn: StatItem[] = [
   { num: "5+", label: "Years Experience" },
   { num: "80+", label: "Projects Completed" },
-  { num: "40+", label: "Happy Clients" },
+  { num: "200+", label: "Happy Clients" },
   { num: "12+", label: "Industry Sectors" },
 ];
 
