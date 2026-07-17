@@ -327,28 +327,28 @@ export const servicesBn: ServiceCategory[] = [
   {
     title: "ডিজিটাল মার্কেটিং",
     items: [
-      { title: "সোশ্যাল মিডিয়া মার্কেটিং", desc: "আপনার সঠিক ক্রেতাদের খুঁজে বের করে ব্র্যান্ডের প্রতি তাদের বিশ্বাস ও সম্পৃক্ততা বৃদ্ধি করা।" },
-      { title: "পেইড অ্যাড ক্যাম্পেইন", desc: "গুগল ও মেটা (ফেসবুক) অ্যাডস-এর মাধ্যমে কম খরচে সর্বোচ্চ সেলস ও কনভার্সন নিশ্চিত করা।" },
-      { title: "সার্চ ইঞ্জিন অপটিমাইজেশন (SEO)", desc: "গুগলের প্রথম পৃষ্ঠায় আপনার ওয়েবসাইটকে নিয়ে এসে দীর্ঘমেয়াদী ও স্থায়ী ক্রেতা তৈরি করা।" },
-      { title: "কন্টেন্ট ও সেলস ফানেল", desc: "গ্রাহকদের মনস্তত্ত্ব বুঝে এমন কন্টেন্ট তৈরি করা, যা তাদেরকে আপনার সার্ভিস নিতে আগ্রহী করে তোলে।" },
+      { title: "সোশ্যাল মিডিয়া মার্কেটিং", desc: "ফেসবুক, ইনস্টাগ্রাম ও ইউটিউবে আপনার আদর্শ ক্রেতাদের কাছে পৌঁছে তাদের বিশ্বাস অর্জন করি এবং ব্র্যান্ড এনগেজমেন্ট বাড়াই।" },
+      { title: "পেইড অ্যাড ক্যাম্পেইন (Meta & Google)", desc: "ডেটা-ড্রিভেন মেটা ও গুগল অ্যাডস ক্যাম্পেইন পরিচালনা করি, যেখানে কম বাজেটে সর্বোচ্চ সেলস ও কনভার্সন নিশ্চিত করা হয়।" },
+      { title: "সার্চ ইঞ্জিন অপটিমাইজেশন (SEO)", desc: "আপনার ওয়েবসাইটকে গুগলের প্রথম পৃষ্ঠায় এনে দীর্ঘমেয়াদী অর্গানিক ট্রাফিক ও সত্যিকারের ক্রেতা তৈরি করি।" },
+      { title: "কন্টেন্ট স্ট্র্যাটেজি ও সেলস ফানেল", desc: "ক্রেতাদের মনস্তত্ত্ব বুঝে এমন কন্টেন্ট ও ফানেল তৈরি করি, যা ভিজিটরকে বিশ্বস্ত ক্রেতায় রূপান্তরিত করে।" },
     ]
   },
   {
     title: "গ্রাফিক ডিজাইন",
     items: [
-      { title: "লোগো ও ব্র্যান্ড আইডেন্টিটি", desc: "এমন একটি ইউনিক এবং প্রফেশনাল লোগো ডিজাইন, যা মানুষের মনে আপনার ব্র্যান্ডের পরিচয় গেঁথে দেবে।" },
-      { title: "সোশ্যাল মিডিয়া ডিজাইন", desc: "অত্যন্ত আকর্ষণীয় এবং মানসম্মত পোস্ট ও ব্যানার ডিজাইন, যা স্ক্রলিং থামিয়ে মানুষের নজর কাড়বে।" },
-      { title: "প্রিন্ট ও প্যাকেজিং", desc: "আন্তর্জাতিক মানের নিখুঁত প্যাকেজিং ও বিজনেস কার্ড ডিজাইন, যা আপনার পেশাদারিত্ব প্রমাণ করবে।" },
-      { title: "ইউআই/ইউএক্স ডিজাইন", desc: "অ্যাপ বা ওয়েবসাইটের জন্য সহজ ও আধুনিক ইন্টারফেস ডিজাইন, যা গ্রাহকদের মুগ্ধ করবে।" },
+      { title: "লোগো ও ব্র্যান্ড আইডেন্টিটি", desc: "আপনার ব্র্যান্ডের জন্য এমন একটি ইউনিক ও আধুনিক লোগো তৈরি করি, যা একনজরেই মানুষের মনে দাগ কাটে।" },
+      { title: "সোশ্যাল মিডিয়া ক্রিয়েটিভস", desc: "প্রিমিয়াম কোয়ালিটির পোস্ট, ব্যানার ও অ্যাড ক্রিয়েটিভ ডিজাইন করি, যা স্ক্রলিং থামিয়ে মানুষের দৃষ্টি আকর্ষণ করে।" },
+      { title: "প্রিন্ট, প্যাকেজিং ও স্টেশনারি", desc: "বিজনেস কার্ড থেকে শুরু করে প্রোডাক্ট প্যাকেজিং—সবকিছু আন্তর্জাতিক মানের ডিজাইনে তৈরি করি।" },
+      { title: "ইউআই/ইউএক্স ডিজাইন", desc: "অ্যাপ ও ওয়েবসাইটের জন্য এমন আধুনিক ইন্টারফেস ডিজাইন করি, যা ব্যবহারে সহজ এবং দেখতে অসাধারণ।" },
     ]
   },
   {
     title: "অ্যাপস ডেভেলপমেন্ট",
     items: [
-      { title: "অ্যান্ড্রয়েড ও আইওএস অ্যাপ", desc: "উন্নত প্রযুক্তিতে তৈরি দ্রুতগতিসম্পন্ন এবং সিকিউর মোবাইল অ্যাপ্লিকেশন।" },
-      { title: "ই-কমার্স ও বিজনেস অ্যাপ", desc: "আপনার ব্যবসার সেলস বাড়াতে ইউজার-ফ্রেন্ডলি ই-কমার্স এবং কর্পোরেট অ্যাপ ডেভেলপমেন্ট।" },
-      { title: "ইউআই/ইউএক্স অপটিমাইজেশন", desc: "গ্রাহকের ব্যবহারবিধি বিশ্লেষণ করে অ্যাপের ইন্টারফেস ও পারফরম্যান্স উন্নত করা।" },
-      { title: "এপিআই ও ব্যাকএন্ড সিস্টেম", desc: "অ্যাপের ডেটা দ্রুত ও নিরাপদে পরিচালনা করার জন্য শক্তিশালী ব্যাকএন্ড সাপোর্ট।" },
+      { title: "অ্যান্ড্রয়েড ও আইওএস অ্যাপ", desc: "আপনার বিজনেস আইডিয়াকে বাস্তবে রূপ দিতে দ্রুতগতি, নিরাপদ ও স্কেলেবল মোবাইল অ্যাপ তৈরি করি।" },
+      { title: "ই-কমার্স ও বিজনেস অ্যাপ", desc: "অনলাইনে সেলস বাড়াতে ইউজার-ফ্রেন্ডলি ই-কমার্স অ্যাপ এবং কর্পোরেট ম্যানেজমেন্ট অ্যাপ তৈরি করি।" },
+      { title: "ইউআই/ইউএক্স অপটিমাইজেশন", desc: "ব্যবহারকারীর অভিজ্ঞতা বিশ্লেষণ করে অ্যাপের ডিজাইন ও পারফরম্যান্স ক্রমাগত উন্নত করি।" },
+      { title: "এপিআই ও ব্যাকএন্ড সিস্টেম", desc: "অ্যাপের পেছনে শক্তিশালী ও নিরাপদ সার্ভার সিস্টেম তৈরি করি, যাতে ডেটা দ্রুত ও নির্ভুলভাবে কাজ করে।" },
     ]
   }
 ];
@@ -357,28 +357,28 @@ export const servicesEn: ServiceCategory[] = [
   {
     title: "Digital Marketing",
     items: [
-      { title: "Social Media Marketing", desc: "Building profound brand trust and highly-engaged audiences across platforms to attract your ideal buyers." },
-      { title: "Paid Ad Campaigns", desc: "Data-driven Meta & Google Ads optimized strictly for minimizing costs and maximizing direct sales/ROI." },
-      { title: "Search Engine Optimization", desc: "Securing top Google rankings to generate a sustainable, long-term stream of organic, high-intent traffic." },
-      { title: "Content & Sales Funnels", desc: "Crafting psychologically persuasive copywriting and funnel strategies that seamlessly convert visitors into loyal customers." },
+      { title: "Social Media Marketing", desc: "I connect your brand with the right audience on Facebook, Instagram, and YouTube—building genuine trust and meaningful engagement." },
+      { title: "Paid Ad Campaigns (Meta & Google)", desc: "I run data-driven Meta and Google Ads campaigns that maximize your sales and conversions while keeping costs as low as possible." },
+      { title: "Search Engine Optimization (SEO)", desc: "I bring your website to Google's first page, generating long-term organic traffic and real, high-intent buyers for your business." },
+      { title: "Content Strategy & Sales Funnels", desc: "I craft persuasive content and smart funnels that guide your visitors from curiosity to confident purchase decisions." },
     ]
   },
   {
     title: "Graphic Design",
     items: [
-      { title: "Logo & Brand Identity", desc: "Designing memorable and highly professional brand identities that implant trust instantly in your customers' minds." },
-      { title: "Social Media Creatives", desc: "Creating scroll-stopping, premium quality graphics and ad creatives that demand attention and drive clicks." },
-      { title: "Print & Packaging", desc: "Delivering world-class, pixel-perfect print and packaging designs that elevate your product's perceived value." },
-      { title: "UI/UX Layouts", desc: "Architecting sleek, modern, and user-friendly interfaces that provide a flawless experience." },
+      { title: "Logo & Brand Identity", desc: "I create unique, modern logos and complete brand identities that make an unforgettable first impression on your customers." },
+      { title: "Social Media Creatives", desc: "I design premium-quality posts, banners, and ad creatives that stop the scroll and grab your audience's attention instantly." },
+      { title: "Print, Packaging & Stationery", desc: "From business cards to product packaging—I deliver internationally-standard designs that elevate your brand's perceived value." },
+      { title: "UI/UX Design", desc: "I design sleek, modern interfaces for apps and websites that are visually stunning and effortlessly easy to use." },
     ]
   },
   {
     title: "App Development",
     items: [
-      { title: "Android & iOS Apps", desc: "Developing lightning-fast, highly secure, and scalable mobile applications for both platforms." },
-      { title: "E-Commerce & Business Apps", desc: "Building conversion-focused mobile apps designed specifically to scale your business operations." },
-      { title: "UI/UX Optimization", desc: "Analyzing user behavior to refine app interfaces and ensure seamless user experiences." },
-      { title: "Backend & API Integration", desc: "Robust and secure backend architecture to seamlessly manage app data and functionalities." },
+      { title: "Android & iOS Apps", desc: "I build lightning-fast, secure, and scalable mobile applications that bring your business idea to life on both platforms." },
+      { title: "E-Commerce & Business Apps", desc: "I develop user-friendly e-commerce and corporate management apps designed to boost your online sales and operations." },
+      { title: "UI/UX Optimization", desc: "I analyze user behavior to continuously improve your app's design and performance for a seamless experience." },
+      { title: "Backend & API Systems", desc: "I build robust, secure server architecture behind your app—ensuring fast, reliable, and safe data management." },
     ]
   }
 ];

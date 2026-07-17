@@ -247,19 +247,20 @@ const premiumServicesData: PremiumService[] = [
     category: "marketing"
   },
   {
-    id: "web-dev",
-    titleBn: "আধুনিক ওয়েব ডেভেলপমেন্ট",
-    titleEn: "Modern Web Development",
-    taglineBn: "বিদ্যুৎ গতিসম্পন্ন এবং রেসপন্সিভ ওয়েব ইন্টারফেস",
-    taglineEn: "Blazing fast React & Next.js responsive websites",
-    descBn: "সর্বাধুনিক রিয়্যাক্ট (React) ও নেক্সট জেএস (Next.js) প্রযুক্তিতে তৈরি সম্পূর্ণ রেসপন্সিভ এবং ক্লিন কোড সমৃদ্ধ ওয়েবসাইট, যা অত্যন্ত দ্রুত লোড হয়।",
-    descEn: "Responsive, clean-code frontends built with React, Next.js, and Tailwind CSS. Perfect layout translation with optimized cold-start load times.",
-    bulletsBn: ["নেক্সট জেএস (Next.js) ও রিয়্যাক্ট ল্যান্ডিং পেজ", "টেলউইন্ড সিএসএস (Tailwind CSS) ডিজাইন", "ফাস্ট লোডিং ও এসইও ফ্রেন্ডলি স্ট্রাকচার", "ফায়ারবেস ও মঙ্গোডিবি ব্যাকএন্ড ইন্টিগ্রেশন"],
-    bulletsEn: ["Next.js & React Landing Pages", "Tailwind CSS Styling", "SEO-friendly & Fast Page Speeds", "Firebase & MongoDB Backend Setup"],
-    outcomeBn: "১০০% মোবাইল ফ্রেন্ডলি ও ৯৫+ গুগল স্পিড স্কোর",
-    outcomeEn: "100% Mobile responsive & 95+ PageSpeed Score",
-    category: "web"
+    id: "graphic-design",
+    titleBn: "\u09aa\u09cd\u09b0\u09ab\u09c7\u09b6\u09a8\u09be\u09b2 \u0997\u09cd\u09b0\u09be\u09ab\u09bf\u0995 \u09a1\u09bf\u099c\u09be\u0987\u09a8",
+    titleEn: "Professional Graphic Design",
+    taglineBn: "\u0986\u09aa\u09a8\u09be\u09b0 \u09ac\u09cd\u09b0\u09cd\u09af\u09be\u09a8\u09cd\u09a1\u0995\u09c7 \u09ad\u09bf\u099c\u09cd\u09af\u09c1\u09af\u09bc\u09be\u09b2\u09bf \u0985\u09ac\u09bf\u09b8\u09cd\u09ae\u09b0\u09a3\u09c0\u09af\u09bc \u0995\u09b0\u09c7 \u09a4\u09cb\u09b2\u09be",
+    taglineEn: "Making your brand visually unforgettable",
+    descBn: "\u09b2\u09cb\u0997\u09cb, \u09ac\u09cd\u09b0\u09cd\u09af\u09be\u09a8\u09cd\u09a1 \u0986\u0987\u09a1\u09c7\u09a8\u09cd\u099f\u09bf\u099f\u09bf, \u09b8\u09cb\u09b6\u09cd\u09af\u09be\u09b2 \u09ae\u09bf\u09a1\u09bf\u09af\u09bc\u09be \u09aa\u09cb\u09b8\u09cd\u099f \u09a5\u09c7\u0995\u09c7 \u09b6\u09c1\u09b0\u09c1 \u0995\u09b0\u09c7 \u09aa\u09cd\u09b0\u09cb\u09a1\u09be\u0995\u09cd\u099f \u09aa\u09cd\u09af\u09be\u0995\u09c7\u099c\u09bf\u0982 \u09aa\u09b0\u09cd\u09af\u09a8\u09cd\u09a4\u2014\u09b8\u09ac\u0995\u09bf\u099b\u09c1 \u0986\u09a8\u09cd\u09a4\u09b0\u09cd\u099c\u09be\u09a4\u09bf\u0995 \u09ae\u09be\u09a8\u09c7\u09b0 \u09a1\u09bf\u099c\u09be\u0987\u09a8\u09c7 \u09a4\u09c8\u09b0\u09bf \u0995\u09b0\u09bf\u0964 \u0986\u09ae\u09be\u09b0 \u09a1\u09bf\u099c\u09be\u0987\u09a8 \u09b6\u09c1\u09a7\u09c1 \u09b8\u09c1\u09a8\u09cd\u09a6\u09b0 \u09a8\u09af\u09bc, \u098f\u099f\u09bf \u0986\u09aa\u09a8\u09be\u09b0 \u09ac\u09cd\u09b0\u09cd\u09af\u09be\u09a8\u09cd\u09a1\u09c7\u09b0 \u09aa\u09cd\u09b0\u09a4\u09bf \u09ae\u09be\u09a8\u09c1\u09b7\u09c7\u09b0 \u0986\u09b8\u09cd\u09a5\u09be \u09a4\u09c8\u09b0\u09bf \u0995\u09b0\u09c7\u0964",
+    descEn: "From logos and brand identity to social media creatives and product packaging\u2014I create everything with international-standard design quality. My designs don't just look beautiful, they build genuine trust in your brand.",
+    bulletsBn: ["\u0987\u0989\u09a8\u09bf\u0995 \u09b2\u09cb\u0997\u09cb \u0993 \u09b8\u09ae\u09cd\u09aa\u09c2\u09b0\u09cd\u09a3 \u09ac\u09cd\u09b0\u09cd\u09af\u09be\u09a8\u09cd\u09a1 \u0986\u0987\u09a1\u09c7\u09a8\u09cd\u099f\u09bf\u099f\u09bf", "\u09aa\u09cd\u09b0\u09bf\u09ae\u09bf\u09af\u09bc\u09be\u09ae \u09b8\u09cb\u09b6\u09cd\u09af\u09be\u09b2 \u09ae\u09bf\u09a1\u09bf\u09af\u09bc\u09be \u0995\u09cd\u09b0\u09bf\u09af\u09bc\u09c7\u099f\u09bf\u09ad\u09b8", "\u09aa\u09cd\u09b0\u09bf\u09a8\u09cd\u099f, \u09aa\u09cd\u09af\u09be\u0995\u09c7\u099c\u09bf\u0982 \u0993 \u09ac\u09bf\u099c\u09a8\u09c7\u09b8 \u09b8\u09cd\u099f\u09c7\u09b6\u09a8\u09be\u09b0\u09bf", "\u0987\u0989\u0986\u0987/\u0987\u0989\u098f\u0995\u09cd\u09b8 \u0987\u09a8\u09cd\u099f\u09be\u09b0\u09ab\u09c7\u09b8 \u09a1\u09bf\u099c\u09be\u0987\u09a8"],
+    bulletsEn: ["Unique Logo \u0026 Complete Brand Identity", "Premium Social Media Creatives", "Print, Packaging \u0026 Business Stationery", "UI/UX Interface Design"],
+    outcomeBn: "\u09ac\u09cd\u09b0\u09cd\u09af\u09be\u09a8\u09cd\u09a1 \u09ad\u09bf\u099c\u09bf\u09ac\u09bf\u09b2\u09bf\u099f\u09bf \u0993 \u09ac\u09bf\u09b6\u09cd\u09ac\u09be\u09b8\u09af\u09cb\u0997\u09cd\u09af\u09a4\u09be \u09eb\u0078 \u09ac\u09c3\u09a6\u09cd\u09a7\u09bf",
+    outcomeEn: "5x increase in brand visibility \u0026 credibility",
+    category: "graphic"
   },
+
   {
     id: "app-dev",
     titleBn: "কাস্টম মোবাইল অ্যাপ ডেভেলপমেন্ট",
