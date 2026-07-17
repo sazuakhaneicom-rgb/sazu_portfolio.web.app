@@ -384,16 +384,23 @@ export const servicesEn: ServiceCategory[] = [
 ];
 
 export const skillsData: SkillItem[] = [
+  // Digital Marketing
   { name: "Meta Ads & Business Suite", level: 95, category: "marketing" },
   { name: "SEO Strategy & Optimization", level: 90, category: "marketing" },
   { name: "Google Search & Display Ads", level: 85, category: "marketing" },
-  { name: "Content Strategy & Copywriting", level: 80, category: "marketing" },
-  { name: "Email Marketing & Automation", level: 75, category: "marketing" },
+  { name: "Content Strategy & Funnels", level: 92, category: "marketing" },
+  
+  // Graphic Design
   { name: "Adobe Photoshop (Manipulations)", level: 95, category: "design" },
   { name: "Adobe Illustrator (Vector Art)", level: 90, category: "design" },
   { name: "Figma (UI/UX & Prototyping)", level: 85, category: "design" },
   { name: "Brand Guidelines & Typography", level: 90, category: "design" },
-  { name: "Print & Package Template Design", level: 80, category: "design" },
+  
+  // App Development
+  { name: "Android App Development", level: 85, category: "app" },
+  { name: "Cross-Platform Frameworks", level: 82, category: "app" },
+  { name: "Firebase Backend & APIs", level: 88, category: "app" },
+  { name: "Mobile UI/UX Optimization", level: 85, category: "app" },
 ];
 
 export const skillsCategoriesData: SkillCategoryData[] = [
@@ -449,8 +456,8 @@ export const skillsCategoriesData: SkillCategoryData[] = [
 
 export const projectsBn: ProjectItem[] = [
   {
-    title: "বিজনেস ও ই-কমার্স অ্যাপ ডেভেলপমেন্ট",
-    desc: "উন্নত পারফরম্যান্স এবং মসৃণ ইউজার এক্সপেরিয়েন্স সমৃদ্ধ একটি ফুল-স্ট্যাক বিজনেস অ্যাপ। কাস্টম পেমেন্ট ইন্টিগ্রেশন এবং ফাস্ট লোডিং স্পিড।",
+    title: "কাস্টম ই-কমার্স ও বিজনেস অ্যাপ",
+    desc: "উন্নত পারফরম্যান্স এবং মসৃণ ইউজার এক্সপেরিয়েন্স সমৃদ্ধ একটি ফুল-স্ট্যাক বিজনেস অ্যাপ। কাস্টম পেমেন্ট ইন্টিগ্রেশন এবং ফায়ারবেস ব্যাকএন্ডের মাধ্যমে অ্যাপটির ডেটা দ্রুত ও নিরাপদে পরিচালনা করার ব্যবস্থা করা হয়েছে।",
     category: "app",
     tag: "App Dev",
     metric: "লোডিং স্পিড ২x ফাস্ট",
@@ -458,20 +465,20 @@ export const projectsBn: ProjectItem[] = [
     bgGradient: "from-blue-600 to-indigo-600"
   },
   {
-    title: "ব্র্যান্ড আইডেন্টিটি ডিজাইন",
-    desc: "একটি টেক স্টার্টআপের জন্য আধুনিক লোগো, ব্র্যান্ড গাইডলাইন এবং সোশ্যাল মিডিয়া কিট ডিজাইন।",
+    title: "কমপ্লিট ব্র্যান্ড আইডেন্টিটি ডিজাইন",
+    desc: "একটি প্রিমিয়াম ব্র্যান্ডের জন্য আধুনিক লোগো, ব্র্যান্ড গাইডলাইন, কালার প্যালেট এবং সোশ্যাল মিডিয়া কিট ডিজাইন। উদ্দেশ্য ছিল এমন একটি ভিজ্যুয়াল আইডেন্টিটি তৈরি করা যা মানুষের মনে দীর্ঘস্থায়ী দাগ কাটে।",
     category: "graphic",
     tag: "Design",
-    metric: "ব্র্যান্ড এওয়ারনেস +৪০%",
+    metric: "ব্র্যান্ড ভিজিবিলিটি +৪০%",
     thumbClass: "Palette",
     bgGradient: "from-pink-500 to-rose-500"
   },
   {
-    title: "লিড জেনারেশন ক্যাম্পেইন",
-    desc: "ফেসবুক এবং গুগল অ্যাডস ব্যবহার করে টার্গেটেড লিড জেনারেশন।",
+    title: "হাই-কনভার্টিং অ্যাড ক্যাম্পেইন",
+    desc: "ফেসবুক ও গুগল অ্যাডস ব্যবহার করে টার্গেটেড লিড জেনারেশন ও সেলস ফানেল তৈরি। সঠিক ক্রেতাদের খুঁজে বের করে কম খরচে সর্বোচ্চ রিটার্ন অন অ্যাড স্পেন্ড (ROAS) নিশ্চিত করা হয়েছে।",
     category: "marketing",
     tag: "Marketing",
-    metric: "ROAS ৩.৫x বৃদ্ধি",
+    metric: "ROAS ৪.২x বৃদ্ধি",
     thumbClass: "Megaphone",
     bgGradient: "from-violet-600 to-purple-800"
   }
@@ -479,8 +486,8 @@ export const projectsBn: ProjectItem[] = [
 
 export const projectsEn: ProjectItem[] = [
   {
-    title: "Business & E-Commerce App Development",
-    desc: "A high-performance, full-stack business application focusing on smooth user experience. Features custom payment integration and blazing fast speeds.",
+    title: "Custom E-Commerce & Business App",
+    desc: "A high-performance, full-stack business application focusing on smooth user experience. Features include custom payment integration, robust Firebase backend, and optimized loading speeds for seamless navigation.",
     category: "app",
     tag: "App Dev",
     metric: "2x Faster Load Time",
@@ -488,20 +495,20 @@ export const projectsEn: ProjectItem[] = [
     bgGradient: "from-blue-600 to-indigo-600"
   },
   {
-    title: "Brand Identity Design",
-    desc: "Modern logo, brand guidelines, and social media kit design for an emerging tech startup.",
+    title: "Complete Brand Identity Design",
+    desc: "Modern logo, brand guidelines, color palette, and premium social media kit design for an emerging brand. The goal was to craft a visual identity that leaves a memorable and trustworthy impression.",
     category: "graphic",
     tag: "Design",
-    metric: "+40% Brand Awareness",
+    metric: "+40% Brand Visibility",
     thumbClass: "Palette",
     bgGradient: "from-pink-500 to-rose-500"
   },
   {
-    title: "Lead Generation Campaign",
-    desc: "Targeted lead generation using Facebook and Google Ads campaigns with high conversion rates.",
+    title: "High-Converting Ad Campaign",
+    desc: "Targeted lead generation and sales funnel creation using Facebook and Google Ads. By targeting the exact ideal audience, we ensured the highest possible Return on Ad Spend (ROAS) at a minimized cost.",
     category: "marketing",
     tag: "Marketing",
-    metric: "3.5x Scaled ROAS",
+    metric: "4.2x Scaled ROAS",
     thumbClass: "Megaphone",
     bgGradient: "from-violet-600 to-purple-800"
   }
