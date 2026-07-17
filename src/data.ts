@@ -158,7 +158,7 @@ export const bnData: TranslationSet = {
     headlineHighlight1: "গল্প",
     headlineHighlight2: "গ্রোথ",
     sub: " বানাই, গল্পকে ",
-    tagline: "৫+ বছর ধরে স্ট্র্যাটেজি, কন্টেন্ট আর ভিজ্যুয়াল ডিজাইন একসাথে নিয়ে কাজ করছি — যেন প্রতিটি ব্র্যান্ড শুধু দেখতেই সুন্দর না হয়, বরং ব্যবসায়িক ফলাফলও নিয়ে আসে।",
+    tagline: "৮+ বছর ধরে মার্কেটিং স্ট্র্যাটেজি, কন্টেন্ট এবং ভিজ্যুয়াল ডিজাইন নিয়ে কাজ করছি। আমার লক্ষ্য হলো আপনার ব্যবসার জন্য বিশ্বস্ত ভিত্তি তৈরি করা যা সরাসরি প্রবৃদ্ধি আনবে।",
     ctaPrimary: "প্রজেক্ট দেখুন",
     ctaSecondary: "যোগাযোগ করুন",
     side1: "০১ — কুড়িগ্রাম, রংপুর, বাংলাদেশ থেকে কাজ করি, তবে ক্লায়েন্ট বিশ্বজুড়ে।",
@@ -168,9 +168,9 @@ export const bnData: TranslationSet = {
   about: {
     title: "পরিচিতি ও কাজের দর্শন",
     subtitle: "আমার সাথে আপনার ব্র্যান্ডের পথচলা কেন দীর্ঘস্থায়ী ও বিশ্বস্ত হবে?",
-    bioParagraph1: "আমি <strong>আসাদুজ্জামান (সাজু)</strong>। বিগত ৫ বছরেরও বেশি সময় ধরে ডিজিটাল মার্কেটিং স্ট্র্যাটেজি এবং প্রফেশনাল গ্রাফিক ডিজাইন নিয়ে নিরলসভাবে কাজ করছি। আমার কাজের মূল দর্শন শুধু কিছু ভিজ্যুয়াল বা কন্টেন্ট তৈরি করা নয়, বরং আপনার ব্র্যান্ডের জন্য এমন একটি নির্ভরযোগ্য ও বিশ্বস্ত সেলস ফানেল এবং ব্র্যান্ড ইমেজ গড়ে তোলা—যা সরাসরি দীর্ঘমেয়াদী ব্যবসায়িক প্রবৃদ্ধি বা কনভার্সন এনে দেবে। কুড়িগ্রাম, রংপুরের শান্ত পরিবেশে থেকে বিশ্বজুড়ে ছড়িয়ে থাকা নানা ক্লায়েন্টদের ব্র্যান্ডের শুরু থেকে শেষ পর্যন্ত সম্পূর্ণ ডিজিটাল রূপান্তর অত্যন্ত বিশ্বস্ততা ও স্বচ্ছতার সাথে আমি নিজে পরিচালনা করি।",
-    bioParagraph2: "প্রতিটি সফল ব্র্যান্ডের পেছনে থাকে একটি অবিচ্ছেদ্য সম্পর্ক এবং কাজের নিখুঁত সততা। আমি বিশ্বাস করি, চমৎকার প্রফেশনাল ডিজাইনের নান্দনিকতা এবং ডেটা-চালিত পেইড বিজ্ঞাপনের যুগান্তকারী কৌশল যখন একবিন্দুতে মিলিত হয়, ঠিক তখনই জন্ম নেয় একটি কালজয়ী ব্র্যান্ড। সেই বিশ্বাস থেকেই আমি কেবল একজন ফ্রিল্যান্সার হিসেবে নয়, বরং আপনার বিজনেসের একজন ডেডিকেটেড গ্রোথ পার্টনার হিসেবে কাজ করি, যেখানে প্রজেক্টের শুরু থেকে শেষ পর্যন্ত শতভাগ স্বচ্ছ যোগাযোগ ও মানের ক্ষেত্রে কোনো আপস করা হয় না।",
-    experienceBadge: "বছরের বিশ্বস্ততা"
+    bioParagraph1: "আমি <strong>আসাদুজ্জামান (সাজু)</strong>। বিগত ৮ বছরেরও বেশি সময় ধরে ডিজিটাল মার্কেটিং এবং প্রফেশনাল গ্রাফিক ডিজাইন নিয়ে নিরলসভাবে কাজ করছি। আমার কাজের মূল দর্শন হলো—শুধু কিছু সুন্দর ছবি বা পোস্ট তৈরি করা নয়, বরং আপনার ব্র্যান্ডের জন্য এমন একটি নির্ভরযোগ্য ও বিশ্বস্ত সেলস ফানেল গড়ে তোলা, যা সরাসরি আপনার ব্যবসার দীর্ঘমেয়াদী প্রবৃদ্ধি নিশ্চিত করবে।",
+    bioParagraph2: "একটি সফল ব্র্যান্ড তৈরি হয় গ্রাহকের বিশ্বাসের ওপর ভিত্তি করে। আমি বিশ্বাস করি, নান্দনিক ডিজাইন এবং সঠিক মার্কেটিং কৌশলের সমন্বয়ে একটি সাধারণ ব্যবসাকেও মানুষের কাছে একটি বিশ্বস্ত ব্র্যান্ডে পরিণত করা সম্ভব। আমি কেবল একজন ফ্রিল্যান্সার হিসেবে নয়, বরং আপনার বিজনেসের একজন বিশ্বস্ত গ্রোথ-পার্টনার হিসেবে কাজ করি। স্বচ্ছতা, সততা এবং শতভাগ পেশাদারিত্বের সাথে আপনার প্রজেক্টের শুরু থেকে শেষ পর্যন্ত আমি নিজেই পরিচালনা করি।",
+    experienceBadge: "বছরের অভিজ্ঞতা"
   },
   services: {
     title: "সেবাসমূহ",
@@ -242,7 +242,7 @@ export const enData: TranslationSet = {
     headlineHighlight1: "stories",
     headlineHighlight2: "growth",
     sub: ", and stories into ",
-    tagline: "Crafting marketing strategies, compelling content, and visual designs for over 5+ years. Ensuring every brand doesn't just look exquisite but delivers high-performing business results.",
+    tagline: "Crafting data-driven marketing strategies and premium visual designs for over 8+ years. My goal is to build deep customer trust and ensure your brand doesn't just look exquisite, but delivers highly profitable business results.",
     ctaPrimary: "View Projects",
     ctaSecondary: "Get in Touch",
     side1: "01 — Based in Kurigram, Rangpur, Bangladesh, working with clients globally.",
@@ -252,8 +252,8 @@ export const enData: TranslationSet = {
   about: {
     title: "About & Work Philosophy",
     subtitle: "Why Trust Your Brand's Digital Journey with Me?",
-    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist and graphic designer with over 5+ years of hands-on experience. My core philosophy isn't just about crafting pretty visual designs or writing social media posts—it is about building an integrated, high-converting digital system and a robust brand identity that directly triggers scalable business growth. From strategic marketing architecture to aesthetic high-end designs, I independently manage your brand's digital presence with absolute transparency, meticulous execution, and trust.",
-    bioParagraph2: "Every successful brand is built on deep trust, pristine credibility, and uncompromising quality. I believe that when world-class creative design meets data-driven campaign precision, an unforgettable brand experience is born. This conviction drives me to act not merely as a service provider, but as your dedicated growth partner, maintaining seamless real-time communication and absolute integrity at every step of our collaboration.",
+    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist and graphic designer with over 8+ years of hands-on experience. My core philosophy isn't just about creating visually appealing graphics—it's about building an integrated, high-converting digital foundation that earns customer trust and drives scalable business growth.",
+    bioParagraph2: "Every successful brand is built on uncompromising trust and credibility. I believe that when world-class aesthetic design meets data-driven marketing precision, an unforgettable and highly profitable brand experience is born. I work not just as a service provider, but as your dedicated growth partner—ensuring transparent communication, flawless execution, and absolute integrity in every project we undertake.",
     experienceBadge: "Years of Trust"
   },
   services: {
@@ -310,14 +310,14 @@ export const enData: TranslationSet = {
 };
 
 export const statsBn: StatItem[] = [
-  { num: "৫+", label: "বছরের অভিজ্ঞতা" },
+  { num: "৮+", label: "বছরের অভিজ্ঞতা" },
   { num: "৮০+", label: "সম্পন্ন প্রজেক্ট" },
   { num: "৪০+", label: "সন্তুষ্ট ক্লায়েন্ট" },
   { num: "১২+", label: "ইন্ডাস্ট্রি সেক্টর" },
 ];
 
 export const statsEn: StatItem[] = [
-  { num: "5+", label: "Years Experience" },
+  { num: "8+", label: "Years Experience" },
   { num: "80+", label: "Projects Completed" },
   { num: "40+", label: "Happy Clients" },
   { num: "12+", label: "Industry Sectors" },
@@ -327,19 +327,19 @@ export const servicesBn: ServiceCategory[] = [
   {
     title: "ডিজিটাল মার্কেটিং",
     items: [
-      { title: "সার্চ ইঞ্জিন অপটিমাইজেশন (SEO)", desc: "অর্গানিক সার্চে র‍্যাঙ্ক বাড়িয়ে দীর্ঘমেয়াদী স্থায়ী ট্রাফিক তৈরি করা।" },
-      { title: "সোশ্যাল মিডিয়া মার্কেটিং", desc: "ফেসবুক, ইনস্টাগ্রাম, লিংকডইনে ব্র্যান্ড উপস্থিতি ও এনগেজমেন্ট বৃদ্ধি।" },
-      { title: "পেইড অ্যাড ক্যাম্পেইন", desc: "Meta Ads ও Google Ads — বাজেট অনুযায়ী সর্বোচ্চ আরওআই (ROI) নিশ্চিতকরণ।" },
-      { title: "কন্টেন্ট ও ইমেইল মার্কেটিং", desc: "কনভার্সন-ফোকাসড কপিরাইটিং ও ইমেইল ফানেল তৈরির মাধ্যমে কাস্টমার তৈরি।" },
+      { title: "সোশ্যাল মিডিয়া মার্কেটিং", desc: "আপনার সঠিক ক্রেতাদের খুঁজে বের করে ব্র্যান্ডের প্রতি তাদের বিশ্বাস ও সম্পৃক্ততা বৃদ্ধি করা।" },
+      { title: "পেইড অ্যাড ক্যাম্পেইন", desc: "গুগল ও মেটা (ফেসবুক) অ্যাডস-এর মাধ্যমে কম খরচে সর্বোচ্চ সেলস ও কনভার্সন নিশ্চিত করা।" },
+      { title: "সার্চ ইঞ্জিন অপটিমাইজেশন (SEO)", desc: "গুগলের প্রথম পৃষ্ঠায় আপনার ওয়েবসাইটকে নিয়ে এসে দীর্ঘমেয়াদী ও স্থায়ী ক্রেতা তৈরি করা।" },
+      { title: "কন্টেন্ট ও সেলস ফানেল", desc: "গ্রাহকদের মনস্তত্ত্ব বুঝে এমন কন্টেন্ট তৈরি করা, যা তাদেরকে আপনার সার্ভিস নিতে আগ্রহী করে তোলে।" },
     ]
   },
   {
     title: "গ্রাফিক ডিজাইন",
     items: [
-      { title: "লোগো ও ব্র্যান্ড আইডেন্টিটি", desc: "সম্পূর্ণ ব্র্যান্ড গাইডলাইন, কালার প্যালেট ও মানসম্মত টাইপোগ্রাফি সিস্টেম।" },
-      { title: "সোশ্যাল মিডিয়া ক্রিয়েটিভ", desc: "নান্দনিক পোস্ট, হাই-কনভার্টিং ব্যানার ও রিল কভার — যা স্ক্রল থামিয়ে দেয়।" },
-      { title: "প্রিন্ট ও প্যাকেজিং ডিজাইন", desc: "বিজনেস কার্ড থেকে শুরু করে চমৎকার প্যাকেজিং — প্রিন্ট-রেডি ভেক্টর ফাইল।" },
-      { title: "ইউআই/ইউএক্স ডিজাইন (Figma)", desc: "ওয়েবসাইট ও ল্যান্ডিং পেজের জন্য পরিষ্কার, ব্যবহারবান্ধব এবং আধুনিক ইন্টারফেস।" },
+      { title: "লোগো ও ব্র্যান্ড আইডেন্টিটি", desc: "এমন একটি ইউনিক এবং প্রফেশনাল লোগো ডিজাইন, যা মানুষের মনে আপনার ব্র্যান্ডের পরিচয় গেঁথে দেবে।" },
+      { title: "সোশ্যাল মিডিয়া ডিজাইন", desc: "অত্যন্ত আকর্ষণীয় এবং মানসম্মত পোস্ট ও ব্যানার ডিজাইন, যা স্ক্রলিং থামিয়ে মানুষের নজর কাড়বে।" },
+      { title: "প্রিন্ট ও প্যাকেজিং", desc: "আন্তর্জাতিক মানের নিখুঁত প্যাকেজিং ও বিজনেস কার্ড ডিজাইন, যা আপনার পেশাদারিত্ব প্রমাণ করবে।" },
+      { title: "ইউআই/ইউএক্স (ওয়েব ডিজাইন)", desc: "ওয়েবসাইট বা অ্যাপের জন্য সহজ ও আধুনিক ইন্টারফেস ডিজাইন, যা গ্রাহকদের মুগ্ধ করবে।" },
     ]
   }
 ];
@@ -348,19 +348,19 @@ export const servicesEn: ServiceCategory[] = [
   {
     title: "Digital Marketing",
     items: [
-      { title: "Search Engine Optimization (SEO)", desc: "Increasing organic ranks on search engines to drive long-term compound traffic." },
-      { title: "Social Media Marketing", desc: "Growing engagement, followers and high-intent leads on Meta, LinkedIn, and Instagram." },
-      { title: "Paid Ads Management", desc: "High-yield Meta & Google PPC ads targeted precisely to optimize client acquisition cost." },
-      { title: "Content & Email Copywriting", desc: "Creating converting sales copies and automatic email drip campaigns." },
+      { title: "Social Media Marketing", desc: "Building profound brand trust and highly-engaged audiences across platforms to attract your ideal buyers." },
+      { title: "Paid Ad Campaigns", desc: "Data-driven Meta & Google Ads optimized strictly for minimizing costs and maximizing direct sales/ROI." },
+      { title: "Search Engine Optimization", desc: "Securing top Google rankings to generate a sustainable, long-term stream of organic, high-intent traffic." },
+      { title: "Content & Sales Funnels", desc: "Crafting psychologically persuasive copywriting and funnel strategies that seamlessly convert visitors into loyal customers." },
     ]
   },
   {
     title: "Graphic Design",
     items: [
-      { title: "Logo & Brand Identity", desc: "Developing complete visual style guidelines, color palettes and type systems." },
-      { title: "Social Media Creatives", desc: "Scroll-stopping static posts, carousels, and thumb-catching story/reels graphics." },
-      { title: "Print & Package Design", desc: "Durable layouts from business stationery to exquisite structural product packages." },
-      { title: "UI/UX Layout Design", desc: "Sleek, intuitive and conversion-optimized websites and desktop/mobile landing pages." },
+      { title: "Logo & Brand Identity", desc: "Designing memorable and highly professional brand identities that implant trust instantly in your customers' minds." },
+      { title: "Social Media Creatives", desc: "Creating scroll-stopping, premium quality graphics and ad creatives that demand attention and drive clicks." },
+      { title: "Print & Packaging", desc: "Delivering world-class, pixel-perfect print and packaging designs that elevate your product's perceived value." },
+      { title: "UI/UX & Web Layouts", desc: "Architecting sleek, modern, and user-friendly interfaces that provide a flawless experience for your website visitors." },
     ]
   }
 ];
@@ -491,7 +491,7 @@ export const projectsEn: ProjectItem[] = [
 
 export const timelineBn: TimelineItem[] = [
   {
-    period: "২০২৩ — বর্তমান",
+    period: "২০২৩ — বর্তমান (২০২৬)",
     role: "সিনিয়র ডিজিটাল মার্কেটিং কনসালট্যান্ট",
     org: "ফ্রিল্যান্স · রিমোট",
     desc: "১৫+ বৈশ্বিক ও দেশীয় ব্র্যান্ডের জন্য পূর্ণাঙ্গ মার্কেটিং এবং ডিজাইন স্ট্র্যাটেজি পরিচালনা করে আরওআই বৃদ্ধি নিশ্চিত করা।"
@@ -512,7 +512,7 @@ export const timelineBn: TimelineItem[] = [
 
 export const timelineEn: TimelineItem[] = [
   {
-    period: "2023 — Present",
+    period: "2023 — Present (2026)",
     role: "Senior Digital Marketing Consultant",
     org: "Freelance & Remote",
     desc: "Formulating performance strategies and identity designs for 15+ global clients to scale high-intent customer acquisition."

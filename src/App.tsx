@@ -58,6 +58,7 @@ import {
   ProjectItem
 } from './data';
 import sazuProfile from './assets/sazu_profile.jpg';
+import sazuLogo from './assets/logo.png';
 
 function getCategoryIcon(iconType: string) {
   switch (iconType) {
@@ -414,8 +415,8 @@ export default function App() {
               className="group flex items-center gap-1.5 focus:outline-none"
               id="nrf-logo"
             >
-              <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-xl shadow-lg shadow-purple-600/20 group-hover:scale-105 transition-transform">
-                A
+              <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-purple-600/20 group-hover:scale-105 transition-transform flex items-center justify-center bg-white">
+                <img src={sazuLogo} alt="Sazu Logo" className="w-full h-full object-contain" />
               </div>
               <span className="font-serif text-2xl tracking-tight dark:text-white text-purple-950 font-bold ml-1">
                 {lang === 'bn' ? 'আসাদুজ্জামান' : 'M. Asaduzzaman'}
@@ -1751,8 +1752,8 @@ export default function App() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-base">
-                  A
+                <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center bg-white shadow-md">
+                  <img src={sazuLogo} alt="Sazu Logo" className="w-full h-full object-contain" />
                 </div>
                 <span className="font-serif text-lg tracking-tight dark:text-white text-purple-950 font-bold">
                   {lang === 'bn' ? 'আসাদুজ্জামান (সাজু)' : 'M. Asaduzzaman Sazu'}
