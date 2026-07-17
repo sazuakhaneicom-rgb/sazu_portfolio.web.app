@@ -168,7 +168,7 @@ export const bnData: TranslationSet = {
   about: {
     title: "পরিচিতি ও কাজের দর্শন",
     subtitle: "আমার সাথে আপনার ব্র্যান্ডের পথচলা কেন দীর্ঘস্থায়ী ও বিশ্বস্ত হবে?",
-    bioParagraph1: "আমি <strong>M. Asaduzzaman Sazu</strong>। বিগত ৫ বছর ধরে ডিজিটাল মার্কেটিং এবং গ্রাফিক ডিজাইনের মাধ্যমে বিভিন্ন ব্যবসাকে সফল ব্র্যান্ডে পরিণত করতে সাহায্য করছি। আমার কাজের উদ্দেশ্য খুব সাধারণ—আপনার ব্যবসাকে মানুষের কাছে একটি বিশ্বস্ত ও জনপ্রিয় নাম হিসেবে প্রতিষ্ঠিত করা।",
+    bioParagraph1: "আমি <strong>M. Asaduzzaman Sazu</strong>। বিগত ৫ বছর ধরে ডিজিটাল মার্কেটিং, গ্রাফিক ডিজাইন এবং অ্যাপস ডেভেলপমেন্টের মাধ্যমে বিভিন্ন ব্যবসাকে সফল ব্র্যান্ডে পরিণত করতে সাহায্য করছি। আমার কাজের উদ্দেশ্য খুব সাধারণ—আপনার ব্যবসাকে মানুষের কাছে একটি বিশ্বস্ত ও জনপ্রিয় নাম হিসেবে প্রতিষ্ঠিত করা।",
     bioParagraph2: "আমি বিশ্বাস করি, একটি সুন্দর ডিজাইন মানুষের নজর কাড়ে, কিন্তু সঠিক মার্কেটিং কৌশল তাদের মন জয় করে। আমি শুধু একটি সার্ভিস দিই না, বরং আপনার ব্যবসার একজন বিশ্বস্ত 'গ্রোথ-পার্টনার' হিসেবে কাজ করি। সততা, স্বচ্ছতা এবং কাজের প্রতি শতভাগ নিষ্ঠা দিয়ে আপনার ব্যবসাকে লাভজনক করে তোলাই আমার প্রধান লক্ষ্য।",
     experienceBadge: "বছরের অভিজ্ঞতা"
   },
@@ -242,7 +242,7 @@ export const enData: TranslationSet = {
     headlineHighlight1: "stories",
     headlineHighlight2: "growth",
     sub: ", and stories into ",
-    tagline: "Crafting data-driven marketing strategies and premium visual designs for over 5+ years. My goal is to build deep customer trust and ensure your brand doesn't just look exquisite, but delivers highly profitable business results.",
+    tagline: "Crafting data-driven marketing strategies, premium visual designs, and high-performance apps for over 5+ years. My goal is to build deep customer trust and ensure your brand doesn't just look exquisite, but delivers highly profitable business results.",
     ctaPrimary: "View Projects",
     ctaSecondary: "Get in Touch",
     side1: "01 — Based in Kurigram, Rangpur, Bangladesh, working with clients globally.",
@@ -252,7 +252,7 @@ export const enData: TranslationSet = {
   about: {
     title: "About & Work Philosophy",
     subtitle: "Why Trust Your Brand's Digital Journey with Me?",
-    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist and graphic designer with over 5+ years of hands-on experience. My core philosophy isn't just about creating visually appealing graphics—it's about building an integrated, high-converting digital foundation that earns customer trust and drives scalable business growth.",
+    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist, graphic designer, and app developer with over 5+ years of hands-on experience. My core philosophy isn't just about creating visually appealing graphics or code—it's about building an integrated, high-converting digital foundation that earns customer trust and drives scalable business growth.",
     bioParagraph2: "Every successful brand is built on uncompromising trust and credibility. I believe that when world-class aesthetic design meets data-driven marketing precision, an unforgettable and highly profitable brand experience is born. I work not just as a service provider, but as your dedicated growth partner—ensuring transparent communication, flawless execution, and absolute integrity in every project we undertake.",
     experienceBadge: "Years of Trust"
   },
