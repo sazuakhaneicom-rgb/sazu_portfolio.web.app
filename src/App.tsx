@@ -315,7 +315,7 @@ export default function App() {
       ? `হ্যালো সাজু! আমি আপনার পোর্টফোলিও ওয়েবসাইট থেকে নক করছি। আমি আপনার "${categoryTitle}" সার্ভিসের "${tierName}" প্যাকেজটি অর্ডার করতে চাই, যার মূল্য ${price}। আমরা কি এই বিষয়ে বিস্তারিত আলোচনা করতে পারি?`
       : `Hello Sazu! I'm reaching out from your portfolio website. I would like to order the "${tierName}" package for your "${categoryTitle}" service, priced at ${price}. Can we discuss this in detail?`;
     
-    const waUrl = `https://wa.me/8801723528807?text=${encodeURIComponent(messageBody)}`;
+    const waUrl = `https://wa.me/8801772570807?text=${encodeURIComponent(messageBody)}`;
     window.open(waUrl, '_blank');
   };
 
