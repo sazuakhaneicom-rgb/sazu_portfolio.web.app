@@ -76,8 +76,8 @@ export interface PricingTier {
   descEn: string;
   features: { textBn: string; textEn: string; included: boolean }[];
   popular?: boolean;
-  ctaBn: string;
-  ctaEn: string;
+  ctaBn?: string;
+  ctaEn?: string;
 }
 
 export interface PricingPlan {
@@ -438,7 +438,7 @@ export const skillsCategoriesData: SkillCategoryData[] = [
     id: "graphic-design",
     titleEn: "Graphic Design",
     titleBn: "গ্রাফিক ডিজাইন",
-    iconType: "design",
+    iconType: "graphic",
     colorTheme: "rose",
     skills: [
       { name: "Adobe Photoshop", level: 95 },
