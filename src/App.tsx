@@ -292,7 +292,7 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   
   // Interactive Skill Analyzer states
-  const [skillCategoryFilter, setSkillCategoryFilter] = useState<'all' | 'marketing' | 'design'>('all');
+  const [skillCategoryFilter, setSkillCategoryFilter] = useState<'all' | 'marketing' | 'design' | 'app'>('all');
   const [skillLevelMin, setSkillLevelMin] = useState<number>(70);
   const [activeSkillsCategory, setActiveSkillsCategory] = useState<string>('all');
   const [skillSearchQuery, setSkillSearchQuery] = useState<string>('');
