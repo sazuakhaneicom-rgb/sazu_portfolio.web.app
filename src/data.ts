@@ -21,7 +21,7 @@ export interface ServiceCategory {
 export interface SkillItem {
   name: string;
   level: number; // out of 100
-  category: 'marketing' | 'design';
+  category: 'marketing' | 'design' | 'app';
 }
 
 export interface SkillCategoryData {
@@ -55,6 +55,36 @@ export interface TestimonialItem {
   name: string;
   role: string;
   rating: number;
+  country?: string;
+  flag?: string;
+}
+
+export interface PricingFeature {
+  textBn: string;
+  textEn: string;
+  included: boolean;
+}
+
+export interface PricingTier {
+  nameBn: string;
+  nameEn: string;
+  priceBn: string;
+  priceEn: string;
+  periodBn: string;
+  periodEn: string;
+  descBn: string;
+  descEn: string;
+  features: { textBn: string; textEn: string; included: boolean }[];
+  popular?: boolean;
+  ctaBn: string;
+  ctaEn: string;
+}
+
+export interface PricingPlan {
+  categoryId: string;
+  titleBn: string;
+  titleEn: string;
+  tiers: PricingTier[];
 }
 
 export interface TranslationSet {
@@ -574,39 +604,229 @@ export const testimonialsBn: TestimonialItem[] = [
     quote: "আমাদের ব্র্যান্ড রিব্র্যান্ডিংয়ে অসাধারণ কাজ করেছেন। বিক্রি এবং ব্র্যান্ড ইমেজ দুটোই বহুগুণ বেড়ে গেছে। আমরা চমৎকার সাড়া পাচ্ছি।",
     name: "সাবরিনা আক্তার",
     role: "প্রতিষ্ঠাতা, লিফ কফি হাউজ",
-    rating: 5
+    rating: 5,
+    country: "বাংলাদেশ",
+    flag: "🇧🇩"
   },
   {
-    quote: "অ্যাড ক্যাম্পেইন শুরু করার পর আমাদের কনভার্সন রেট প্রায় দ্বিগুণ হয়ে গেছে। সত্যিই প্রফেশনাল মার্কেটিং ও ডিজাইন সেন্স!",
-    name: "ইমরান খান",
-    role: "মার্কেটিং ম্যানেজার, শপএক্সপ্রেস",
-    rating: 5
+    quote: "অ্যাড ক্যাম্পেইন শুরু করার পর আমাদের কনভার্সন রেট প্রায় দ্বিগুণ হয়ে গেছে। সত্যি অসাধারণ মার্কেটিং স্ট্র্যাটেজি, যা সরাসরি ইউএস মার্কেটে আমাদের সেলস বাড়িয়েছে।",
+    name: "মাইকেল জনসন",
+    role: "মার্কেটিং হেড, স্কাইলাইন ডিজিটাল",
+    rating: 5,
+    country: "যুক্তরাষ্ট্র",
+    flag: "🇺🇸"
   },
   {
-    quote: "সময়মতো নিখুঁত ডেলিভারি, পরিষ্কার ফ্রেন্ডলি কমিউনিকেশন আর অসাধারণ ক্রিয়েটিভ চোখের অধিকারী। ওনাকে হাইলি রিকমেন্ড করছি।",
-    name: "তানভীর হাসান",
-    role: "সিইও, নেক্সটজেন অ্যাপারেল",
-    rating: 5
+    quote: "আমাদের ই-কমার্স অ্যাপটি তিনি যেভাবে ডেভেলপ করেছেন তা সত্যিই চমৎকার। অ্যাপটি খুব ফাস্ট এবং ইউজার-ফ্রেন্ডলি। আমি তার কাজের মানে মুগ্ধ।",
+    name: "রাহাত আলী",
+    role: "ম্যানেজিং ডিরেক্টর, ট্রেডবিডি",
+    rating: 5,
+    country: "সংযুক্ত আরব আমিরাত",
+    flag: "🇦🇪"
+  },
+  {
+    quote: "লোগো এবং প্যাকেজিং ডিজাইনে তার সৃজনশীলতা অসাধারণ। আন্তর্জাতিক মানের কাজ পেয়েছি, যা আমাদের ব্র্যান্ডকে একটি প্রিমিয়াম লুক দিয়েছে।",
+    name: "ফাতিমা নূর",
+    role: "ফাউন্ডার, নূরা অর্গানিকস",
+    rating: 5,
+    country: "যুক্তরাজ্য",
+    flag: "🇬🇧"
   }
 ];
 
 export const testimonialsEn: TestimonialItem[] = [
   {
-    quote: "Sazu completely revamped our cafe brand identity — from logo to social media creatives. The response was immediate: customers started sharing our pages on their own, and footfall visibly increased. Best investment we made this year.",
+    quote: "Sazu completely revamped our cafe brand identity. The response was immediate: customers started sharing our pages on their own, and footfall visibly increased.",
     name: "Sabrina Akter",
     role: "Founder, Leaf Coffee House",
-    rating: 5
+    rating: 5,
+    country: "Bangladesh",
+    flag: "🇧🇩"
   },
   {
-    quote: "Within 30 days of handing over our Meta Ads to him, our conversion rate doubled. The ad budget that was previously wasting now directly generates sales. He works as if it's his own business on the line.",
-    name: "Imran Khan",
-    role: "Marketing Manager, ShopExpress",
-    rating: 5
+    quote: "Within 30 days of handing over our Meta Ads to him, our conversion rate doubled. His strategic approach increased our brand visibility in the US market significantly.",
+    name: "Michael Johnson",
+    role: "Marketing Head, Skyline Digital",
+    rating: 5,
+    country: "United States",
+    flag: "🇺🇸"
   },
   {
-    quote: "Delivered before the deadline, transparent updates at every step, and the packaging design he created makes every client ask 'who designed this?' — A truly rare partner who combines professionalism with genuine creative excellence.",
-    name: "Tanveer Hasan",
-    role: "CEO, NextGen Apparel",
-    rating: 5
+    quote: "He developed our e-commerce app flawlessly. The app loads incredibly fast and our customers love the experience. A truly rare partner who combines professionalism with excellence.",
+    name: "Rahat Ali",
+    role: "Managing Director, TradeBD",
+    rating: 5,
+    country: "UAE",
+    flag: "🇦🇪"
+  },
+  {
+    quote: "Our complete brand identity — logo, packaging, everything came out world-class. He truly understands how to make a brand look premium and trustworthy. Highly recommended!",
+    name: "Fatima Noor",
+    role: "Founder, Noora Organics",
+    rating: 5,
+    country: "United Kingdom",
+    flag: "🇬🇧"
+  }
+];
+
+export const pricingData: PricingPlan[] = [
+  {
+    categoryId: "marketing",
+    titleBn: "ডিজিটাল মার্কেটিং",
+    titleEn: "Digital Marketing",
+    tiers: [
+      {
+        nameBn: "বেসিক", nameEn: "Basic",
+        priceBn: "৳৩,০০০", priceEn: "$35",
+        periodBn: "/মাস", periodEn: "/month",
+        descBn: "ছোট ব্যবসার সোশ্যাল মিডিয়া ম্যানেজমেন্ট",
+        descEn: "Social media management for small business",
+        features: [
+          { textBn: "১টি সোশ্যাল মিডিয়া অ্যাকাউন্ট", textEn: "1 Social Media Account", included: true },
+          { textBn: "মাসে ১২টি প্রফেশনাল পোস্ট ডিজাইন", textEn: "12 Pro Post Designs/Month", included: true },
+          { textBn: "বেসিক কনটেন্ট রাইটিং", textEn: "Basic Content Writing", included: true },
+          { textBn: "অ্যাড ক্যাম্পেইন রান (বাজেট বাদে)", textEn: "Ad Campaign Setup", included: false },
+          { textBn: "অ্যানালিটিক্স ও রিপোর্ট", textEn: "Analytics & Reporting", included: false },
+          { textBn: "আনলিমিটেড সাপোর্ট", textEn: "Unlimited Support", included: false }
+        ]
+      },
+      {
+        nameBn: "স্ট্যান্ডার্ড", nameEn: "Standard",
+        priceBn: "৳৮,০০০", priceEn: "$95",
+        periodBn: "/মাস", periodEn: "/month",
+        descBn: "গ্রোথ-ফোকাসড ব্যবসার জন্য সেরা পছন্দ",
+        descEn: "Best choice for growth-focused businesses",
+        popular: true,
+        features: [
+          { textBn: "৩টি সোশ্যাল মিডিয়া অ্যাকাউন্ট", textEn: "3 Social Media Accounts", included: true },
+          { textBn: "মাসে ৩০টি প্রফেশনাল পোস্ট", textEn: "30 Pro Post Designs/Month", included: true },
+          { textBn: "প্রিমিয়াম কনটেন্ট রাইটিং", textEn: "Premium Content Writing", included: true },
+          { textBn: "অ্যাড ক্যাম্পেইন ম্যানেজমেন্ট (৪টি)", textEn: "Ad Campaign Management (4)", included: true },
+          { textBn: "মাসিক অ্যানালিটিক্স রিপোর্ট", textEn: "Monthly Analytics Report", included: true },
+          { textBn: "আনলিমিটেড সাপোর্ট", textEn: "Unlimited Support", included: false }
+        ]
+      },
+      {
+        nameBn: "প্রিমিয়াম", nameEn: "Premium",
+        priceBn: "৳১৫,০০০", priceEn: "$175",
+        periodBn: "/মাস", periodEn: "/month",
+        descBn: "এন্টারপ্রাইজ বা বড় ব্যবসার ফুল সলিউশন",
+        descEn: "Full solution for enterprise or large business",
+        features: [
+          { textBn: "আনলিমিটেড অ্যাকাউন্ট ম্যানেজমেন্ট", textEn: "Unlimited Account Management", included: true },
+          { textBn: "আনলিমিটেড প্রফেশনাল পোস্ট ও রিলস", textEn: "Unlimited Pro Posts & Reels", included: true },
+          { textBn: "SEO অপ্টিমাইজড কনটেন্ট ও স্ট্র্যাটেজি", textEn: "SEO Optimized Content & Strategy", included: true },
+          { textBn: "আনলিমিটেড অ্যাড ক্যাম্পেইন ও ট্র্যাকিং", textEn: "Unlimited Ad Campaigns & Tracking", included: true },
+          { textBn: "অ্যাডভান্সড সেলস ফানেল তৈরি", textEn: "Advanced Sales Funnel Creation", included: true },
+          { textBn: "২৪/৭ আনলিমিটেড ডেডিকেটেড সাপোর্ট", textEn: "24/7 Unlimited Dedicated Support", included: true }
+        ]
+      }
+    ]
+  },
+  {
+    categoryId: "graphic",
+    titleBn: "গ্রাফিক ডিজাইন",
+    titleEn: "Graphic Design",
+    tiers: [
+      {
+        nameBn: "বেসিক", nameEn: "Basic",
+        priceBn: "৳২,০০০", priceEn: "$25",
+        periodBn: "/প্রজেক্ট", periodEn: "/project",
+        descBn: "স্টার্টআপদের জন্য সিম্পল ব্র্যান্ডিং",
+        descEn: "Simple branding for startups",
+        features: [
+          { textBn: "১টি হাই-কোয়ালিটি লোগো কনসেপ্ট", textEn: "1 High-Quality Logo Concept", included: true },
+          { textBn: "৩ বার ডিজাইন রিভিশন", textEn: "3 Design Revisions", included: true },
+          { textBn: "প্রাইমারি কালার প্যালেট", textEn: "Primary Color Palette", included: true },
+          { textBn: "প্রিন্ট-রেডি ভেক্টর ফাইল (AI/EPS)", textEn: "Print-Ready Vector Files (AI)", included: false },
+          { textBn: "সোশ্যাল মিডিয়া ব্র্যান্ড কিট", textEn: "Social Media Brand Kit", included: false },
+          { textBn: "ফুল ব্র্যান্ড গাইডলাইন বুক", textEn: "Full Brand Guideline Book", included: false }
+        ]
+      },
+      {
+        nameBn: "স্ট্যান্ডার্ড", nameEn: "Standard",
+        priceBn: "৳৫,০০০", priceEn: "$60",
+        periodBn: "/প্রজেক্ট", periodEn: "/project",
+        descBn: "প্রফেশনাল ব্র্যান্ড আইডেন্টিটি প্যাকেজ",
+        descEn: "Professional brand identity package",
+        popular: true,
+        features: [
+          { textBn: "৩টি প্রিমিয়াম লোগো কনসেপ্ট", textEn: "3 Premium Logo Concepts", included: true },
+          { textBn: "৫ বার ডিজাইন রিভিশন", textEn: "5 Design Revisions", included: true },
+          { textBn: "কালার প্যালেট ও টাইপোগ্রাফি", textEn: "Color Palette & Typography", included: true },
+          { textBn: "প্রিন্ট-রেডি ভেক্টর ফাইল (AI/EPS/PDF)", textEn: "Print-Ready Vector Files (All)", included: true },
+          { textBn: "সোশ্যাল মিডিয়া প্রোফাইল কিট", textEn: "Social Media Profile Kit", included: true },
+          { textBn: "ফুল ব্র্যান্ড গাইডলাইন বুক", textEn: "Full Brand Guideline Book", included: false }
+        ]
+      },
+      {
+        nameBn: "প্রিমিয়াম", nameEn: "Premium",
+        priceBn: "৳১২,০০০", priceEn: "$140",
+        periodBn: "/প্রজেক্ট", periodEn: "/project",
+        descBn: "এ টু জেড কমপ্লিট ব্র্যান্ড সলিউশন",
+        descEn: "A to Z complete brand solution",
+        features: [
+          { textBn: "আনলিমিটেড লোগো কনসেপ্ট", textEn: "Unlimited Logo Concepts", included: true },
+          { textBn: "আনলিমিটেড ডিজাইন রিভিশন", textEn: "Unlimited Design Revisions", included: true },
+          { textBn: "কমপ্লিট ব্র্যান্ড স্টাইল গাইড", textEn: "Complete Brand Style Guide", included: true },
+          { textBn: "সকল প্রকার সোর্স ফাইল", textEn: "All Type of Source Files", included: true },
+          { textBn: "ফুল সোশ্যাল মিডিয়া ও প্রিন্ট কিট", textEn: "Full Social Media & Print Kit", included: true },
+          { textBn: "১ মাসের ফ্রি সাপোর্ট", textEn: "1 Month Free Support", included: true }
+        ]
+      }
+    ]
+  },
+  {
+    categoryId: "app",
+    titleBn: "অ্যাপ ডেভেলপমেন্ট",
+    titleEn: "App Development",
+    tiers: [
+      {
+        nameBn: "বেসিক", nameEn: "Basic",
+        priceBn: "৳১২,০০০", priceEn: "$140",
+        periodBn: "/প্রজেক্ট", periodEn: "/project",
+        descBn: "ছোট ব্যবসার জন্য ইনফরমেশনাল অ্যাপ",
+        descEn: "Informational app for small business",
+        features: [
+          { textBn: "সিঙ্গেল প্ল্যাটফর্ম (Android)", textEn: "Single Platform (Android)", included: true },
+          { textBn: "৫টি স্ক্রিন পর্যন্ত সুন্দর UI", textEn: "Beautiful UI up to 5 Screens", included: true },
+          { textBn: "স্ট্যাটিক ডেটা / বেসিক API", textEn: "Static Data / Basic API", included: true },
+          { textBn: "পেমেন্ট গেটওয়ে ইন্টিগ্রেশন", textEn: "Payment Gateway Integration", included: false },
+          { textBn: "অ্যাডমিন প্যানেল (Dashboard)", textEn: "Admin Panel (Dashboard)", included: false },
+          { textBn: "প্লে স্টোর পাবলিশিং", textEn: "Play Store Publishing", included: false }
+        ]
+      },
+      {
+        nameBn: "স্ট্যান্ডার্ড", nameEn: "Standard",
+        priceBn: "৳২৫,০০০", priceEn: "$290",
+        periodBn: "/প্রজেক্ট", periodEn: "/project",
+        descBn: "ই-কমার্স বা ডাইনামিক বিজনেস অ্যাপ",
+        descEn: "E-commerce or dynamic business app",
+        popular: true,
+        features: [
+          { textBn: "অ্যান্ড্রয়েড ও iOS উভয় প্ল্যাটফর্ম", textEn: "Android & iOS Platforms", included: true },
+          { textBn: "১৫টি স্ক্রিন ও প্রিমিয়াম ডিজাইন", textEn: "15 Screens & Premium Design", included: true },
+          { textBn: "ফায়ারবেস/কাস্টম ব্যাকএন্ড", textEn: "Firebase/Custom Backend", included: true },
+          { textBn: "পেমেন্ট গেটওয়ে (বিকাশ/স্ট্রাইপ)", textEn: "Payment Gateway (bKash/Stripe)", included: true },
+          { textBn: "সহজ অ্যাডমিন প্যানেল", textEn: "Simple Admin Panel", included: true },
+          { textBn: "প্লে স্টোর পাবলিশিং", textEn: "Play Store Publishing", included: false }
+        ]
+      },
+      {
+        nameBn: "প্রিমিয়াম", nameEn: "Premium",
+        priceBn: "৳৪৫,০০০+", priceEn: "$520+",
+        periodBn: "/প্রজেক্ট", periodEn: "/project",
+        descBn: "স্কেলেবল এন্টারপ্রাইজ গ্রেড অ্যাপ",
+        descEn: "Scalable enterprise grade app",
+        features: [
+          { textBn: "ক্রস-প্ল্যাটফর্ম হাই-এন্ড পারফরম্যান্স", textEn: "Cross-Platform High-End Performance", included: true },
+          { textBn: "আনলিমিটেড স্ক্রিন ও কাস্টম অ্যানিমেশন", textEn: "Unlimited Screens & Custom Animations", included: true },
+          { textBn: "স্কেলেবল ক্লাউড ব্যাকএন্ড ও API", textEn: "Scalable Cloud Backend & API", included: true },
+          { textBn: "মাল্টি-ভেন্ডর বা কমপ্লেক্স পেমেন্ট ফ্লো", textEn: "Multi-Vendor or Complex Payment Flow", included: true },
+          { textBn: "অ্যাডভান্সড অ্যাডমিন ড্যাশবোর্ড", textEn: "Advanced Admin Dashboard", included: true },
+          { textBn: "প্লে স্টোর ও অ্যাপ স্টোর পাবলিশিং", textEn: "Play Store & App Store Publishing", included: true }
+        ]
+      }
+    ]
   }
 ];

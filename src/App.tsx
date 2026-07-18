@@ -55,6 +55,7 @@ import {
   toolsList,
   testimonialsBn,
   testimonialsEn,
+  pricingData,
   ProjectItem
 } from './data';
 import sazuProfile from './assets/sazu_profile.jpg';
@@ -305,6 +306,18 @@ export default function App() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Pricing State
+  const [activePricingCategory, setActivePricingCategory] = useState<string>('marketing');
+
+  const handleOrderWhatsApp = (tierName: string, categoryTitle: string, price: string) => {
+    const messageBody = lang === 'bn' 
+      ? `হ্যালো সাজু! আমি আপনার পোর্টফোলিও ওয়েবসাইট থেকে নক করছি। আমি আপনার "${categoryTitle}" সার্ভিসের "${tierName}" প্যাকেজটি অর্ডার করতে চাই, যার মূল্য ${price}। আমরা কি এই বিষয়ে বিস্তারিত আলোচনা করতে পারি?`
+      : `Hello Sazu! I'm reaching out from your portfolio website. I would like to order the "${tierName}" package for your "${categoryTitle}" service, priced at ${price}. Can we discuss this in detail?`;
+    
+    const waUrl = `https://wa.me/8801723528807?text=${encodeURIComponent(messageBody)}`;
+    window.open(waUrl, '_blank');
+  };
 
   useEffect(() => {
     localStorage.setItem('portfolio-lang', lang);
@@ -1394,6 +1407,122 @@ export default function App() {
           </div>
         </section>
 
+        {/* ===================== PRICING SECTION ===================== */}
+        <section id="pricing" className="py-20 bg-white dark:bg-[#090514] border-b border-purple-50 dark:border-purple-950/40 transition-colors">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+            >
+              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase">
+                {lang === 'bn' ? 'প্যাকেজ ও মূল্য' : 'Pricing & Packages'}
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">
+                {lang === 'bn' ? 'স্বচ্ছ মূল্য, সেরা মান' : 'Transparent Pricing, Best Value'}
+              </h2>
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: 48 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" 
+              />
+            </motion.div>
+
+            {/* Pricing Category Tabs */}
+            <div className="flex flex-wrap justify-center gap-3 mb-12">
+              {pricingData.map((plan) => (
+                <button
+                  key={plan.categoryId}
+                  onClick={() => setActivePricingCategory(plan.categoryId)}
+                  className={`px-6 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                    activePricingCategory === plan.categoryId
+                      ? 'bg-purple-600 text-white shadow-md shadow-purple-600/20'
+                      : 'bg-[#faf8fc] dark:bg-[#120d29] border border-purple-100/50 dark:border-purple-950/80 text-slate-600 dark:text-purple-200 hover:bg-purple-50 dark:hover:bg-purple-900/30'
+                  }`}
+                >
+                  {lang === 'bn' ? plan.titleBn : plan.titleEn}
+                </button>
+              ))}
+            </div>
+
+            {/* Pricing Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <AnimatePresence mode="wait">
+                {pricingData
+                  .find((p) => p.categoryId === activePricingCategory)
+                  ?.tiers.map((tier, idx) => (
+                    <motion.div
+                      key={tier.nameEn + activePricingCategory}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3, delay: idx * 0.1 }}
+                      className={`relative flex flex-col p-8 rounded-3xl bg-[#faf8fc] dark:bg-[#110c28] border transition-all duration-300 ${
+                        tier.popular 
+                          ? 'border-purple-500 dark:border-purple-500 shadow-xl shadow-purple-500/10 scale-100 md:scale-105 z-10' 
+                          : 'border-purple-100/50 dark:border-purple-950/60 shadow-sm hover:border-purple-300 dark:hover:border-purple-700/50'
+                      }`}
+                    >
+                      {tier.popular && (
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-1 rounded-full text-xs font-bold tracking-wider uppercase shadow-md">
+                          {lang === 'bn' ? 'সবচেয়ে জনপ্রিয়' : 'Most Popular'}
+                        </div>
+                      )}
+
+                      <div className="mb-6 border-b border-purple-100/50 dark:border-purple-950/40 pb-6">
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                          {lang === 'bn' ? tier.nameBn : tier.nameEn}
+                        </h3>
+                        <p className="text-sm text-slate-500 dark:text-purple-300/70 h-10">
+                          {lang === 'bn' ? tier.descBn : tier.descEn}
+                        </p>
+                        <div className="mt-4 flex items-baseline gap-1 text-slate-900 dark:text-white">
+                          <span className="text-4xl font-black tracking-tight">{lang === 'bn' ? tier.priceBn : tier.priceEn}</span>
+                          <span className="text-sm text-slate-500 dark:text-purple-300/60 font-medium">
+                            {lang === 'bn' ? tier.periodBn : tier.periodEn}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex-1 space-y-4 mb-8">
+                        {tier.features.map((feature, fIdx) => (
+                          <div key={fIdx} className="flex items-start gap-3">
+                            <div className={`mt-0.5 flex-shrink-0 ${feature.included ? 'text-purple-600 dark:text-purple-400' : 'text-slate-300 dark:text-slate-700'}`}>
+                              {feature.included ? <CheckCircle2 className="w-4 h-4" /> : <X className="w-4 h-4" />}
+                            </div>
+                            <span className={`text-sm ${feature.included ? 'text-slate-700 dark:text-purple-100' : 'text-slate-400 dark:text-slate-600 line-through'}`}>
+                              {lang === 'bn' ? feature.textBn : feature.textEn}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <button
+                        onClick={() => handleOrderWhatsApp(
+                          lang === 'bn' ? tier.nameBn : tier.nameEn,
+                          lang === 'bn' ? pricingData.find(p => p.categoryId === activePricingCategory)?.titleBn || '' : pricingData.find(p => p.categoryId === activePricingCategory)?.titleEn || '',
+                          lang === 'bn' ? tier.priceBn : tier.priceEn
+                        )}
+                        className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all flex justify-center items-center gap-2 ${
+                          tier.popular
+                            ? 'bg-purple-600 text-white hover:bg-purple-700 shadow-md shadow-purple-600/20'
+                            : 'bg-white dark:bg-[#1a1338] border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/50'
+                        }`}
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        {lang === 'bn' ? 'অর্ডার করুন' : 'Order Now'}
+                      </button>
+                    </motion.div>
+                  ))}
+              </AnimatePresence>
+            </div>
+          </div>
+        </section>
+
         {/* ===================== TESTIMONIALS SECTION ===================== */}
         <section className="py-20 bg-[#faf8fc] dark:bg-[#0c081d] border-b border-purple-50 dark:border-purple-950/40 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1451,11 +1580,21 @@ export default function App() {
                   </div>
 
                   <div className="pt-6 border-t border-purple-100/50 dark:border-purple-950/40 mt-6 space-y-1">
-                    <div className="font-bold text-slate-900 dark:text-purple-100 text-sm">
-                      {testi.name}
-                    </div>
-                    <div className="text-xs text-slate-400 dark:text-purple-400/60">
-                      {testi.role}
+                    <div className="flex justify-between items-start gap-2">
+                      <div>
+                        <div className="font-bold text-slate-900 dark:text-purple-100 text-sm">
+                          {testi.name}
+                        </div>
+                        <div className="text-xs text-slate-500 dark:text-purple-400/60 mt-0.5">
+                          {testi.role}
+                        </div>
+                      </div>
+                      {testi.country && testi.flag && (
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#faf8fc] dark:bg-[#1a1338] border border-purple-100 dark:border-purple-900/40 text-[10px] font-semibold text-slate-600 dark:text-purple-300 whitespace-nowrap">
+                          <span>{testi.flag}</span>
+                          <span>{testi.country}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </motion.div>
