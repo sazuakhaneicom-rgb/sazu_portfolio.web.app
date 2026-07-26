@@ -159,9 +159,25 @@ function useCounter(target: number, duration = 2000, startAnimation = false) {
 // ============================================================
 
 function StatCard({ stat, statsVisible, idx }: { stat: any, statsVisible: boolean, idx: number }) {
-  const numStr = stat.num.replace(/[^\d]/g, '');
-  const count = useCounter(parseInt(numStr) || 0, 1800, statsVisible);
-  const suffix = stat.num.replace(/[\d]/g, '');
+  const bnDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+  const hasBengali = /[০-৯]/.test(stat.num || '');
+  
+  // Convert Bengali digits to English for parsing
+  const enNumStr = (stat.num || '').replace(/[০-৯]/g, (w: string) => bnDigits.indexOf(w).toString());
+  const numericMatch = enNumStr.match(/\d+/);
+  const target = numericMatch ? parseInt(numericMatch[0]) : 0;
+  
+  const count = useCounter(target, 1800, statsVisible);
+  
+  // Convert back to Bengali if needed
+  let displayCount = count.toString();
+  if (hasBengali) {
+    displayCount = displayCount.replace(/\d/g, (w: string) => bnDigits[parseInt(w)]);
+  }
+
+  // Remove both English and Bengali digits to get the suffix
+  const suffix = (stat.num || '').replace(/[\d০-৯]/g, '');
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -171,7 +187,7 @@ function StatCard({ stat, statsVisible, idx }: { stat: any, statsVisible: boolea
       className="text-center"
     >
       <div className="text-4xl font-black text-white mb-1">
-        {statsVisible ? count : 0}{suffix}
+        {statsVisible ? displayCount : (hasBengali ? '০' : '0')}{suffix}
       </div>
       <div className="text-purple-200 text-sm font-medium">{stat.label}</div>
     </motion.div>
