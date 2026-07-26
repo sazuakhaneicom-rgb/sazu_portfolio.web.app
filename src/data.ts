@@ -1,3 +1,7 @@
+// ============================================================
+// INTERFACES
+// ============================================================
+
 export interface NavItem {
   id: string;
   label: string;
@@ -11,17 +15,27 @@ export interface StatItem {
 export interface ServiceDetail {
   title: string;
   desc: string;
+  icon: string;
 }
 
 export interface ServiceCategory {
   title: string;
+  icon: string;
   items: ServiceDetail[];
 }
 
 export interface SkillItem {
   name: string;
-  level: number; // out of 100
+  level: number;
   category: 'marketing' | 'design' | 'app';
+}
+
+export interface SkillCardItem {
+  name: string;
+  category: 'design' | 'marketing' | 'development' | 'ai';
+  icon: string; // emoji or icon name
+  color: string; // tailwind color classes
+  proficiency: number; // 0-100
 }
 
 export interface SkillCategoryData {
@@ -33,14 +47,29 @@ export interface SkillCategoryData {
   skills: { name: string; level: number }[];
 }
 
+export interface ProjectFeature {
+  textBn: string;
+  textEn: string;
+}
+
 export interface ProjectItem {
+  id: string;
   title: string;
+  titleEn: string;
   desc: string;
+  descEn: string;
   category: string;
   tag: string;
+  tagEn: string;
   metric: string;
+  metricEn: string;
   thumbClass: string;
   bgGradient: string;
+  technologies: string[];
+  features: ProjectFeature[];
+  liveUrl?: string;
+  githubUrl?: string;
+  mockupType: 'amardokan' | 'studio_maker' | 'ai_enhancer' | 'pos_system' | 'portfolio' | 'marketing' | 'graphic' | 'app';
 }
 
 export interface TimelineItem {
@@ -48,6 +77,16 @@ export interface TimelineItem {
   role: string;
   org: string;
   desc: string;
+}
+
+export interface JourneyItem {
+  year: string;
+  titleBn: string;
+  titleEn: string;
+  descBn: string;
+  descEn: string;
+  icon: string;
+  color: string;
 }
 
 export interface TestimonialItem {
@@ -97,6 +136,7 @@ export interface TranslationSet {
     experience: string;
     contact: string;
     cta: string;
+    pricing: string;
   };
   hero: {
     badge: string;
@@ -107,9 +147,11 @@ export interface TranslationSet {
     tagline: string;
     ctaPrimary: string;
     ctaSecondary: string;
+    ctaResume: string;
     side1: string;
     side2: string;
     side3: string;
+    typedRoles: string[];
   };
   about: {
     title: string;
@@ -117,6 +159,7 @@ export interface TranslationSet {
     bioParagraph1: string;
     bioParagraph2: string;
     experienceBadge: string;
+    journeyTitle: string;
   };
   services: {
     title: string;
@@ -128,6 +171,8 @@ export interface TranslationSet {
     filterAll: string;
     filterMarketing: string;
     filterDesign: string;
+    filterDevelopment: string;
+    filterAI: string;
   };
   projects: {
     title: string;
@@ -136,6 +181,10 @@ export interface TranslationSet {
     metricLabel: string;
     viewDetails: string;
     closeBtn: string;
+    techLabel: string;
+    featuresLabel: string;
+    liveDemo: string;
+    sourceCode: string;
   };
   experience: {
     title: string;
@@ -159,17 +208,23 @@ export interface TranslationSet {
     formName: string;
     formEmail: string;
     formMsg: string;
+    formSubject: string;
     formSubmit: string;
     formNote: string;
     formSuccess: string;
     copyTemplate: string;
     copySuccess: string;
+    socialTitle: string;
   };
   footer: {
     rights: string;
     backToTop: string;
   };
 }
+
+// ============================================================
+// TRANSLATIONS - BANGLA
+// ============================================================
 
 export const bnData: TranslationSet = {
   name: "আসাদুজ্জামান (সাজু)",
@@ -181,6 +236,7 @@ export const bnData: TranslationSet = {
     experience: "অভিজ্ঞতা",
     contact: "যোগাযোগ",
     cta: "হায়ার করুন",
+    pricing: "মূল্য",
   },
   hero: {
     badge: "ওয়েব ডেভেলপার · গ্রাফিক ডিজাইনার · ডিজিটাল মার্কেটার",
@@ -188,19 +244,22 @@ export const bnData: TranslationSet = {
     headlineHighlight1: "গল্প",
     headlineHighlight2: "গ্রোথ",
     sub: " বানাই, গল্পকে ",
-    tagline: "৮+ বছর ধরে মার্কেটিং স্ট্র্যাটেজি, কন্টেন্ট এবং ভিজ্যুয়াল ডিজাইন নিয়ে কাজ করছি। আমার লক্ষ্য হলো আপনার ব্যবসার জন্য বিশ্বস্ত ভিত্তি তৈরি করা যা সরাসরি প্রবৃদ্ধি আনবে।",
+    tagline: "৫+ বছর ধরে মার্কেটিং স্ট্র্যাটেজি, কন্টেন্ট এবং ভিজ্যুয়াল ডিজাইন নিয়ে কাজ করছি। আমার লক্ষ্য হলো আপনার ব্যবসার জন্য বিশ্বস্ত ভিত্তি তৈরি করা যা সরাসরি প্রবৃদ্ধি আনবে।",
     ctaPrimary: "প্রজেক্ট দেখুন",
     ctaSecondary: "যোগাযোগ করুন",
+    ctaResume: "রিজিউমি ডাউনলোড",
     side1: "০১ — কুড়িগ্রাম, রংপুর, বাংলাদেশ থেকে কাজ করি, তবে ক্লায়েন্ট বিশ্বজুড়ে।",
     side2: "০২ — ফ্রিল্যান্স ও চুক্তিভিত্তিক প্রজেক্টের জন্য উন্মুক্ত।",
     side3: "০৩ — গড় রেসপন্স সময়: ২৪ ঘণ্টার মধ্যে।",
+    typedRoles: ["গ্রাফিক ডিজাইনার", "অ্যাপ ডেভেলপার", "ডিজিটাল মার্কেটার", "ব্র্যান্ড স্ট্র্যাটেজিস্ট", "Flutter ডেভেলপার"],
   },
   about: {
     title: "পরিচিতি ও কাজের দর্শন",
     subtitle: "আমার সাথে আপনার ব্র্যান্ডের পথচলা কেন দীর্ঘস্থায়ী ও বিশ্বস্ত হবে?",
-    bioParagraph1: "আমি <strong>M. Asaduzzaman Sazu</strong>। বিগত ৫ বছর ধরে ডিজিটাল মার্কেটিং, গ্রাফিক ডিজাইন এবং অ্যাপস ডেভেলপমেন্টের মাধ্যমে বিভিন্ন ব্যবসাকে সফল ব্র্যান্ডে পরিণত করতে সাহায্য করছি। আমার কাজের উদ্দেশ্য খুব সাধারণ—আপনার ব্যবসাকে মানুষের কাছে একটি বিশ্বস্ত ও জনপ্রিয় নাম হিসেবে প্রতিষ্ঠিত করা।",
-    bioParagraph2: "আমি বিশ্বাস করি, একটি সুন্দর ডিজাইন মানুষের নজর কাড়ে, কিন্তু সঠিক মার্কেটিং কৌশল তাদের মন জয় করে। আমি শুধু একটি সার্ভিস দিই না, বরং আপনার ব্যবসার একজন বিশ্বস্ত 'গ্রোথ-পার্টনার' হিসেবে কাজ করি। সততা, স্বচ্ছতা এবং কাজের প্রতি শতভাগ নিষ্ঠা দিয়ে আপনার ব্যবসাকে লাভজনক করে তোলাই আমার প্রধান লক্ষ্য।",
-    experienceBadge: "বছরের অভিজ্ঞতা"
+    bioParagraph1: "আমি <strong>M. Asaduzzaman Sazu</strong>। বিগত ৫ বছর ধরে ডিজিটাল মার্কেটিং, গ্রাফিক ডিজাইন এবং অ্যাপস ডেভেলপমেন্টের মাধ্যমে বিভিন্ন ব্যবসাকে সফল ব্র্যান্ডে পরিণত করতে সাহায্য করছি।",
+    bioParagraph2: "আমি বিশ্বাস করি, একটি সুন্দর ডিজাইন মানুষের নজর কাড়ে, কিন্তু সঠিক মার্কেটিং কৌশল তাদের মন জয় করে। আমি শুধু একটি সার্ভিস দিই না, বরং আপনার ব্যবসার একজন বিশ্বস্ত 'গ্রোথ-পার্টনার' হিসেবে কাজ করি।",
+    experienceBadge: "বছরের অভিজ্ঞতা",
+    journeyTitle: "আমার পেশাদার যাত্রা",
   },
   services: {
     title: "সেবাসমূহ",
@@ -209,9 +268,11 @@ export const bnData: TranslationSet = {
   skills: {
     title: "পেশাগত দক্ষতা",
     subtitle: "কাজের ক্ষেত্র ও প্রযুক্তিগত দক্ষতা",
-    filterAll: "সব দক্ষতা",
+    filterAll: "সব",
     filterMarketing: "মার্কেটিং",
     filterDesign: "ডিজাইন",
+    filterDevelopment: "ডেভেলপমেন্ট",
+    filterAI: "AI & Tools",
   },
   projects: {
     title: "সিলেক্টেড কাজ",
@@ -220,6 +281,10 @@ export const bnData: TranslationSet = {
     metricLabel: "ফলাফল",
     viewDetails: "বিস্তারিত দেখুন",
     closeBtn: "বন্ধ করুন",
+    techLabel: "প্রযুক্তি",
+    featuresLabel: "ফিচারসমূহ",
+    liveDemo: "লাইভ দেখুন",
+    sourceCode: "সোর্স কোড",
   },
   experience: {
     title: "অভিজ্ঞতা",
@@ -227,7 +292,7 @@ export const bnData: TranslationSet = {
   },
   tools: {
     title: "টুলস",
-    subtitle: "যেসব টুল ব্যবহার করি",
+    subtitle: "যেসব প্রফেশনাল টুল ব্যবহার করি",
   },
   testimonials: {
     title: "প্রশংসাপত্র",
@@ -242,18 +307,24 @@ export const bnData: TranslationSet = {
     locLabel: "লোকেশন",
     formName: "আপনার নাম",
     formEmail: "আপনার ইমেইল",
+    formSubject: "বিষয়",
     formMsg: "আপনার বার্তা",
     formSubmit: "মেসেজ পাঠান",
-    formNote: "সাবমিট করলে সরাসরি ইমেইল ক্লায়েন্ট ওপেন হবে অথবা ইমেইল ফরম্যাট কপি করতে পারবেন।",
-    formSuccess: "ধন্যবাদ! আপনার মেসেজটি প্রস্তুত করা হয়েছে।",
-    copyTemplate: "বার্তার টেমপ্লেট কপি করুন",
-    copySuccess: "কপি করা হয়েছে!",
+    formNote: "সাবমিট করলে সরাসরি হোয়াটসঅ্যাপে মেসেজ যাবে।",
+    formSuccess: "ধন্যবাদ! আপনার মেসেজটি পাঠানো হচ্ছে।",
+    copyTemplate: "ইমেইল টেমপ্লেট কপি করুন",
+    copySuccess: "কপি করা হয়েছে!",
+    socialTitle: "সোশ্যাল মিডিয়া",
   },
   footer: {
     rights: "আসাদুজ্জামান (সাজু)। সর্বস্বত্ব সংরক্ষিত।",
     backToTop: "উপরে ফিরুন",
   },
 };
+
+// ============================================================
+// TRANSLATIONS - ENGLISH
+// ============================================================
 
 export const enData: TranslationSet = {
   name: "M. Asaduzzaman Sazu",
@@ -265,6 +336,7 @@ export const enData: TranslationSet = {
     experience: "Experience",
     contact: "Contact",
     cta: "Hire Me",
+    pricing: "Pricing",
   },
   hero: {
     badge: "Web Developer · Graphic Designer · Digital Marketer",
@@ -272,19 +344,22 @@ export const enData: TranslationSet = {
     headlineHighlight1: "stories",
     headlineHighlight2: "growth",
     sub: ", and stories into ",
-    tagline: "Crafting data-driven marketing strategies, premium visual designs, and high-performance apps for over 5+ years. My goal is to build deep customer trust and ensure your brand doesn't just look exquisite, but delivers highly profitable business results.",
+    tagline: "Crafting data-driven marketing strategies, premium visual designs, and high-performance apps for 5+ years. My goal is to build deep customer trust and deliver profitable business results.",
     ctaPrimary: "View Projects",
     ctaSecondary: "Get in Touch",
+    ctaResume: "Download Resume",
     side1: "01 — Based in Kurigram, Rangpur, Bangladesh, working with clients globally.",
     side2: "02 — Available for freelance, contract, and full-time remote roles.",
     side3: "03 — Average response time: Within 24 hours.",
+    typedRoles: ["Graphic Designer", "App Developer", "Digital Marketer", "Brand Strategist", "Flutter Developer"],
   },
   about: {
     title: "About & Work Philosophy",
     subtitle: "Why Trust Your Brand's Digital Journey with Me?",
-    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist, graphic designer, and app developer with over 5+ years of hands-on experience. My core philosophy isn't just about creating visually appealing graphics or code—it's about building an integrated, high-converting digital foundation that earns customer trust and drives scalable business growth.",
-    bioParagraph2: "Every successful brand is built on uncompromising trust and credibility. I believe that when world-class aesthetic design meets data-driven marketing precision, an unforgettable and highly profitable brand experience is born. I work not just as a service provider, but as your dedicated growth partner—ensuring transparent communication, flawless execution, and absolute integrity in every project we undertake.",
-    experienceBadge: "Years of Trust"
+    bioParagraph1: "I am <strong>M. Asaduzzaman Sazu</strong>, a professional digital marketing strategist, graphic designer, and app developer with over 5+ years of hands-on experience. My core philosophy is building an integrated, high-converting digital foundation that earns trust and drives scalable business growth.",
+    bioParagraph2: "I work not just as a service provider, but as your dedicated growth partner—ensuring transparent communication, flawless execution, and absolute integrity in every project we undertake together.",
+    experienceBadge: "Years of Trust",
+    journeyTitle: "My Professional Journey",
   },
   services: {
     title: "Services",
@@ -293,9 +368,11 @@ export const enData: TranslationSet = {
   skills: {
     title: "Professional Skills",
     subtitle: "My Areas of Expertise",
-    filterAll: "All Skills",
+    filterAll: "All",
     filterMarketing: "Marketing",
     filterDesign: "Design",
+    filterDevelopment: "Development",
+    filterAI: "AI & Tools",
   },
   projects: {
     title: "Selected Work",
@@ -304,6 +381,10 @@ export const enData: TranslationSet = {
     metricLabel: "Impact",
     viewDetails: "View Details",
     closeBtn: "Close",
+    techLabel: "Technologies",
+    featuresLabel: "Key Features",
+    liveDemo: "Live Demo",
+    sourceCode: "Source Code",
   },
   experience: {
     title: "Experience",
@@ -311,7 +392,7 @@ export const enData: TranslationSet = {
   },
   tools: {
     title: "Tools",
-    subtitle: "Technologies I Master",
+    subtitle: "Professional Tools I Use",
   },
   testimonials: {
     title: "Testimonials",
@@ -326,18 +407,24 @@ export const enData: TranslationSet = {
     locLabel: "Location",
     formName: "Your Name",
     formEmail: "Your Email",
+    formSubject: "Subject",
     formMsg: "Your Message",
     formSubmit: "Send Message",
-    formNote: "Submitting opens your email client directly or lets you copy a prefilled template.",
-    formSuccess: "Thank you! Your message is formatted and ready.",
+    formNote: "Submitting will open WhatsApp with a pre-filled message.",
+    formSuccess: "Thank you! Your message is being sent.",
     copyTemplate: "Copy Email Template",
     copySuccess: "Copied successfully!",
+    socialTitle: "Find Me Online",
   },
   footer: {
     rights: "M. Asaduzzaman Sazu. All Rights Reserved.",
     backToTop: "Back to Top",
   },
 };
+
+// ============================================================
+// STATS
+// ============================================================
 
 export const statsBn: StatItem[] = [
   { num: "৫+", label: "বছরের অভিজ্ঞতা" },
@@ -353,32 +440,122 @@ export const statsEn: StatItem[] = [
   { num: "12+", label: "Industry Sectors" },
 ];
 
+// ============================================================
+// JOURNEY TIMELINE (About section)
+// ============================================================
+
+export const journeyData: JourneyItem[] = [
+  {
+    year: "2019",
+    titleBn: "গ্রাফিক ডিজাইনার",
+    titleEn: "Graphic Designer",
+    descBn: "Adobe Photoshop ও Illustrator দিয়ে লোগো, ব্র্যান্ড আইডেন্টিটি এবং প্রিন্ট ডিজাইন শুরু করি।",
+    descEn: "Started with Adobe Photoshop & Illustrator — logos, brand identity, and print design.",
+    icon: "🎨",
+    color: "from-rose-500 to-pink-500",
+  },
+  {
+    year: "2020",
+    titleBn: "ডিজিটাল মার্কেটার",
+    titleEn: "Digital Marketer",
+    descBn: "Meta Ads, Google Ads এবং SEO শিখে বিভিন্ন ব্যবসার অনলাইন গ্রোথ নিশ্চিত করতে শুরু করি।",
+    descEn: "Mastered Meta Ads, Google Ads & SEO to drive online growth for multiple businesses.",
+    icon: "📈",
+    color: "from-violet-500 to-purple-600",
+  },
+  {
+    year: "2022",
+    titleBn: "অ্যাপ ডেভেলপার",
+    titleEn: "App Developer",
+    descBn: "Flutter ও Firebase দিয়ে Android ও iOS অ্যাপ ডেভেলপমেন্টে প্রবেশ করি।",
+    descEn: "Entered app development with Flutter & Firebase — building Android & iOS apps.",
+    icon: "📱",
+    color: "from-blue-500 to-cyan-500",
+  },
+  {
+    year: "2023",
+    titleBn: "AI ও অটোমেশন",
+    titleEn: "AI & Automation",
+    descBn: "AI টুলস, Gemini API এবং অটোমেশন ইন্টিগ্রেশন নিয়ে কাজ শুরু। POS সফটওয়্যার তৈরি।",
+    descEn: "Started working with AI tools, Gemini API and automation. Built POS software.",
+    icon: "🤖",
+    color: "from-emerald-500 to-teal-500",
+  },
+  {
+    year: "2024+",
+    titleBn: "ফুল-স্ট্যাক ডিজিটাল স্ট্র্যাটেজিস্ট",
+    titleEn: "Full-Stack Digital Strategist",
+    descBn: "ডিজাইন, মার্কেটিং ও ডেভেলপমেন্ট একত্রিত করে গ্লোবাল ক্লায়েন্টদের জন্য সম্পূর্ণ ডিজিটাল সমাধান প্রদান।",
+    descEn: "Combining design, marketing & development to deliver complete digital solutions for global clients.",
+    icon: "🚀",
+    color: "from-amber-500 to-orange-500",
+  },
+];
+
+// ============================================================
+// SKILL CARDS
+// ============================================================
+
+export const skillCards: SkillCardItem[] = [
+  // Design
+  { name: "Photoshop", category: "design", icon: "🎨", color: "from-blue-500 to-blue-700", proficiency: 95 },
+  { name: "Illustrator", category: "design", icon: "✏️", color: "from-orange-400 to-orange-600", proficiency: 90 },
+  { name: "Figma", category: "design", icon: "🖌️", color: "from-purple-500 to-purple-700", proficiency: 85 },
+  { name: "Canva", category: "design", icon: "🖼️", color: "from-teal-400 to-teal-600", proficiency: 98 },
+  { name: "InDesign", category: "design", icon: "📄", color: "from-pink-500 to-pink-700", proficiency: 80 },
+  // Marketing
+  { name: "Meta Ads", category: "marketing", icon: "📢", color: "from-blue-600 to-indigo-700", proficiency: 95 },
+  { name: "Google Ads", category: "marketing", icon: "🔍", color: "from-green-500 to-emerald-600", proficiency: 88 },
+  { name: "SEO", category: "marketing", icon: "📊", color: "from-violet-500 to-purple-700", proficiency: 90 },
+  { name: "Analytics", category: "marketing", icon: "📈", color: "from-orange-500 to-red-600", proficiency: 85 },
+  { name: "Email Mktg", category: "marketing", icon: "📧", color: "from-cyan-500 to-sky-700", proficiency: 82 },
+  // Development
+  { name: "Flutter", category: "development", icon: "💙", color: "from-sky-400 to-blue-600", proficiency: 85 },
+  { name: "Firebase", category: "development", icon: "🔥", color: "from-yellow-400 to-orange-500", proficiency: 88 },
+  { name: "React", category: "development", icon: "⚛️", color: "from-cyan-400 to-blue-500", proficiency: 80 },
+  { name: "Node.js", category: "development", icon: "💚", color: "from-green-500 to-emerald-700", proficiency: 75 },
+  { name: "Android", category: "development", icon: "📱", color: "from-green-400 to-green-600", proficiency: 85 },
+  { name: "GitHub", category: "development", icon: "🐙", color: "from-slate-600 to-slate-800", proficiency: 90 },
+  // AI & Tools
+  { name: "Gemini AI", category: "ai", icon: "✨", color: "from-indigo-500 to-purple-600", proficiency: 80 },
+  { name: "ChatGPT", category: "ai", icon: "🤖", color: "from-emerald-400 to-teal-600", proficiency: 88 },
+  { name: "Midjourney", category: "ai", icon: "🎭", color: "from-violet-500 to-indigo-700", proficiency: 82 },
+  { name: "VS Code", category: "ai", icon: "💻", color: "from-blue-400 to-indigo-500", proficiency: 92 },
+];
+
+// ============================================================
+// SERVICES
+// ============================================================
+
 export const servicesBn: ServiceCategory[] = [
   {
     title: "ডিজিটাল মার্কেটিং",
+    icon: "📈",
     items: [
-      { title: "সোশ্যাল মিডিয়া মার্কেটিং", desc: "ফেসবুক, ইনস্টাগ্রাম ও ইউটিউবে আপনার আদর্শ ক্রেতাদের কাছে পৌঁছে তাদের বিশ্বাস অর্জন করি এবং ব্র্যান্ড এনগেজমেন্ট বাড়াই।" },
-      { title: "পেইড অ্যাড ক্যাম্পেইন (Meta & Google)", desc: "ডেটা-ড্রিভেন মেটা ও গুগল অ্যাডস ক্যাম্পেইন পরিচালনা করি, যেখানে কম বাজেটে সর্বোচ্চ সেলস ও কনভার্সন নিশ্চিত করা হয়।" },
-      { title: "সার্চ ইঞ্জিন অপটিমাইজেশন (SEO)", desc: "আপনার ওয়েবসাইটকে গুগলের প্রথম পৃষ্ঠায় এনে দীর্ঘমেয়াদী অর্গানিক ট্রাফিক ও সত্যিকারের ক্রেতা তৈরি করি।" },
-      { title: "কন্টেন্ট স্ট্র্যাটেজি ও সেলস ফানেল", desc: "ক্রেতাদের মনস্তত্ত্ব বুঝে এমন কন্টেন্ট ও ফানেল তৈরি করি, যা ভিজিটরকে বিশ্বস্ত ক্রেতায় রূপান্তরিত করে।" },
+      { title: "সোশ্যাল মিডিয়া মার্কেটিং", desc: "ফেসবুক, ইনস্টাগ্রাম ও ইউটিউবে আপনার আদর্শ ক্রেতাদের কাছে পৌঁছে তাদের বিশ্বাস অর্জন করি এবং ব্র্যান্ড এনগেজমেন্ট বাড়াই।", icon: "📱" },
+      { title: "পেইড অ্যাড ক্যাম্পেইন (Meta & Google)", desc: "ডেটা-ড্রিভেন মেটা ও গুগল অ্যাডস ক্যাম্পেইন পরিচালনা করি, যেখানে কম বাজেটে সর্বোচ্চ সেলস ও কনভার্সন নিশ্চিত করা হয়।", icon: "🎯" },
+      { title: "সার্চ ইঞ্জিন অপটিমাইজেশন (SEO)", desc: "আপনার ওয়েবসাইটকে গুগলের প্রথম পৃষ্ঠায় এনে দীর্ঘমেয়াদী অর্গানিক ট্রাফিক ও সত্যিকারের ক্রেতা তৈরি করি।", icon: "🔍" },
+      { title: "কন্টেন্ট স্ট্র্যাটেজি ও সেলস ফানেল", desc: "ক্রেতাদের মনস্তত্ত্ব বুঝে এমন কন্টেন্ট ও ফানেল তৈরি করি, যা ভিজিটরকে বিশ্বস্ত ক্রেতায় রূপান্তরিত করে।", icon: "🔄" },
     ]
   },
   {
-    title: "গ্রাফিক ডিজাইন",
+    title: "গ্রাফিক ডিজাইন ও ব্র্যান্ডিং",
+    icon: "🎨",
     items: [
-      { title: "লোগো ও ব্র্যান্ড আইডেন্টিটি", desc: "আপনার ব্র্যান্ডের জন্য এমন একটি ইউনিক ও আধুনিক লোগো তৈরি করি, যা একনজরেই মানুষের মনে দাগ কাটে।" },
-      { title: "সোশ্যাল মিডিয়া ক্রিয়েটিভস", desc: "প্রিমিয়াম কোয়ালিটির পোস্ট, ব্যানার ও অ্যাড ক্রিয়েটিভ ডিজাইন করি, যা স্ক্রলিং থামিয়ে মানুষের দৃষ্টি আকর্ষণ করে।" },
-      { title: "প্রিন্ট, প্যাকেজিং ও স্টেশনারি", desc: "বিজনেস কার্ড থেকে শুরু করে প্রোডাক্ট প্যাকেজিং—সবকিছু আন্তর্জাতিক মানের ডিজাইনে তৈরি করি।" },
-      { title: "ইউআই/ইউএক্স ডিজাইন", desc: "অ্যাপ ও ওয়েবসাইটের জন্য এমন আধুনিক ইন্টারফেস ডিজাইন করি, যা ব্যবহারে সহজ এবং দেখতে অসাধারণ।" },
+      { title: "লোগো ও ব্র্যান্ড আইডেন্টিটি", desc: "আপনার ব্র্যান্ডের জন্য এমন একটি ইউনিক ও আধুনিক লোগো তৈরি করি, যা একনজরেই মানুষের মনে দাগ কাটে।", icon: "✨" },
+      { title: "সোশ্যাল মিডিয়া ক্রিয়েটিভস", desc: "প্রিমিয়াম কোয়ালিটির পোস্ট, ব্যানার ও অ্যাড ক্রিয়েটিভ ডিজাইন করি, যা স্ক্রলিং থামিয়ে মানুষের দৃষ্টি আকর্ষণ করে।", icon: "🖼️" },
+      { title: "প্রিন্ট, প্যাকেজিং ও স্টেশনারি", desc: "বিজনেস কার্ড থেকে শুরু করে প্রোডাক্ট প্যাকেজিং—সবকিছু আন্তর্জাতিক মানের ডিজাইনে তৈরি করি।", icon: "📦" },
+      { title: "ইউআই/ইউএক্স ডিজাইন", desc: "অ্যাপ ও ওয়েবসাইটের জন্য এমন আধুনিক ইন্টারফেস ডিজাইন করি, যা ব্যবহারে সহজ এবং দেখতে অসাধারণ।", icon: "🎭" },
     ]
   },
   {
-    title: "অ্যাপস ডেভেলপমেন্ট",
+    title: "অ্যাপ ও সফটওয়্যার ডেভেলপমেন্ট",
+    icon: "📱",
     items: [
-      { title: "অ্যান্ড্রয়েড ও আইওএস অ্যাপ", desc: "আপনার বিজনেস আইডিয়াকে বাস্তবে রূপ দিতে দ্রুতগতি, নিরাপদ ও স্কেলেবল মোবাইল অ্যাপ তৈরি করি।" },
-      { title: "ই-কমার্স ও বিজনেস অ্যাপ", desc: "অনলাইনে সেলস বাড়াতে ইউজার-ফ্রেন্ডলি ই-কমার্স অ্যাপ এবং কর্পোরেট ম্যানেজমেন্ট অ্যাপ তৈরি করি।" },
-      { title: "ইউআই/ইউএক্স অপটিমাইজেশন", desc: "ব্যবহারকারীর অভিজ্ঞতা বিশ্লেষণ করে অ্যাপের ডিজাইন ও পারফরম্যান্স ক্রমাগত উন্নত করি।" },
-      { title: "এপিআই ও ব্যাকএন্ড সিস্টেম", desc: "অ্যাপের পেছনে শক্তিশালী ও নিরাপদ সার্ভার সিস্টেম তৈরি করি, যাতে ডেটা দ্রুত ও নির্ভুলভাবে কাজ করে।" },
+      { title: "Flutter অ্যান্ড্রয়েড ও iOS অ্যাপ", desc: "আপনার বিজনেস আইডিয়াকে বাস্তবে রূপ দিতে দ্রুতগতি, নিরাপদ ও স্কেলেবল মোবাইল অ্যাপ তৈরি করি।", icon: "💙" },
+      { title: "ই-কমার্স ও বিজনেস অ্যাপ", desc: "অনলাইনে সেলস বাড়াতে ইউজার-ফ্রেন্ডলি ই-কমার্স অ্যাপ এবং কর্পোরেট ম্যানেজমেন্ট অ্যাপ তৈরি করি।", icon: "🛒" },
+      { title: "POS সফটওয়্যার সিস্টেম", desc: "দোকান ও রেস্টুরেন্টের জন্য কাস্টম POS সিস্টেম তৈরি করি—বিক্রি, স্টক ম্যানেজমেন্ট, রিপোর্ট সবকিছু এক জায়গায়।", icon: "🏪" },
+      { title: "AI অটোমেশন ইন্টিগ্রেশন", desc: "ব্যবসার পুনরাবৃত্তিমূলক কাজ অটোমেট করতে AI ও স্মার্ট সিস্টেম তৈরি করি, যা সময় ও খরচ দুটোই সাশ্রয় করে।", icon: "🤖" },
     ]
   }
 ];
@@ -386,51 +563,53 @@ export const servicesBn: ServiceCategory[] = [
 export const servicesEn: ServiceCategory[] = [
   {
     title: "Digital Marketing",
+    icon: "📈",
     items: [
-      { title: "Social Media Marketing", desc: "I connect your brand with the right audience on Facebook, Instagram, and YouTube—building genuine trust and meaningful engagement." },
-      { title: "Paid Ad Campaigns (Meta & Google)", desc: "I run data-driven Meta and Google Ads campaigns that maximize your sales and conversions while keeping costs as low as possible." },
-      { title: "Search Engine Optimization (SEO)", desc: "I bring your website to Google's first page, generating long-term organic traffic and real, high-intent buyers for your business." },
-      { title: "Content Strategy & Sales Funnels", desc: "I craft persuasive content and smart funnels that guide your visitors from curiosity to confident purchase decisions." },
+      { title: "Social Media Marketing", desc: "I connect your brand with the right audience on Facebook, Instagram, and YouTube—building genuine trust and meaningful engagement.", icon: "📱" },
+      { title: "Paid Ad Campaigns (Meta & Google)", desc: "I run data-driven Meta and Google Ads campaigns that maximize your sales and conversions while keeping costs as low as possible.", icon: "🎯" },
+      { title: "Search Engine Optimization (SEO)", desc: "I bring your website to Google's first page, generating long-term organic traffic and real, high-intent buyers for your business.", icon: "🔍" },
+      { title: "Content Strategy & Sales Funnels", desc: "I craft persuasive content and smart funnels that guide your visitors from curiosity to confident purchase decisions.", icon: "🔄" },
     ]
   },
   {
-    title: "Graphic Design",
+    title: "Graphic Design & Branding",
+    icon: "🎨",
     items: [
-      { title: "Logo & Brand Identity", desc: "I create unique, modern logos and complete brand identities that make an unforgettable first impression on your customers." },
-      { title: "Social Media Creatives", desc: "I design premium-quality posts, banners, and ad creatives that stop the scroll and grab your audience's attention instantly." },
-      { title: "Print, Packaging & Stationery", desc: "From business cards to product packaging—I deliver internationally-standard designs that elevate your brand's perceived value." },
-      { title: "UI/UX Design", desc: "I design sleek, modern interfaces for apps and websites that are visually stunning and effortlessly easy to use." },
+      { title: "Logo & Brand Identity", desc: "I create unique, modern logos and complete brand identities that make an unforgettable first impression on your customers.", icon: "✨" },
+      { title: "Social Media Creatives", desc: "I design premium-quality posts, banners, and ad creatives that stop the scroll and grab your audience's attention instantly.", icon: "🖼️" },
+      { title: "Print, Packaging & Stationery", desc: "From business cards to product packaging—I deliver internationally-standard designs that elevate your brand's perceived value.", icon: "📦" },
+      { title: "UI/UX Design", desc: "I design sleek, modern interfaces for apps and websites that are visually stunning and effortlessly easy to use.", icon: "🎭" },
     ]
   },
   {
-    title: "App Development",
+    title: "App & Software Development",
+    icon: "📱",
     items: [
-      { title: "Android & iOS Apps", desc: "I build lightning-fast, secure, and scalable mobile applications that bring your business idea to life on both platforms." },
-      { title: "E-Commerce & Business Apps", desc: "I develop user-friendly e-commerce and corporate management apps designed to boost your online sales and operations." },
-      { title: "UI/UX Optimization", desc: "I analyze user behavior to continuously improve your app's design and performance for a seamless experience." },
-      { title: "Backend & API Systems", desc: "I build robust, secure server architecture behind your app—ensuring fast, reliable, and safe data management." },
+      { title: "Flutter Android & iOS Apps", desc: "I build lightning-fast, secure, and scalable mobile applications that bring your business idea to life on both platforms.", icon: "💙" },
+      { title: "E-Commerce & Business Apps", desc: "I develop user-friendly e-commerce and corporate management apps designed to boost your online sales and operations.", icon: "🛒" },
+      { title: "POS Software Systems", desc: "I build custom POS systems for shops and restaurants—sales tracking, inventory management, and reports all in one place.", icon: "🏪" },
+      { title: "AI Automation Integration", desc: "I automate repetitive business tasks using AI and smart systems—saving you valuable time and operational costs.", icon: "🤖" },
     ]
   }
 ];
 
+// ============================================================
+// SKILL CATEGORIES (for the detailed section)
+// ============================================================
+
 export const skillsData: SkillItem[] = [
-  // Digital Marketing
   { name: "Meta Ads & Business Suite", level: 95, category: "marketing" },
   { name: "SEO Strategy & Optimization", level: 90, category: "marketing" },
   { name: "Google Search & Display Ads", level: 85, category: "marketing" },
   { name: "Content Strategy & Funnels", level: 92, category: "marketing" },
-  
-  // Graphic Design
-  { name: "Adobe Photoshop (Manipulations)", level: 95, category: "design" },
-  { name: "Adobe Illustrator (Vector Art)", level: 90, category: "design" },
-  { name: "Figma (UI/UX & Prototyping)", level: 85, category: "design" },
-  { name: "Brand Guidelines & Typography", level: 90, category: "design" },
-  
-  // App Development
-  { name: "Android App Development", level: 85, category: "app" },
-  { name: "Cross-Platform Frameworks", level: 82, category: "app" },
-  { name: "Firebase Backend & APIs", level: 88, category: "app" },
-  { name: "Mobile UI/UX Optimization", level: 85, category: "app" },
+  { name: "Adobe Photoshop", level: 95, category: "design" },
+  { name: "Adobe Illustrator", level: 90, category: "design" },
+  { name: "Figma (UI/UX)", level: 85, category: "design" },
+  { name: "Brand Identity Design", level: 90, category: "design" },
+  { name: "Flutter App Development", level: 85, category: "app" },
+  { name: "Firebase Backend", level: 88, category: "app" },
+  { name: "Android Development", level: 82, category: "app" },
+  { name: "React & Next.js", level: 78, category: "app" },
 ];
 
 export const skillsCategoriesData: SkillCategoryData[] = [
@@ -444,10 +623,9 @@ export const skillsCategoriesData: SkillCategoryData[] = [
       { name: "Adobe Photoshop", level: 95 },
       { name: "Adobe Illustrator", level: 90 },
       { name: "Figma (UI/UX)", level: 85 },
+      { name: "Canva Pro", level: 98 },
       { name: "Brand Identity Design", level: 92 },
-      { name: "Social Media Creatives", level: 95 },
       { name: "Print & Packaging", level: 88 },
-      { name: "Typography & Color Theory", level: 90 }
     ]
   },
   {
@@ -457,10 +635,12 @@ export const skillsCategoriesData: SkillCategoryData[] = [
     iconType: "app",
     colorTheme: "pink",
     skills: [
-      { name: "Android Apps", level: 80 },
-      { name: "Cross-Platform Apps", level: 82 },
-      { name: "Firebase Integration", level: 88 },
-      { name: "Business Applications", level: 85 }
+      { name: "Flutter", level: 85 },
+      { name: "Firebase", level: 88 },
+      { name: "React / Next.js", level: 78 },
+      { name: "Node.js / Express", level: 75 },
+      { name: "Android Studio", level: 80 },
+      { name: "REST APIs", level: 82 },
     ]
   },
   {
@@ -470,86 +650,187 @@ export const skillsCategoriesData: SkillCategoryData[] = [
     iconType: "marketing",
     colorTheme: "indigo",
     skills: [
-      { name: "Social Media Marketing", level: 94 },
-      { name: "Search Engine Optimization (SEO)", level: 88 },
-      { name: "Content Strategy", level: 90 },
-      { name: "Lead Generation", level: 86 },
-      { name: "Brand Marketing", level: 92 },
       { name: "Meta Ads & Business Suite", level: 95 },
       { name: "Google PPC Ad Campaigns", level: 90 },
+      { name: "SEO & Keyword Research", level: 88 },
+      { name: "Content Strategy", level: 90 },
+      { name: "Lead Generation", level: 86 },
       { name: "Conversion Funnel Design", level: 92 },
-      { name: "Ad Copywriting & Creatives", level: 88 },
-      { name: "ROI Optimization Strategy", level: 95 }
     ]
   }
 ];
 
-export const projectsBn: ProjectItem[] = [
+// ============================================================
+// PROJECTS
+// ============================================================
+
+export const projectsData: ProjectItem[] = [
   {
-    title: "কাস্টম ই-কমার্স ও বিজনেস অ্যাপ",
-    desc: "উন্নত পারফরম্যান্স এবং মসৃণ ইউজার এক্সপেরিয়েন্স সমৃদ্ধ একটি ফুল-স্ট্যাক বিজনেস অ্যাপ। কাস্টম পেমেন্ট ইন্টিগ্রেশন এবং ফায়ারবেস ব্যাকএন্ডের মাধ্যমে অ্যাপটির ডেটা দ্রুত ও নিরাপদে পরিচালনা করার ব্যবস্থা করা হয়েছে।",
+    id: "amardokan",
+    title: "আমারডোকান — ই-কমার্স অ্যাপ",
+    titleEn: "AmarDokan — E-Commerce App",
+    desc: "বাংলাদেশের ছোট ব্যবসায়ীদের জন্য তৈরি একটি সম্পূর্ণ ই-কমার্স মার্কেটপ্লেস অ্যাপ। Flutter দিয়ে তৈরি এই অ্যাপে আছে প্রোডাক্ট লিস্টিং, শপিং কার্ট, বিকাশ পেমেন্ট ও অর্ডার ট্র্যাকিং।",
+    descEn: "A complete e-commerce marketplace app built for Bangladeshi small businesses. Built with Flutter, it features product listings, shopping cart, bKash payment integration, and real-time order tracking.",
     category: "app",
-    tag: "App Dev",
-    metric: "লোডিং স্পিড ২x ফাস্ট",
+    tag: "Flutter App",
+    tagEn: "Flutter App",
+    metric: "লোডিং ২x দ্রুত",
+    metricEn: "2x Faster Load",
     thumbClass: "Smartphone",
-    bgGradient: "from-blue-600 to-indigo-600"
+    bgGradient: "from-blue-600 to-indigo-700",
+    technologies: ["Flutter", "Firebase", "bKash API", "Node.js", "Firestore"],
+    features: [
+      { textBn: "মাল্টি-ভেন্ডর মার্কেটপ্লেস সিস্টেম", textEn: "Multi-vendor marketplace system" },
+      { textBn: "বিকাশ ও কার্ড পেমেন্ট ইন্টিগ্রেশন", textEn: "bKash & card payment integration" },
+      { textBn: "রিয়েল-টাইম অর্ডার ট্র্যাকিং", textEn: "Real-time order tracking" },
+      { textBn: "সেলার ড্যাশবোর্ড ও অ্যানালিটিক্স", textEn: "Seller dashboard & analytics" },
+      { textBn: "পুশ নোটিফিকেশন সিস্টেম", textEn: "Push notification system" },
+    ],
+    liveUrl: "#",
+    githubUrl: "#",
+    mockupType: "amardokan",
   },
   {
-    title: "কমপ্লিট ব্র্যান্ড আইডেন্টিটি ডিজাইন",
-    desc: "একটি প্রিমিয়াম ব্র্যান্ডের জন্য আধুনিক লোগো, ব্র্যান্ড গাইডলাইন, কালার প্যালেট এবং সোশ্যাল মিডিয়া কিট ডিজাইন। উদ্দেশ্য ছিল এমন একটি ভিজ্যুয়াল আইডেন্টিটি তৈরি করা যা মানুষের মনে দীর্ঘস্থায়ী দাগ কাটে।",
-    category: "graphic",
-    tag: "Design",
-    metric: "ব্র্যান্ড ভিজিবিলিটি +৪০%",
+    id: "studio_maker",
+    title: "Studio Maker — ডিজাইন টুল",
+    titleEn: "Studio Maker — Design Tool",
+    desc: "নন-ডিজাইনারদের জন্য একটি সহজ ও শক্তিশালী গ্রাফিক ডিজাইন টুল। ব্যবহারকারীরা সহজেই লোগো, সোশ্যাল মিডিয়া পোস্ট ও ব্যানার তৈরি করতে পারেন।",
+    descEn: "A simple yet powerful graphic design tool for non-designers. Users can easily create logos, social media posts, and banners with drag-and-drop simplicity.",
+    category: "app",
+    tag: "Web App",
+    tagEn: "Web App",
+    metric: "৫০০+ ব্যবহারকারী",
+    metricEn: "500+ Users",
     thumbClass: "Palette",
-    bgGradient: "from-pink-500 to-rose-500"
+    bgGradient: "from-purple-600 to-pink-600",
+    technologies: ["React", "Node.js", "Canvas API", "Firebase", "Tailwind CSS"],
+    features: [
+      { textBn: "ড্র্যাগ-এন্ড-ড্রপ ডিজাইন এডিটর", textEn: "Drag-and-drop design editor" },
+      { textBn: "১০০০+ প্রি-মেড টেমপ্লেট", textEn: "1000+ pre-made templates" },
+      { textBn: "AI-চালিত ব্যাকগ্রাউন্ড রিমুভার", textEn: "AI-powered background remover" },
+      { textBn: "PNG, JPG, SVG এক্সপোর্ট", textEn: "PNG, JPG, SVG export" },
+      { textBn: "কোলাবোরেশন ফিচার", textEn: "Collaboration feature" },
+    ],
+    liveUrl: "#",
+    githubUrl: "#",
+    mockupType: "studio_maker",
   },
   {
+    id: "ai_enhancer",
+    title: "AI Image Enhancer",
+    titleEn: "AI Image Enhancer",
+    desc: "AI দিয়ে পুরনো বা নিম্নমানের ছবি 4K-তে রূপান্তরিত করার একটি স্মার্ট ওয়েব অ্যাপ। Gemini AI ইন্টিগ্রেশন দিয়ে তৈরি এই টুলটি ফটোগ্রাফার ও ব্যবসায়ীদের জন্য অসাধারণ।",
+    descEn: "A smart web app that transforms old or low-quality images into stunning 4K using AI. Built with Gemini AI integration, it's perfect for photographers and businesses alike.",
+    category: "app",
+    tag: "AI Tool",
+    tagEn: "AI Tool",
+    metric: "৯৫% নির্ভুলতা",
+    metricEn: "95% Accuracy",
+    thumbClass: "Bot",
+    bgGradient: "from-emerald-500 to-teal-700",
+    technologies: ["React", "Gemini AI", "Firebase", "Python", "TensorFlow"],
+    features: [
+      { textBn: "AI-চালিত ছবি এনহান্সমেন্ট", textEn: "AI-powered image enhancement" },
+      { textBn: "ব্যাচ প্রসেসিং (একসাথে অনেক ছবি)", textEn: "Batch processing (multiple images)" },
+      { textBn: "Before/After স্লাইডার ভিউ", textEn: "Before/After slider view" },
+      { textBn: "নয়েজ রিডাকশন ও শার্পনিং", textEn: "Noise reduction & sharpening" },
+      { textBn: "4K রেজোলিউশনে ডাউনলোড", textEn: "Download in 4K resolution" },
+    ],
+    liveUrl: "#",
+    githubUrl: "#",
+    mockupType: "ai_enhancer",
+  },
+  {
+    id: "pos_system",
+    title: "POS সফটওয়্যার সিস্টেম",
+    titleEn: "POS Software System",
+    desc: "ছোট থেকে মাঝারি দোকান ও রেস্টুরেন্টের জন্য একটি সম্পূর্ণ পয়েন্ট-অফ-সেল সিস্টেম। বিক্রয়, স্টক, রিপোর্ট ও কর্মী ব্যবস্থাপনা সবকিছু এক জায়গায়।",
+    descEn: "A complete Point-of-Sale system for small to medium shops and restaurants. Sales tracking, inventory, reports, and staff management—all in one place.",
+    category: "app",
+    tag: "Software",
+    tagEn: "Software",
+    metric: "বিক্রয় ২৫% বৃদ্ধি",
+    metricEn: "+25% Sales Efficiency",
+    thumbClass: "Terminal",
+    bgGradient: "from-amber-500 to-orange-600",
+    technologies: ["Flutter", "Firebase", "SQLite", "bKash API", "PDF Generation"],
+    features: [
+      { textBn: "দ্রুত বিলিং ও ইনভয়েস", textEn: "Fast billing & invoice generation" },
+      { textBn: "স্টক ম্যানেজমেন্ট ও লো-স্টক অ্যালার্ট", textEn: "Stock management & low-stock alerts" },
+      { textBn: "দৈনিক/মাসিক সেলস রিপোর্ট", textEn: "Daily/monthly sales reports" },
+      { textBn: "মাল্টি-ইউজার ও রোল অ্যাকসেস", textEn: "Multi-user & role-based access" },
+      { textBn: "অফলাইন মোড সাপোর্ট", textEn: "Offline mode support" },
+    ],
+    liveUrl: "#",
+    githubUrl: "#",
+    mockupType: "pos_system",
+  },
+  {
+    id: "brand_identity",
+    title: "কমপ্লিট ব্র্যান্ড আইডেন্টিটি",
+    titleEn: "Complete Brand Identity Design",
+    desc: "একটি প্রিমিয়াম ব্র্যান্ডের জন্য আধুনিক লোগো, ব্র্যান্ড গাইডলাইন, কালার প্যালেট এবং সোশ্যাল মিডিয়া কিট ডিজাইন। ব্র্যান্ড ভিজিবিলিটি ৪০% বৃদ্ধি পেয়েছে।",
+    descEn: "Modern logo, brand guidelines, color palette, and social media kit for an emerging brand. The visual identity helped increase brand visibility by 40%.",
+    category: "graphic",
+    tag: "Branding",
+    tagEn: "Branding",
+    metric: "ব্র্যান্ড ভিজিবিলিটি +৪০%",
+    metricEn: "+40% Brand Visibility",
+    thumbClass: "Palette",
+    bgGradient: "from-pink-500 to-rose-600",
+    technologies: ["Adobe Illustrator", "Adobe Photoshop", "Figma", "Canva"],
+    features: [
+      { textBn: "প্রাইমারি ও সেকেন্ডারি লোগো সেট", textEn: "Primary & secondary logo set" },
+      { textBn: "ব্র্যান্ড কালার প্যালেট ও টাইপোগ্রাফি", textEn: "Brand color palette & typography" },
+      { textBn: "সোশ্যাল মিডিয়া ক্রিয়েটিভ কিট", textEn: "Social media creative kit" },
+      { textBn: "প্রিন্ট-রেডি ফাইল (AI/EPS/PDF)", textEn: "Print-ready files (AI/EPS/PDF)" },
+      { textBn: "কমপ্লিট ব্র্যান্ড গাইডলাইন বুক", textEn: "Complete brand guideline book" },
+    ],
+    liveUrl: "#",
+    githubUrl: undefined,
+    mockupType: "graphic",
+  },
+  {
+    id: "meta_campaign",
     title: "হাই-কনভার্টিং অ্যাড ক্যাম্পেইন",
-    desc: "ফেসবুক ও গুগল অ্যাডস ব্যবহার করে টার্গেটেড লিড জেনারেশন ও সেলস ফানেল তৈরি। সঠিক ক্রেতাদের খুঁজে বের করে কম খরচে সর্বোচ্চ রিটার্ন অন অ্যাড স্পেন্ড (ROAS) নিশ্চিত করা হয়েছে।",
+    titleEn: "High-Converting Ad Campaign",
+    desc: "ফেসবুক ও গুগল অ্যাডস ব্যবহার করে টার্গেটেড লিড জেনারেশন ও সেলস ফানেল তৈরি। সঠিক ক্রেতা খুঁজে কম খরচে সর্বোচ্চ ROAS নিশ্চিত করা হয়েছে।",
+    descEn: "Targeted lead generation and sales funnel creation using Facebook and Google Ads. By targeting the exact ideal audience, we ensured the highest possible ROAS at minimized cost.",
     category: "marketing",
-    tag: "Marketing",
+    tag: "Meta Ads",
+    tagEn: "Meta Ads",
     metric: "ROAS ৪.২x বৃদ্ধি",
+    metricEn: "4.2x Scaled ROAS",
     thumbClass: "Megaphone",
-    bgGradient: "from-violet-600 to-purple-800"
-  }
+    bgGradient: "from-violet-600 to-purple-800",
+    technologies: ["Meta Ads Manager", "Google Ads", "SEMrush", "Google Analytics", "Canva"],
+    features: [
+      { textBn: "টার্গেটেড অডিয়েন্স রিসার্চ", textEn: "Targeted audience research" },
+      { textBn: "A/B টেস্টিং ও ক্রিয়েটিভ অপটিমাইজেশন", textEn: "A/B testing & creative optimization" },
+      { textBn: "রিটার্গেটিং ও লুকঅ্যালাইক অডিয়েন্স", textEn: "Retargeting & lookalike audiences" },
+      { textBn: "সম্পূর্ণ কনভার্সন ফানেল", textEn: "Complete conversion funnel" },
+      { textBn: "সাপ্তাহিক পারফরম্যান্স রিপোর্ট", textEn: "Weekly performance reports" },
+    ],
+    liveUrl: "#",
+    githubUrl: undefined,
+    mockupType: "marketing",
+  },
 ];
 
-export const projectsEn: ProjectItem[] = [
-  {
-    title: "Custom E-Commerce & Business App",
-    desc: "A high-performance, full-stack business application focusing on smooth user experience. Features include custom payment integration, robust Firebase backend, and optimized loading speeds for seamless navigation.",
-    category: "app",
-    tag: "App Dev",
-    metric: "2x Faster Load Time",
-    thumbClass: "Smartphone",
-    bgGradient: "from-blue-600 to-indigo-600"
-  },
-  {
-    title: "Complete Brand Identity Design",
-    desc: "Modern logo, brand guidelines, color palette, and premium social media kit design for an emerging brand. The goal was to craft a visual identity that leaves a memorable and trustworthy impression.",
-    category: "graphic",
-    tag: "Design",
-    metric: "+40% Brand Visibility",
-    thumbClass: "Palette",
-    bgGradient: "from-pink-500 to-rose-500"
-  },
-  {
-    title: "High-Converting Ad Campaign",
-    desc: "Targeted lead generation and sales funnel creation using Facebook and Google Ads. By targeting the exact ideal audience, we ensured the highest possible Return on Ad Spend (ROAS) at a minimized cost.",
-    category: "marketing",
-    tag: "Marketing",
-    metric: "4.2x Scaled ROAS",
-    thumbClass: "Megaphone",
-    bgGradient: "from-violet-600 to-purple-800"
-  }
-];
+// Keep legacy arrays for backward compatibility
+export const projectsBn: ProjectItem[] = projectsData;
+export const projectsEn: ProjectItem[] = projectsData;
+
+// ============================================================
+// EXPERIENCE TIMELINE
+// ============================================================
 
 export const timelineBn: TimelineItem[] = [
   {
     period: "২০২৪ — বর্তমান (২০২৬)",
     role: "লিড ডিজিটাল স্ট্র্যাটেজিস্ট ও অ্যাপ ডেভেলপার",
     org: "ফ্রিল্যান্স · গ্লোবাল ক্লায়েন্টবেস",
-    desc: "বর্তমানে দেশীয় ও আন্তর্জাতিক ব্র্যান্ডের জন্য ফুল-স্ট্যাক ডিজিটাল মার্কেটিং, প্রিমিয়াম ব্র্যান্ডিং এবং কাস্টম মোবাইল অ্যাপ ডেভেলপমেন্ট নিয়ে কাজ করছি। প্রতিটি প্রজেক্টে ক্লায়েন্টের সেলস ও ব্র্যান্ড ভ্যালু বহুগুণ বৃদ্ধি করাই আমার প্রধান লক্ষ্য।"
+    desc: "বর্তমানে দেশীয় ও আন্তর্জাতিক ব্র্যান্ডের জন্য ফুল-স্ট্যাক ডিজিটাল মার্কেটিং, প্রিমিয়াম ব্র্যান্ডিং এবং কাস্টম মোবাইল অ্যাপ ডেভেলপমেন্ট নিয়ে কাজ করছি।"
   },
   {
     period: "২০২২ — ২০২৪",
@@ -562,6 +843,12 @@ export const timelineBn: TimelineItem[] = [
     role: "জুনিয়র গ্রাফিক ডিজাইনার",
     org: "স্টার্টআপ ডিজাইন স্টুডিও",
     desc: "কর্পোরেট স্টেশনারি, লোগো ডিজাইন, প্রিন্ট ব্যানার এবং প্যাকেজিং ডিজাইনে হাতে-কলমে কাজ করার মধ্য দিয়ে পেশাদার ক্যারিয়ারের একটি শক্ত ভিত্তি তৈরি করি।"
+  },
+  {
+    period: "২০১৯ — ২০২১",
+    role: "ফ্রিল্যান্স গ্রাফিক ডিজাইনার",
+    org: "Fiverr · Upwork · স্থানীয় ক্লায়েন্ট",
+    desc: "ফ্রিল্যান্সিং প্ল্যাটফর্মে কাজ শুরু। লোগো ডিজাইন, সোশ্যাল মিডিয়া ক্রিয়েটিভ এবং ডিজিটাল মার্কেটিংয়ে দক্ষতা অর্জন করি।"
   }
 ];
 
@@ -570,7 +857,7 @@ export const timelineEn: TimelineItem[] = [
     period: "2024 — Present (2026)",
     role: "Lead Digital Strategist & App Developer",
     org: "Freelance — Global Client Base",
-    desc: "Currently leading full-stack digital marketing, premium branding, and custom mobile app development for local and international brands. My primary focus is scaling clients' sales, user acquisition, and overall brand value."
+    desc: "Currently leading full-stack digital marketing, premium branding, and custom mobile app development for local and international brands."
   },
   {
     period: "2022 — 2024",
@@ -582,26 +869,44 @@ export const timelineEn: TimelineItem[] = [
     period: "2021 — 2022",
     role: "Junior Graphic Designer",
     org: "Startup Design Studio",
-    desc: "Built a solid professional foundation by focusing on vector logos, corporate stationery, print banners, and product packaging design—delivering real value from day one."
+    desc: "Built a solid professional foundation by focusing on vector logos, corporate stationery, print banners, and product packaging design."
+  },
+  {
+    period: "2019 — 2021",
+    role: "Freelance Graphic Designer",
+    org: "Fiverr · Upwork · Local Clients",
+    desc: "Started freelancing on major platforms, building expertise in logo design, social media creatives, and digital marketing."
   }
 ];
+
+// ============================================================
+// TOOLS LIST
+// ============================================================
 
 export const toolsList = [
   "Adobe Photoshop",
   "Adobe Illustrator",
   "Figma (UI/UX)",
+  "Canva Pro",
   "Meta Business Suite",
   "Google Ads & Analytics",
   "SEMrush (SEO)",
-  "React Native / Flutter",
+  "Flutter",
+  "Firebase / Firestore",
+  "React / Next.js",
   "Android Studio",
-  "Firebase / MongoDB",
-  "VS Code / Git"
+  "VS Code / Git",
+  "ChatGPT / Gemini AI",
+  "Midjourney",
 ];
+
+// ============================================================
+// TESTIMONIALS
+// ============================================================
 
 export const testimonialsBn: TestimonialItem[] = [
   {
-    quote: "আমাদের ব্র্যান্ড রিব্র্যান্ডিংয়ে অসাধারণ কাজ করেছেন। বিক্রি এবং ব্র্যান্ড ইমেজ দুটোই বহুগুণ বেড়ে গেছে। আমরা চমৎকার সাড়া পাচ্ছি।",
+    quote: "আমাদের ব্র্যান্ড রিব্র্যান্ডিংয়ে অসাধারণ কাজ করেছেন। বিক্রি এবং ব্র্যান্ড ইমেজ দুটোই বহুগুণ বেড়ে গেছে। আমরা চমৎকার সাড়া পাচ্ছি।",
     name: "সাবরিনা আক্তার",
     role: "প্রতিষ্ঠাতা, লিফ কফি হাউজ",
     rating: 5,
@@ -609,7 +914,7 @@ export const testimonialsBn: TestimonialItem[] = [
     flag: "🇧🇩"
   },
   {
-    quote: "অ্যাড ক্যাম্পেইন শুরু করার পর আমাদের কনভার্সন রেট প্রায় দ্বিগুণ হয়ে গেছে। সত্যি অসাধারণ মার্কেটিং স্ট্র্যাটেজি, যা সরাসরি ইউএস মার্কেটে আমাদের সেলস বাড়িয়েছে।",
+    quote: "অ্যাড ক্যাম্পেইন শুরু করার পর আমাদের কনভার্সন রেট প্রায় দ্বিগুণ হয়ে গেছে। সত্যি অসাধারণ মার্কেটিং স্ট্র্যাটেজি, যা সরাসরি ইউএস মার্কেটে আমাদের সেলস বাড়িয়েছে।",
     name: "মাইকেল জনসন",
     role: "মার্কেটিং হেড, স্কাইলাইন ডিজিটাল",
     rating: 5,
@@ -625,7 +930,7 @@ export const testimonialsBn: TestimonialItem[] = [
     flag: "🇦🇪"
   },
   {
-    quote: "লোগো এবং প্যাকেজিং ডিজাইনে তার সৃজনশীলতা অসাধারণ। আন্তর্জাতিক মানের কাজ পেয়েছি, যা আমাদের ব্র্যান্ডকে একটি প্রিমিয়াম লুক দিয়েছে।",
+    quote: "লোগো এবং প্যাকেজিং ডিজাইনে তার সৃজনশীলতা অসাধারণ। আন্তর্জাতিক মানের কাজ পেয়েছি, যা আমাদের ব্র্যান্ডকে একটি প্রিমিয়াম লুক দিয়েছে।",
     name: "ফাতিমা নূর",
     role: "ফাউন্ডার, নূরা অর্গানিকস",
     rating: 5,
@@ -669,6 +974,10 @@ export const testimonialsEn: TestimonialItem[] = [
   }
 ];
 
+// ============================================================
+// PRICING
+// ============================================================
+
 export const pricingData: PricingPlan[] = [
   {
     categoryId: "marketing",
@@ -683,9 +992,9 @@ export const pricingData: PricingPlan[] = [
         descEn: "Social media management for small business",
         features: [
           { textBn: "১টি সোশ্যাল মিডিয়া অ্যাকাউন্ট", textEn: "1 Social Media Account", included: true },
-          { textBn: "মাসে ১২টি প্রফেশনাল পোস্ট ডিজাইন", textEn: "12 Pro Post Designs/Month", included: true },
+          { textBn: "মাসে ১২টি প্রফেশনাল পোস্ট", textEn: "12 Pro Post Designs/Month", included: true },
           { textBn: "বেসিক কনটেন্ট রাইটিং", textEn: "Basic Content Writing", included: true },
-          { textBn: "অ্যাড ক্যাম্পেইন রান (বাজেট বাদে)", textEn: "Ad Campaign Setup", included: false },
+          { textBn: "অ্যাড ক্যাম্পেইন ম্যানেজমেন্ট", textEn: "Ad Campaign Management", included: false },
           { textBn: "অ্যানালিটিক্স ও রিপোর্ট", textEn: "Analytics & Reporting", included: false },
           { textBn: "আনলিমিটেড সাপোর্ট", textEn: "Unlimited Support", included: false }
         ]
@@ -700,7 +1009,7 @@ export const pricingData: PricingPlan[] = [
         features: [
           { textBn: "৩টি সোশ্যাল মিডিয়া অ্যাকাউন্ট", textEn: "3 Social Media Accounts", included: true },
           { textBn: "মাসে ৩০টি প্রফেশনাল পোস্ট", textEn: "30 Pro Post Designs/Month", included: true },
-          { textBn: "প্রিমিয়াম কনটেন্ট রাইটিং", textEn: "Premium Content Writing", included: true },
+          { textBn: "প্রিমিয়াম কনটেন্ট রাইটিং", textEn: "Premium Content Writing", included: true },
           { textBn: "অ্যাড ক্যাম্পেইন ম্যানেজমেন্ট (৪টি)", textEn: "Ad Campaign Management (4)", included: true },
           { textBn: "মাসিক অ্যানালিটিক্স রিপোর্ট", textEn: "Monthly Analytics Report", included: true },
           { textBn: "আনলিমিটেড সাপোর্ট", textEn: "Unlimited Support", included: false }
@@ -738,7 +1047,7 @@ export const pricingData: PricingPlan[] = [
           { textBn: "১টি হাই-কোয়ালিটি লোগো কনসেপ্ট", textEn: "1 High-Quality Logo Concept", included: true },
           { textBn: "৩ বার ডিজাইন রিভিশন", textEn: "3 Design Revisions", included: true },
           { textBn: "প্রাইমারি কালার প্যালেট", textEn: "Primary Color Palette", included: true },
-          { textBn: "প্রিন্ট-রেডি ভেক্টর ফাইল (AI/EPS)", textEn: "Print-Ready Vector Files (AI)", included: false },
+          { textBn: "প্রিন্ট-রেডি ভেক্টর ফাইল", textEn: "Print-Ready Vector Files", included: false },
           { textBn: "সোশ্যাল মিডিয়া ব্র্যান্ড কিট", textEn: "Social Media Brand Kit", included: false },
           { textBn: "ফুল ব্র্যান্ড গাইডলাইন বুক", textEn: "Full Brand Guideline Book", included: false }
         ]
@@ -754,7 +1063,7 @@ export const pricingData: PricingPlan[] = [
           { textBn: "৩টি প্রিমিয়াম লোগো কনসেপ্ট", textEn: "3 Premium Logo Concepts", included: true },
           { textBn: "৫ বার ডিজাইন রিভিশন", textEn: "5 Design Revisions", included: true },
           { textBn: "কালার প্যালেট ও টাইপোগ্রাফি", textEn: "Color Palette & Typography", included: true },
-          { textBn: "প্রিন্ট-রেডি ভেক্টর ফাইল (AI/EPS/PDF)", textEn: "Print-Ready Vector Files (All)", included: true },
+          { textBn: "প্রিন্ট-রেডি ভেক্টর ফাইল", textEn: "Print-Ready Vector Files", included: true },
           { textBn: "সোশ্যাল মিডিয়া প্রোফাইল কিট", textEn: "Social Media Profile Kit", included: true },
           { textBn: "ফুল ব্র্যান্ড গাইডলাইন বুক", textEn: "Full Brand Guideline Book", included: false }
         ]
