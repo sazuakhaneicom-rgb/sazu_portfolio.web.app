@@ -223,7 +223,6 @@ export default function App() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const statsRef = useRef<HTMLDivElement>(null);
 
   // Scroll progress
@@ -241,23 +240,24 @@ export default function App() {
   // 1. Fetch Global Settings, Testimonials & Pricing on load
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch all data in parallel to save time
-      const [s, tests, pricing] = await Promise.all([
-        loadSettings(),
-        getTestimonials(),
-        getPricingPlans()
-      ]);
-      
-      setGlobalData(s);
-      setFsTestimonials(tests);
-      
-      if (pricing.length > 0) {
-        const sorted = pricing.sort((a, b) => (a.order as number) - (b.order as number));
-        setFsPricing(sorted as unknown as PricingPlan[]);
+      try {
+        // Fetch all data in parallel to save time
+        const [s, tests, pricing] = await Promise.all([
+          loadSettings(),
+          getTestimonials(),
+          getPricingPlans()
+        ]);
+        
+        if (s) setGlobalData(s);
+        if (tests && tests.length > 0) setFsTestimonials(tests);
+        
+        if (pricing && pricing.length > 0) {
+          const sorted = pricing.sort((a, b) => (a.order as number) - (b.order as number));
+          setFsPricing(sorted as unknown as PricingPlan[]);
+        }
+      } catch (err) {
+        console.error("Error loading data:", err);
       }
-      
-      // Remove artificial delay to load instantly
-      setIsLoading(false);
     };
     fetchData();
   }, []);
@@ -326,38 +326,7 @@ export default function App() {
     window.open(`https://wa.me/${globalData.hero.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
-  // ============================================================
-  // LOADING SCREEN
-  // ============================================================
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-[#090514] flex flex-col items-center justify-center z-[9999]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col items-center gap-6"
-        >
-          <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-2xl shadow-purple-600/40">
-            <img src={sazuLogo} alt="Logo" className="w-full h-full object-contain" />
-          </div>
-          <div className="flex gap-2">
-            {[0, 1, 2].map(i => (
-              <motion.div
-                key={i}
-                animate={{ y: [0, -12, 0], opacity: [0.4, 1, 0.4] }}
-                transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.2 }}
-                className="w-2.5 h-2.5 bg-purple-500 rounded-full"
-              />
-            ))}
-          </div>
-          <p className="text-purple-300/60 text-sm font-mono tracking-widest">
-            {lang === 'bn' ? 'লোড হচ্ছে...' : 'Loading...'}
-          </p>
-        </motion.div>
-      </div>
-    );
-  }
+
 
   return (
     <div className={isDarkMode ? 'dark' : ''}>
