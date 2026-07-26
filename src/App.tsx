@@ -149,6 +149,26 @@ function useCounter(target: number, duration = 2000, startAnimation = false) {
 // MAIN APP
 // ============================================================
 
+function StatCard({ stat, statsVisible, idx }: { stat: any, statsVisible: boolean, idx: number }) {
+  const numStr = stat.num.replace(/[^\d]/g, '');
+  const count = useCounter(parseInt(numStr) || 0, 1800, statsVisible);
+  const suffix = stat.num.replace(/[\d]/g, '');
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: idx * 0.1 }}
+      className="text-center"
+    >
+      <div className="text-4xl font-black text-white mb-1">
+        {statsVisible ? count : 0}{suffix}
+      </div>
+      <div className="text-purple-200 text-sm font-medium">{stat.label}</div>
+    </motion.div>
+  );
+}
+
 export default function App() {
   const [lang, setLang] = useState<'bn' | 'en'>(() => {
     const saved = localStorage.getItem('portfolio-lang');
@@ -590,26 +610,9 @@ export default function App() {
         <div ref={statsRef} className="bg-purple-600 dark:bg-purple-700 py-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {stats.map((stat, idx) => {
-                const numStr = stat.num.replace(/[^\d]/g, '');
-                const count = useCounter(parseInt(numStr) || 0, 1800, statsVisible);
-                const suffix = stat.num.replace(/[\d]/g, '');
-                return (
-                  <motion.div
-                    key={testi.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="text-center"
-                  >
-                    <div className="text-4xl font-black text-white mb-1">
-                      {statsVisible ? count : 0}{suffix}
-                    </div>
-                    <div className="text-purple-200 text-sm font-medium">{stat.label}</div>
-                  </motion.div>
-                );
-              })}
+              {stats.map((stat, idx) => (
+                <StatCard key={idx} stat={stat} statsVisible={statsVisible} idx={idx} />
+              ))}
             </div>
           </div>
         </div>
