@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, FormEvent } from 'react';
-import { loadSettings, subscribeToCacheVersion, getTestimonials, GlobalSettings, DEFAULT_SETTINGS, FSTestimonial } from './admin/firestore';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import {
   Sparkles,
@@ -155,12 +154,6 @@ export default function App() {
     return (saved === 'en' || saved === 'bn') ? saved : 'bn';
   });
 
-  
-  // Dynamic Data States
-  const [globalData, setGlobalData] = useState<GlobalSettings>(DEFAULT_SETTINGS);
-  const [fsTestimonials, setFsTestimonials] = useState<FSTestimonial[]>([]);
-  const [initialCacheVersion, setInitialCacheVersion] = useState<number | null>(null);
-
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const saved = localStorage.getItem('portfolio-dark-mode');
     return saved !== 'false';
@@ -191,31 +184,11 @@ export default function App() {
   useEffect(() => { localStorage.setItem('portfolio-lang', lang); }, [lang]);
   useEffect(() => { localStorage.setItem('portfolio-dark-mode', String(isDarkMode)); }, [isDarkMode]);
 
-  
-  // 1. Fetch Global Settings & Testimonials on load
+  // Loading screen
   useEffect(() => {
-    const fetchData = async () => {
-      const s = await loadSettings();
-      setGlobalData(s);
-      const tests = await getTestimonials();
-      setFsTestimonials(tests);
-      setTimeout(() => setIsLoading(false), 1200);
-    };
-    fetchData();
+    const timer = setTimeout(() => setIsLoading(false), 1800);
+    return () => clearTimeout(timer);
   }, []);
-
-  // 2. Subscribe to Force Refresh Cache System
-  useEffect(() => {
-    const unsub = subscribeToCacheVersion((newVersion) => {
-      if (initialCacheVersion === null) {
-        setInitialCacheVersion(newVersion);
-      } else if (newVersion !== initialCacheVersion) {
-        window.location.reload();
-      }
-    });
-    return () => unsub();
-  }, [initialCacheVersion]);
-
 
   // Stats observer
   useEffect(() => {
@@ -228,16 +201,11 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  const stats = [
-    { num: lang === 'bn' ? globalData.stats.yearsBn : globalData.stats.yearsEn, label: lang === 'bn' ? 'বছরের অভিজ্ঞতা' : 'Years Experience' },
-    { num: lang === 'bn' ? globalData.stats.projectsBn : globalData.stats.projectsEn, label: lang === 'bn' ? 'সম্পন্ন প্রজেক্ট' : 'Projects Completed' },
-    { num: lang === 'bn' ? globalData.stats.clientsBn : globalData.stats.clientsEn, label: lang === 'bn' ? 'সন্তুষ্ট ক্লায়েন্ট' : 'Happy Clients' },
-    { num: lang === 'bn' ? globalData.stats.sectorsBn : globalData.stats.sectorsEn, label: lang === 'bn' ? 'ইন্ডাস্ট্রি সেক্টর' : 'Industry Sectors' },
-  ];
+  const stats = lang === 'bn' ? statsBn : statsEn;
   const services = lang === 'bn' ? servicesBn : servicesEn;
   const projects = projectsData;
   const timeline = lang === 'bn' ? timelineBn : timelineEn;
-  const currentTestimonials = fsTestimonials.filter(tt => tt.lang === lang).sort((a, b) => a.order - b.order);
+  const testimonials = lang === 'bn' ? testimonialsBn : testimonialsEn;
 
   const filteredProjects = projects.filter(p =>
     projectFilter === 'all' || p.category === projectFilter
@@ -253,7 +221,7 @@ export default function App() {
     const messageBody = lang === 'bn'
       ? `হ্যালো সাজু! আমি আপনার পোর্টফোলিও থেকে যোগাযোগ করছি।\n\nনাম: ${formName}\nইমেইল: ${formEmail}\nবিষয়: ${formSubject || 'সাধারণ জিজ্ঞাসা'}\n\nবার্তা:\n${formMsg}\n\nধন্যবাদ!`
       : `Hello Sazu! I'm reaching out from your portfolio.\n\nName: ${formName}\nEmail: ${formEmail}\nSubject: ${formSubject || 'General Inquiry'}\n\nMessage:\n${formMsg}\n\nThank you!`;
-    const waUrl = `https://wa.me/${globalData.contact.whatsappNumber}?text=${encodeURIComponent(messageBody)}`;
+    const waUrl = `https://wa.me/8801772570807?text=${encodeURIComponent(messageBody)}`;
     setTimeout(() => window.open(waUrl, '_blank'), 500);
   };
 
@@ -265,7 +233,7 @@ export default function App() {
     const msg = lang === 'bn'
       ? `হ্যালো সাজু! আমি আপনার পোর্টফোলিও থেকে নক করছি। আমি "${categoryTitle}" সার্ভিসের "${tierName}" প্যাকেজটি অর্ডার করতে চাই (মূল্য: ${price})। আলোচনা করতে পারি?`
       : `Hello Sazu! From your portfolio — I'd like to order the "${tierName}" package for "${categoryTitle}" service (Price: ${price}). Can we discuss?`;
-    window.open(`https://wa.me/${globalData.hero.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/8801772570807?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   // ============================================================
@@ -523,8 +491,8 @@ export default function App() {
                   {t.hero.ctaSecondary}
                 </a>
                 <a
-                  href={globalData.hero.resumeUrl}
-                  target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 py-3.5 bg-slate-100 dark:bg-purple-950/40 text-slate-700 dark:text-purple-200 font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-purple-900/30 transition-all text-sm border border-slate-200 dark:border-purple-900/40"
+                  href="#"
+                  className="flex items-center gap-2 px-5 py-3.5 bg-slate-100 dark:bg-purple-950/40 text-slate-700 dark:text-purple-200 font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-purple-900/30 transition-all text-sm border border-slate-200 dark:border-purple-900/40"
                 >
                   <Download className="w-4 h-4" />
                   {t.hero.ctaResume}
@@ -596,7 +564,7 @@ export default function App() {
                 const suffix = stat.num.replace(/[\d]/g, '');
                 return (
                   <motion.div
-                    key={testi.id}
+                    key={idx}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -653,11 +621,11 @@ export default function App() {
 
                 <div
                   className="prose prose-slate dark:prose-invert text-slate-600 dark:text-purple-200/80 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: lang === 'bn' ? globalData.about.bioParagraph1Bn : globalData.about.bioParagraph1En }}
+                  dangerouslySetInnerHTML={{ __html: t.about.bioParagraph1 }}
                 />
                 <div
                   className="prose prose-slate dark:prose-invert text-slate-600 dark:text-purple-200/80 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: lang === 'bn' ? globalData.about.bioParagraph2Bn : globalData.about.bioParagraph2En }}
+                  dangerouslySetInnerHTML={{ __html: t.about.bioParagraph2 }}
                 />
 
                 {/* Quick info chips */}
@@ -1052,7 +1020,7 @@ export default function App() {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {currentTestimonials.map((testi, idx) => (
+              {testimonials.map((testi, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 30 }}
@@ -1208,9 +1176,9 @@ export default function App() {
                 className="space-y-6"
               >
                 {[
-                  { icon: <Mail className="w-5 h-5" />, label: t.contact.emailLabel, value: globalData.contact.email, href: `mailto:${globalData.contact.email}` },
-                  { icon: <Phone className="w-5 h-5" />, label: t.contact.phoneLabel, value: globalData.contact.phone, href: `tel:${globalData.contact.phone.replace(/[\s-]/g, '')}` },
-                  { icon: <MapPin className="w-5 h-5" />, label: t.contact.locLabel, value: lang === 'bn' ? globalData.contact.locationBn : globalData.contact.locationEn, href: "#" },
+                  { icon: <Mail className="w-5 h-5" />, label: t.contact.emailLabel, value: "freelancersazu03@gmail.com", href: "mailto:freelancersazu03@gmail.com" },
+                  { icon: <Phone className="w-5 h-5" />, label: t.contact.phoneLabel, value: "+880 177-2570807", href: "tel:+8801772570807" },
+                  { icon: <MapPin className="w-5 h-5" />, label: t.contact.locLabel, value: lang === 'bn' ? "কুড়িগ্রাম, রংপুর, বাংলাদেশ" : "Kurigram, Rangpur, Bangladesh", href: "#" },
                 ].map((info, i) => (
                   <motion.a
                     key={i}
@@ -1239,7 +1207,7 @@ export default function App() {
                   </div>
                   <div>
                     <span className="block text-[10px] uppercase text-emerald-600/50 font-bold tracking-wider">WhatsApp</span>
-                    <a href={`https://wa.me/${globalData.contact.whatsappNumber}`} target="_blank" rel="noreferrer" className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">+{globalData.contact.whatsappNumber}</a>
+                    <a href="https://wa.me/8801772570807" target="_blank" rel="noreferrer" className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">+880 177-2570807</a>
                   </div>
                 </motion.div>
 
@@ -1248,12 +1216,12 @@ export default function App() {
                   <p className="text-sm font-bold text-slate-700 dark:text-purple-200 mb-4">{t.contact.socialTitle}</p>
                   <div className="grid grid-cols-3 gap-3">
                     {[
-                      { icon: <Facebook className="w-5 h-5" />, label: "Facebook", href: globalData.social.facebook, color: "hover:bg-blue-600 hover:border-blue-600" },
-                      { icon: <Instagram className="w-5 h-5" />, label: "Instagram", href: globalData.social.instagram, color: "hover:bg-pink-600 hover:border-pink-600" },
-                      { icon: <Linkedin className="w-5 h-5" />, label: "LinkedIn", href: globalData.social.linkedin, color: "hover:bg-sky-700 hover:border-sky-700" },
-                      { icon: <Github className="w-5 h-5" />, label: "GitHub", href: globalData.social.github, color: "hover:bg-slate-700 hover:border-slate-700" },
-                      { icon: <Send className="w-5 h-5" />, label: "Telegram", href: globalData.social.telegram, color: "hover:bg-sky-500 hover:border-sky-500" },
-                      { icon: <MessageCircle className="w-5 h-5" />, label: "Messenger", href: globalData.social.messenger, color: "hover:bg-indigo-600 hover:border-indigo-600" },
+                      { icon: <Facebook className="w-5 h-5" />, label: "Facebook", href: "https://www.facebook.com/sazu807", color: "hover:bg-blue-600 hover:border-blue-600" },
+                      { icon: <Instagram className="w-5 h-5" />, label: "Instagram", href: "#", color: "hover:bg-pink-600 hover:border-pink-600" },
+                      { icon: <Linkedin className="w-5 h-5" />, label: "LinkedIn", href: "#", color: "hover:bg-sky-700 hover:border-sky-700" },
+                      { icon: <Github className="w-5 h-5" />, label: "GitHub", href: "#", color: "hover:bg-slate-700 hover:border-slate-700" },
+                      { icon: <Send className="w-5 h-5" />, label: "Telegram", href: "#", color: "hover:bg-sky-500 hover:border-sky-500" },
+                      { icon: <MessageCircle className="w-5 h-5" />, label: "Messenger", href: "https://m.me/sazu807", color: "hover:bg-indigo-600 hover:border-indigo-600" },
                     ].map(social => (
                       <a
                         key={social.label}
