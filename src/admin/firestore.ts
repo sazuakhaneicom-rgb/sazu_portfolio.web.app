@@ -11,6 +11,7 @@ import {
   deleteDoc,
   serverTimestamp,
 } from 'firebase/firestore';
+import { pricingData } from '../data';
 
 // ============================================================
 // DEFAULT SETTINGS STRUCTURE

@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef, FormEvent } from 'react';
-import { loadSettings, subscribeToCacheVersion, getTestimonials, GlobalSettings, DEFAULT_SETTINGS, FSTestimonial } from './admin/firestore';
+import {
+  loadSettings,
+  subscribeToCacheVersion,
+  getTestimonials,
+  getPricingPlans,
+  GlobalSettings,
+  DEFAULT_SETTINGS,
+  FSTestimonial
+} from './admin/firestore';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import {
   Sparkles,
@@ -59,7 +67,8 @@ import {
   toolsList,
   testimonialsBn,
   testimonialsEn,
-  pricingData,
+  pricingData as defaultPricing,
+  PricingPlan
 } from './data';
 import sazuProfile from './assets/sazu_profile.jpg';
 import sazuLogo from './assets/sazu_logo.png';
@@ -179,6 +188,7 @@ export default function App() {
   // Dynamic Data States
   const [globalData, setGlobalData] = useState<GlobalSettings>(DEFAULT_SETTINGS);
   const [fsTestimonials, setFsTestimonials] = useState<FSTestimonial[]>([]);
+  const [fsPricing, setFsPricing] = useState<PricingPlan[]>(defaultPricing);
   const [initialCacheVersion, setInitialCacheVersion] = useState<number | null>(null);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -212,13 +222,18 @@ export default function App() {
   useEffect(() => { localStorage.setItem('portfolio-dark-mode', String(isDarkMode)); }, [isDarkMode]);
 
   
-  // 1. Fetch Global Settings & Testimonials on load
+  // 1. Fetch Global Settings, Testimonials & Pricing on load
   useEffect(() => {
     const fetchData = async () => {
       const s = await loadSettings();
       setGlobalData(s);
       const tests = await getTestimonials();
       setFsTestimonials(tests);
+      const pricing = await getPricingPlans();
+      if (pricing.length > 0) {
+        const sorted = pricing.sort((a, b) => (a.order as number) - (b.order as number));
+        setFsPricing(sorted as unknown as PricingPlan[]);
+      }
       setTimeout(() => setIsLoading(false), 1200);
     };
     fetchData();
@@ -1110,7 +1125,7 @@ export default function App() {
             </motion.div>
 
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {pricingData.map(plan => (
+              {fsPricing.map(plan => (
                 <button
                   key={plan.categoryId}
                   onClick={() => setActivePricingCategory(plan.categoryId)}
@@ -1127,7 +1142,7 @@ export default function App() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               <AnimatePresence mode="wait">
-                {pricingData.find(p => p.categoryId === activePricingCategory)?.tiers.map((tier, idx) => (
+                {fsPricing.find(p => p.categoryId === activePricingCategory)?.tiers.map((tier, idx) => (
                   <motion.div
                     key={tier.nameEn + activePricingCategory}
                     initial={{ opacity: 0, y: 20 }}
@@ -1168,7 +1183,7 @@ export default function App() {
                     <button
                       onClick={() => handleOrderWhatsApp(
                         lang === 'bn' ? tier.nameBn : tier.nameEn,
-                        lang === 'bn' ? pricingData.find(p => p.categoryId === activePricingCategory)?.titleBn || '' : pricingData.find(p => p.categoryId === activePricingCategory)?.titleEn || '',
+                        lang === 'bn' ? fsPricing.find(p => p.categoryId === activePricingCategory)?.titleBn || '' : fsPricing.find(p => p.categoryId === activePricingCategory)?.titleEn || '',
                         lang === 'bn' ? tier.priceBn : tier.priceEn
                       )}
                       className={`w-full py-3.5 rounded-xl font-semibold text-sm flex justify-center items-center gap-2 transition-all ${
