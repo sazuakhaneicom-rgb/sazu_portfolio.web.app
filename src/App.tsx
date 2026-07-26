@@ -241,16 +241,23 @@ export default function App() {
   // 1. Fetch Global Settings, Testimonials & Pricing on load
   useEffect(() => {
     const fetchData = async () => {
-      const s = await loadSettings();
+      // Fetch all data in parallel to save time
+      const [s, tests, pricing] = await Promise.all([
+        loadSettings(),
+        getTestimonials(),
+        getPricingPlans()
+      ]);
+      
       setGlobalData(s);
-      const tests = await getTestimonials();
       setFsTestimonials(tests);
-      const pricing = await getPricingPlans();
+      
       if (pricing.length > 0) {
         const sorted = pricing.sort((a, b) => (a.order as number) - (b.order as number));
         setFsPricing(sorted as unknown as PricingPlan[]);
       }
-      setTimeout(() => setIsLoading(false), 1200);
+      
+      // Remove artificial delay to load instantly
+      setIsLoading(false);
     };
     fetchData();
   }, []);
