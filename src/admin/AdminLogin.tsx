@@ -29,8 +29,10 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
         setError('ইমেইল বা পাসওয়ার্ড ভুল। আবার চেষ্টা করুন।');
       } else if (code === 'auth/too-many-requests') {
         setError('অনেকবার ভুল চেষ্টা করা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।');
+      } else if (code === 'auth/operation-not-allowed') {
+        setError('Email/Password লগইন সিস্টেম Firebase Console-এ চালু করা হয়নি।');
       } else {
-        setError('লগইন ব্যর্থ হয়েছে। ইন্টারনেট সংযোগ চেক করুন।');
+        setError(`লগইন ব্যর্থ হয়েছে। Error: ${code || (err as Error).message}`);
       }
     } finally {
       setLoading(false);
