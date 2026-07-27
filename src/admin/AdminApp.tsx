@@ -396,10 +396,7 @@ export default function AdminApp() {
               {/* PRICING */}
               {activeSection === 'pricing' && (
                 <motion.div key="pricing" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                  <PricingManager
-                    data={settings}
-                    onSave={(data) => handleSave('pricing' as keyof GlobalSettings, data)}
-                  />
+                  <PricingManager />
                 </motion.div>
               )}
             </AnimatePresence>

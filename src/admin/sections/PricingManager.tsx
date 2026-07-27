@@ -116,7 +116,7 @@ export default function PricingManager() {
         ))}
 
         <div className="mt-8">
-          <SaveButton saving={saving} success={saveSuccess} onClick={handleSave} />
+          <SaveButton onClick={handleSave} loading={saving} />
         </div>
       </div>
     </div>

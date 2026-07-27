@@ -584,7 +584,7 @@ export default function App() {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-[2.5rem] blur-2xl scale-110" />
                 <div className="relative w-72 h-72 sm:w-96 sm:h-96 rounded-[2.5rem] overflow-hidden border-2 border-purple-200/50 dark:border-purple-800/30 shadow-2xl shadow-purple-600/20">
-                  <img src={sazuProfile} alt="M. Asaduzzaman Sazu" className="w-full h-full object-cover" />
+                  <img src={globalData.hero.profilePictureUrl || sazuProfile} alt="M. Asaduzzaman Sazu" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent" />
                 </div>
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-purple-950/90 backdrop-blur-md rounded-2xl px-5 py-3 shadow-xl border border-purple-100 dark:border-purple-800/30 text-center w-56">
@@ -649,7 +649,7 @@ export default function App() {
               >
                 <div className="flex items-start gap-5">
                   <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-purple-100 dark:border-purple-800/40 shadow-lg flex-shrink-0">
-                    <img src={sazuProfile} alt="Sazu" className="w-full h-full object-cover" />
+                    <img src={globalData.hero.profilePictureUrl || sazuProfile} alt="Sazu" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white">M. Asaduzzaman Sazu</h3>

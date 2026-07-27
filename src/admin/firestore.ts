@@ -20,6 +20,7 @@ export interface GlobalSettings {
   hero: {
     whatsappNumber: string;
     resumeUrl: string;
+    profilePictureUrl: string;
   };
   contact: {
     email: string;
@@ -62,6 +63,7 @@ export const DEFAULT_SETTINGS: GlobalSettings = {
   hero: {
     whatsappNumber: '8801772570807',
     resumeUrl: '#',
+    profilePictureUrl: '',
   },
   contact: {
     email: 'freelancersazu03@gmail.com',
