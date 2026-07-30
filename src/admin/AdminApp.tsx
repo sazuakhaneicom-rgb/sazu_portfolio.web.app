@@ -27,6 +27,9 @@ import {
   CheckCircle2,
   ChevronRight,
   Wifi,
+  Briefcase,
+  Layers,
+  Award,
 } from 'lucide-react';
 import ContactSettings from './sections/ContactSettings';
 import SocialSettings from './sections/SocialSettings';
@@ -35,9 +38,13 @@ import HeroSettings from './sections/HeroSettings';
 import AboutSettings from './sections/AboutSettings';
 import TestimonialsManager from './sections/TestimonialsManager';
 import PricingManager from './sections/PricingManager';
+import ProjectsManager from './sections/ProjectsManager';
+import JourneyManager from './sections/JourneyManager';
+import SkillsManager from './sections/SkillsManager';
+import ServicesManager from './sections/ServicesManager';
 import sazuLogo from '../assets/sazu_logo.png';
 
-type Section = 'dashboard' | 'hero' | 'contact' | 'social' | 'stats' | 'about' | 'testimonials' | 'pricing';
+type Section = 'dashboard' | 'hero' | 'contact' | 'social' | 'stats' | 'about' | 'testimonials' | 'pricing' | 'projects' | 'journey' | 'skills' | 'services';
 
 export default function AdminApp() {
   const [user, setUser] = useState<User | null>(null);
@@ -114,11 +121,15 @@ export default function AdminApp() {
 
   const navItems: { id: Section; label: string; icon: React.ReactNode; desc: string }[] = [
     { id: 'dashboard', label: 'ড্যাশবোর্ড', icon: <Sparkles className="w-4 h-4" />, desc: 'Overview' },
-    { id: 'hero', label: 'হিরো সেকশন', icon: <UserIcon className="w-4 h-4" />, desc: 'WhatsApp, Resume' },
+    { id: 'hero', label: 'হিরো সেকশন', icon: <UserIcon className="w-4 h-4" />, desc: 'Photo, WhatsApp, Resume' },
     { id: 'contact', label: 'যোগাযোগ তথ্য', icon: <Phone className="w-4 h-4" />, desc: 'Email, Phone, Location' },
     { id: 'social', label: 'সোশ্যাল লিংক', icon: <Globe className="w-4 h-4" />, desc: 'FB, IG, LI, GH...' },
     { id: 'stats', label: 'স্ট্যাটিস্টিক্স', icon: <BarChart2 className="w-4 h-4" />, desc: 'Counters & Numbers' },
     { id: 'about', label: 'পরিচিতি / Bio', icon: <FileText className="w-4 h-4" />, desc: 'About paragraphs' },
+    { id: 'services', label: 'সার্ভিস সেকশন', icon: <Settings className="w-4 h-4" />, desc: 'Manage Services' },
+    { id: 'projects', label: 'প্রজেক্ট গ্যালারি', icon: <Briefcase className="w-4 h-4" />, desc: 'Add / Edit Projects' },
+    { id: 'journey', label: 'জার্নি টাইমলাইন', icon: <Layers className="w-4 h-4" />, desc: 'Career Timeline' },
+    { id: 'skills', label: 'স্কিল ম্যানেজার', icon: <Award className="w-4 h-4" />, desc: 'Skills & Levels' },
     { id: 'testimonials', label: 'রিভিউ / Testimonials', icon: <MessageSquare className="w-4 h-4" />, desc: 'Client reviews' },
     { id: 'pricing', label: 'মূল্য / Pricing', icon: <DollarSign className="w-4 h-4" />, desc: 'Package prices' },
   ];
@@ -383,6 +394,34 @@ export default function AdminApp() {
                     data={settings.about}
                     onSave={(data) => handleSave('about', data)}
                   />
+                </motion.div>
+              )}
+
+              {/* SERVICES */}
+              {activeSection === 'services' && (
+                <motion.div key="services" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                  <ServicesManager />
+                </motion.div>
+              )}
+
+              {/* PROJECTS */}
+              {activeSection === 'projects' && (
+                <motion.div key="projects" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                  <ProjectsManager />
+                </motion.div>
+              )}
+
+              {/* JOURNEY */}
+              {activeSection === 'journey' && (
+                <motion.div key="journey" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                  <JourneyManager />
+                </motion.div>
+              )}
+
+              {/* SKILLS */}
+              {activeSection === 'skills' && (
+                <motion.div key="skills" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                  <SkillsManager />
                 </motion.div>
               )}
 

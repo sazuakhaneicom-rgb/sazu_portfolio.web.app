@@ -4,9 +4,15 @@ import {
   subscribeToCacheVersion,
   getTestimonials,
   getPricingPlans,
+  getProjects,
+  getJourney,
   GlobalSettings,
   DEFAULT_SETTINGS,
-  FSTestimonial
+  FSTestimonial,
+  FSProject,
+  FSJourneyItem,
+  FSService,
+  getServices,
 } from './admin/firestore';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import {
@@ -205,6 +211,9 @@ export default function App() {
   const [globalData, setGlobalData] = useState<GlobalSettings>(DEFAULT_SETTINGS);
   const [fsTestimonials, setFsTestimonials] = useState<FSTestimonial[]>([]);
   const [fsPricing, setFsPricing] = useState<PricingPlan[]>(defaultPricing);
+  const [fsProjects, setFsProjects] = useState<FSProject[]>([]);
+  const [fsJourney, setFsJourney] = useState<FSJourneyItem[]>([]);
+  const [fsServices, setFsServices] = useState<FSService[]>([]);
   const [initialCacheVersion, setInitialCacheVersion] = useState<number | null>(null);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -237,24 +246,30 @@ export default function App() {
   useEffect(() => { localStorage.setItem('portfolio-dark-mode', String(isDarkMode)); }, [isDarkMode]);
 
   
-  // 1. Fetch Global Settings, Testimonials & Pricing on load
+  // 1. Fetch Global Settings, Testimonials, Pricing, Projects & Journey on load
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch all data in parallel to save time
-        const [s, tests, pricing] = await Promise.all([
+        const [s, tests, pricing, proj, journey, servicesData] = await Promise.all([
           loadSettings(),
           getTestimonials(),
-          getPricingPlans()
+          getPricingPlans(),
+          getProjects(),
+          getJourney(),
+          getServices(),
         ]);
-        
+
         if (s) setGlobalData(s);
         if (tests && tests.length > 0) setFsTestimonials(tests);
-        
+
         if (pricing && pricing.length > 0) {
           const sorted = pricing.sort((a, b) => (a.order as number) - (b.order as number));
           setFsPricing(sorted as unknown as PricingPlan[]);
         }
+
+        if (proj && proj.length > 0) setFsProjects(proj);
+        if (journey && journey.length > 0) setFsJourney(journey);
+        if (servicesData && servicesData.length > 0) setFsServices(servicesData as FSService[]);
       } catch (err) {
         console.error("Error loading data:", err);
       }
@@ -292,10 +307,29 @@ export default function App() {
     { num: lang === 'bn' ? globalData.stats.clientsBn : globalData.stats.clientsEn, label: lang === 'bn' ? 'সন্তুষ্ট ক্লায়েন্ট' : 'Happy Clients' },
     { num: lang === 'bn' ? globalData.stats.sectorsBn : globalData.stats.sectorsEn, label: lang === 'bn' ? 'ইন্ডাস্ট্রি সেক্টর' : 'Industry Sectors' },
   ];
-  const services = lang === 'bn' ? servicesBn : servicesEn;
-  const projects = projectsData;
-  const timeline = lang === 'bn' ? timelineBn : timelineEn;
-  const currentTestimonials = fsTestimonials.filter(tt => tt.lang === lang).sort((a, b) => a.order - b.order);
+  const services = fsServices.length > 0 ? fsServices.map(s => ({ title: lang === 'bn' ? s.titleBn : s.titleEn, icon: s.icon, items: s.items.map((i: any) => ({ title: lang === 'bn' ? i.title : i.titleEn, desc: lang === 'bn' ? i.desc : i.descEn, icon: i.icon })) })) : (lang === 'bn' ? servicesBn : servicesEn);
+  const projects = fsProjects.length > 0 ? fsProjects.map(p => ({
+    id: p.id ?? '',
+    title: p.titleBn,
+    titleEn: p.titleEn,
+    desc: p.descBn,
+    descEn: p.descEn,
+    category: p.category,
+    tag: p.tag,
+    tagEn: p.tagEn,
+    metric: p.metric,
+    metricEn: p.metricEn,
+    thumbClass: 'Briefcase',
+    bgGradient: p.bgGradient,
+    technologies: p.technologies ? p.technologies.split(',').map(t => t.trim()) : [],
+    features: [],
+    liveUrl: p.liveUrl,
+    githubUrl: p.githubUrl,
+    mockupType: 'app' as const,
+    imageUrl: p.imageUrl,
+  })) : projectsData;
+
+  const journey = fsJourney.length > 0 ? fsJourney : journeyData;
 
   const filteredProjects = projects.filter(p =>
     projectFilter === 'all' || p.category === projectFilter
@@ -694,7 +728,7 @@ export default function App() {
                 <div className="relative">
                   <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-purple-100 dark:bg-purple-900/40" />
                   <div className="space-y-8">
-                    {journeyData.map((item, idx) => (
+                    {journey.map((item: any, idx: number) => (
                       <motion.div
                         key={idx}
                         initial={{ opacity: 0, x: 20 }}
@@ -984,7 +1018,7 @@ export default function App() {
             <div className="max-w-3xl mx-auto relative">
               <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-600 via-purple-300 to-transparent dark:from-purple-600 dark:via-purple-900 dark:to-transparent" />
               <div className="space-y-12">
-                {timeline.map((item, idx) => (
+                {(lang === 'bn' ? timelineBn : timelineEn).map((item, idx) => (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, x: -30 }}
@@ -1062,7 +1096,7 @@ export default function App() {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {currentTestimonials.map((testi, idx) => (
+              {fsTestimonials.filter(tt => tt.lang === lang).sort((a, b) => a.order - b.order).map((testi, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 30 }}
