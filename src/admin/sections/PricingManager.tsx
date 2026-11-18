@@ -1,26 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { DollarSign, Save } from 'lucide-react';
-import { AdminCard, SectionHeader, SaveButton } from '../components';
+import { AdminCard, SectionHeader, SaveButton, AdminError, adminErrorMessage } from '../components';
 import { getPricingPlans, savePricingPlan } from '../firestore';
 import { pricingData as defaultPricing, PricingPlan } from '../../data';
 
 export default function PricingManager() {
   const [plans, setPlans] = useState<PricingPlan[]>([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     async function load() {
-      const fsPlans = await getPricingPlans();
-      if (fsPlans.length > 0) {
-        // We assume fsPlans matched PricingPlan structure
-        const sorted = fsPlans.sort((a, b) => (a.order as number) - (b.order as number));
-        setPlans(sorted as unknown as PricingPlan[]);
-      } else {
+      try {
+        const fsPlans = await getPricingPlans();
+        if (fsPlans.length > 0) {
+          // We assume fsPlans matched PricingPlan structure
+          const sorted = fsPlans.sort((a, b) => (a.order as number) - (b.order as number));
+          setPlans(sorted as unknown as PricingPlan[]);
+        } else {
+          setPlans(defaultPricing);
+        }
+      } catch (e) {
+        // আগে এই এরর unhandled rejection হয়ে চুপচাপ হারিয়ে যেত
+        console.error('Pricing load failed:', e);
+        setError(adminErrorMessage(e));
         setPlans(defaultPricing);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     load();
   }, []);
@@ -31,21 +39,15 @@ export default function PricingManager() {
     setPlans(newPlans);
   };
 
+  // এরর আর গিলে ফেলা হয় না — SaveButton ধরে ব্যবহারকারীকে কারণ দেখায়।
   const handleSave = async () => {
-    setSaving(true);
     setSaveSuccess(false);
-    try {
-      // Save each category as a document
-      for (let i = 0; i < plans.length; i++) {
-        const plan = plans[i];
-        await savePricingPlan(plan.categoryId, { ...plan, order: i });
-      }
-      setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 3000);
-    } catch (e) {
-      console.error(e);
+    for (let i = 0; i < plans.length; i++) {
+      const plan = plans[i];
+      await savePricingPlan(plan.categoryId, { ...plan, order: i });
     }
-    setSaving(false);
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 3000);
   };
 
   if (loading) return <div className="text-white p-4">Loading Pricing...</div>;
@@ -53,6 +55,8 @@ export default function PricingManager() {
   return (
     <div>
       <SectionHeader title="মূল্য / Pricing" subtitle="আপনার সার্ভিসের প্যাকেজ ও মূল্য পরিবর্তন করুন" icon={<DollarSign className="w-5 h-5" />} />
+
+      {error && <div className="mb-4 max-w-4xl"><AdminError message={error} onDismiss={() => setError('')} /></div>}
       <div className="space-y-6 max-w-4xl">
         {plans.map((category, catIdx) => (
           <AdminCard key={category.categoryId}>
@@ -116,7 +120,7 @@ export default function PricingManager() {
         ))}
 
         <div className="mt-8">
-          <SaveButton onClick={handleSave} loading={saving} />
+          <SaveButton onClick={handleSave} />
         </div>
       </div>
     </div>

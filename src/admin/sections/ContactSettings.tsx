@@ -33,7 +33,7 @@ export default function ContactSettings({ data, onSave }: Props) {
           </div>
         </AdminCard>
 
-        <SaveButton onClick={async () => { setSaving(true); await onSave(form); setSaving(false); }} loading={saving} />
+        <SaveButton onClick={() => onSave(form)} />
       </div>
     </div>
   );

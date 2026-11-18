@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Briefcase, Plus, Trash2, ChevronUp, ChevronDown, Edit2, Check, X, ExternalLink } from 'lucide-react';
-import { SectionHeader, AdminCard, SaveButton } from '../components';
+import { SectionHeader, AdminCard, SaveButton, AdminError, adminErrorMessage } from '../components';
 import { getProjects, addProject, updateProject, deleteProject, FSProject } from '../firestore';
 
 const EMPTY_PROJECT: Omit<FSProject, 'id'> = {
@@ -26,6 +26,7 @@ export default function ProjectsManager() {
   const [addForm, setAddForm] = useState({ ...EMPTY_PROJECT });
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState('');
+  const [error, setError] = useState('');
 
   const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(''), 3000); };
 
@@ -33,47 +34,85 @@ export default function ProjectsManager() {
 
   const load = async () => {
     setLoading(true);
-    const data = await getProjects();
-    setProjects(data);
-    setLoading(false);
+    try {
+      const data = await getProjects({ throwOnError: true });
+      setProjects(data);
+      setError('');
+    } catch (e) {
+      console.error('Projects load failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAdd = async () => {
     if (!addForm.titleBn || !addForm.titleEn) return;
     setSaving(true);
-    await addProject({ ...addForm, order: projects.length });
-    await load();
-    setAddForm({ ...EMPTY_PROJECT });
-    setShowAdd(false);
-    setSaving(false);
-    showToast('✅ প্রজেক্ট যোগ হয়েছে!');
+    setError('');
+    try {
+      await addProject({ ...addForm, order: projects.length });
+      await load();
+      setAddForm({ ...EMPTY_PROJECT });
+      setShowAdd(false);
+      showToast('✅ প্রজেক্ট যোগ হয়েছে!');
+    } catch (e) {
+      console.error('Project add failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleUpdate = async (id: string) => {
     setSaving(true);
-    await updateProject(id, editForm);
-    await load();
-    setEditingId(null);
-    setEditForm({});
-    setSaving(false);
-    showToast('✅ আপডেট হয়েছে!');
+    setError('');
+    try {
+      await updateProject(id, editForm);
+      await load();
+      setEditingId(null);
+      setEditForm({});
+      showToast('✅ আপডেট হয়েছে!');
+    } catch (e) {
+      console.error('Project update failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`"${title}" প্রজেক্টটি মুছে ফেলবেন?`)) return;
-    await deleteProject(id);
-    await load();
-    showToast('🗑️ মুছে ফেলা হয়েছে!');
+    setError('');
+    try {
+      await deleteProject(id);
+      await load();
+      showToast('🗑️ মুছে ফেলা হয়েছে!');
+    } catch (e) {
+      console.error('Project delete failed:', e);
+      setError(adminErrorMessage(e));
+    }
   };
 
+  /**
+   * আগে দুটো আইটেমের order পরস্পর বদল করা হত। কিন্তু একাধিক প্রজেক্টের
+   * order সমান হলে (যেমন সবগুলোই 0 বা undefined) বদলে কিছুই হত না —
+   * উপর/নিচ বাটন চাপলে কোনো পরিবর্তন দেখা যেত না। এখন নতুন সাজানো
+   * তালিকার অবস্থান (index) থেকেই order নতুন করে বসানো হয়।
+   */
   const handleMove = async (idx: number, dir: 'up' | 'down') => {
-    const arr = [...projects];
     const swapIdx = dir === 'up' ? idx - 1 : idx + 1;
-    if (swapIdx < 0 || swapIdx >= arr.length) return;
-    const a = arr[idx], b = arr[swapIdx];
-    await updateProject(a.id!, { order: b.order });
-    await updateProject(b.id!, { order: a.order });
-    await load();
+    if (swapIdx < 0 || swapIdx >= projects.length) return;
+    const arr = [...projects];
+    [arr[idx], arr[swapIdx]] = [arr[swapIdx], arr[idx]];
+    setError('');
+    try {
+      await Promise.all(arr.map((p, i) => updateProject(p.id!, { order: i })));
+      await load();
+    } catch (e) {
+      console.error('Project reorder failed:', e);
+      setError(adminErrorMessage(e));
+    }
   };
 
   const set = (key: keyof typeof addForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
@@ -97,6 +136,8 @@ export default function ProjectsManager() {
           {toast}
         </div>
       )}
+
+      {error && <div className="mb-4"><AdminError message={error} onDismiss={() => setError('')} /></div>}
 
       {/* Add Button */}
       <div className="mb-6">

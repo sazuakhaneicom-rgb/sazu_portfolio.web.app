@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Award, Plus, Trash2, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
-import { SectionHeader, AdminCard, SaveButton } from '../components';
+import { SectionHeader, AdminCard, SaveButton, AdminError, adminErrorMessage } from '../components';
 import { getSkillCategories, saveSkillCategory, FSSkillCategory } from '../firestore';
 import { skillsCategoriesData } from '../../data';
 
@@ -12,6 +12,7 @@ export default function SkillsManager() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [toast, setToast] = useState('');
+  const [error, setError] = useState('');
   const [editForms, setEditForms] = useState<Record<string, FSSkillCategory>>({});
 
   const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(''), 3000); };
@@ -20,7 +21,15 @@ export default function SkillsManager() {
 
   const load = async () => {
     setLoading(true);
-    const data = await getSkillCategories();
+    let data: FSSkillCategory[] = [];
+    try {
+      data = await getSkillCategories({ throwOnError: true });
+    } catch (e) {
+      console.error('Skills load failed:', e);
+      setError(adminErrorMessage(e));
+      setLoading(false);
+      return;
+    }
     if (data.length > 0) {
       setCategories(data);
       const forms: Record<string, FSSkillCategory> = {};
@@ -48,10 +57,17 @@ export default function SkillsManager() {
   const handleSaveCategory = async (cat: FSSkillCategory) => {
     if (!cat.id) return;
     setSaving(cat.id);
-    await saveSkillCategory(cat.id, editForms[cat.id]);
-    await load();
-    setSaving(null);
-    showToast('✅ সেভ হয়েছে!');
+    setError('');
+    try {
+      await saveSkillCategory(cat.id, editForms[cat.id]);
+      await load();
+      showToast('✅ সেভ হয়েছে!');
+    } catch (e) {
+      console.error('Skill save failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      setSaving(null);
+    }
   };
 
   const updateForm = (id: string, key: keyof FSSkillCategory, value: unknown) => {
@@ -95,6 +111,8 @@ export default function SkillsManager() {
       />
 
       {toast && <div className="mb-4 px-4 py-3 bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 rounded-xl text-sm font-semibold">{toast}</div>}
+
+      {error && <div className="mb-4"><AdminError message={error} onDismiss={() => setError('')} /></div>}
 
       <div className="space-y-6">
         {categories.map(cat => {

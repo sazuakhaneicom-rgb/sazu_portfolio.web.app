@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '../firebase-auth';
 import { Lock, Mail, Eye, EyeOff, Sparkles } from 'lucide-react';
 import sazuLogo from '../assets/sazu_logo.png';
 

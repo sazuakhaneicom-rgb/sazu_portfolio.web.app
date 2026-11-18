@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageSquare, Plus, Trash2, Edit2, X, Check } from 'lucide-react';
-import { SectionHeader, SaveButton, AdminField } from '../components';
+import { SectionHeader, SaveButton, AdminField, AdminError, adminErrorMessage } from '../components';
 import { getTestimonials, addTestimonial, updateTestimonial, deleteTestimonial, FSTestimonial } from '../firestore';
 
 export default function TestimonialsManager() {
@@ -10,6 +10,7 @@ export default function TestimonialsManager() {
   const [form, setForm] = useState<Partial<FSTestimonial>>({});
   const [saving, setSaving] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     load();
@@ -17,16 +18,24 @@ export default function TestimonialsManager() {
 
   const load = async () => {
     setLoading(true);
-    const data = await getTestimonials();
-    setTestimonials(data.sort((a, b) => (a.order || 0) - (b.order || 0)));
-    setLoading(false);
+    try {
+      const data = await getTestimonials();
+      setTestimonials(data.sort((a, b) => (a.order || 0) - (b.order || 0)));
+      setError('');
+    } catch (e) {
+      console.error('Testimonials load failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const set = (key: keyof FSTestimonial) => (v: string | number) => setForm(f => ({ ...f, [key]: v }));
 
   const handleSave = async () => {
     if (!form.quote || !form.name || !form.role) return;
-    setSaving(true);
+    setError('');
+    // SaveButton নিজেই স্পিনার ও এরর সামলায়, তাই এখানে throw হতে দেওয়া হচ্ছে
     if (isAdding) {
       await addTestimonial({
         quote: form.quote,
@@ -42,17 +51,22 @@ export default function TestimonialsManager() {
       await updateTestimonial(editingId, { ...form, rating: Number(form.rating) });
     }
     await load();
-    setSaving(false);
     setIsAdding(false);
     setEditingId(null);
     setForm({});
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('সত্যিই ডিলিট করতে চান?')) {
-      setSaving(true);
+    if (!confirm('সত্যিই ডিলিট করতে চান?')) return;
+    setSaving(true);
+    setError('');
+    try {
       await deleteTestimonial(id);
       await load();
+    } catch (e) {
+      console.error('Testimonial delete failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
       setSaving(false);
     }
   };
@@ -65,6 +79,8 @@ export default function TestimonialsManager() {
 
   return (
     <div>
+      {error && <div className="mb-4"><AdminError message={error} onDismiss={() => setError('')} /></div>}
+
       <div className="flex items-center justify-between mb-8">
         <SectionHeader title="রিভিউ / Testimonials" subtitle="ক্লায়েন্টদের রিভিউ ম্যানেজ করুন" icon={<MessageSquare className="w-5 h-5" />} />
         {!isAdding && !editingId && (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { onAuthStateChanged, signOut, User } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '../firebase-auth';
 import AdminLogin from './AdminLogin';
 import {
   GlobalSettings,
@@ -42,6 +42,7 @@ import ProjectsManager from './sections/ProjectsManager';
 import JourneyManager from './sections/JourneyManager';
 import SkillsManager from './sections/SkillsManager';
 import ServicesManager from './sections/ServicesManager';
+import { AdminError, adminErrorMessage } from './components';
 import sazuLogo from '../assets/sazu_logo.png';
 
 type Section = 'dashboard' | 'hero' | 'contact' | 'social' | 'stats' | 'about' | 'testimonials' | 'pricing' | 'projects' | 'journey' | 'skills' | 'services';
@@ -55,6 +56,8 @@ export default function AdminApp() {
   const [refreshing, setRefreshing] = useState(false);
   const [refreshSuccess, setRefreshSuccess] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState('');
+  const [actionError, setActionError] = useState('');
+  const [loadError, setLoadError] = useState('');
 
   // Auth listener
   useEffect(() => {
@@ -67,38 +70,41 @@ export default function AdminApp() {
 
   // Load settings when logged in
   useEffect(() => {
-    if (user) {
-      setSettingsLoading(true);
-      loadSettings().then((s) => {
-        setSettings(s);
-        setSettingsLoading(false);
-      });
-    }
+    if (!user) return;
+    setSettingsLoading(true);
+    setLoadError('');
+    loadSettings({ throwOnError: true })
+      .then((s) => setSettings(s))
+      .catch((e) => {
+        console.error('Settings load failed:', e);
+        setLoadError(adminErrorMessage(e));
+      })
+      .finally(() => setSettingsLoading(false));
   }, [user]);
 
   const handleLogout = async () => {
     await signOut(auth);
   };
 
+  // এররটা আর গিলে ফেলা হয় না — re-throw করা হয় যাতে SaveButton
+  // ব্যবহারকারীকে আসল কারণ দেখাতে পারে।
   const handleSave = async (section: keyof GlobalSettings, data: unknown) => {
-    try {
-      await saveSettings({ [section]: data } as Partial<GlobalSettings>);
-      setSettings(prev => ({ ...prev, [section]: data }));
-      setSaveSuccess(section);
-      setTimeout(() => setSaveSuccess(''), 3000);
-    } catch (e) {
-      console.error('Save failed:', e);
-    }
+    await saveSettings({ [section]: data } as Partial<GlobalSettings>);
+    setSettings(prev => ({ ...prev, [section]: data }));
+    setSaveSuccess(section);
+    setTimeout(() => setSaveSuccess(''), 3000);
   };
 
   const handleForceRefresh = async () => {
     setRefreshing(true);
+    setActionError('');
     try {
       await forceRefreshAllVisitors();
       setRefreshSuccess(true);
       setTimeout(() => setRefreshSuccess(false), 4000);
     } catch (e) {
       console.error('Refresh failed:', e);
+      setActionError(adminErrorMessage(e));
     } finally {
       setRefreshing(false);
     }
@@ -271,6 +277,14 @@ export default function AdminApp() {
         </AnimatePresence>
 
         <div className="p-6 md:p-8">
+          {/* Firestore অ্যাকশন/লোড এরর — আগে এগুলো শুধু console-এ যেত */}
+          {(actionError || loadError) && (
+            <div className="mb-6 space-y-3">
+              <AdminError message={loadError} onDismiss={() => setLoadError('')} />
+              <AdminError message={actionError} onDismiss={() => setActionError('')} />
+            </div>
+          )}
+
           {settingsLoading ? (
             <div className="flex items-center justify-center h-64">
               <div className="flex flex-col items-center gap-3">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layers, Plus, Trash2, Check, X } from 'lucide-react';
-import { SectionHeader, AdminCard, SaveButton } from '../components';
+import { SectionHeader, AdminCard, SaveButton, AdminError, adminErrorMessage } from '../components';
 import { getJourney, addJourneyItem, updateJourneyItem, deleteJourneyItem, FSJourneyItem } from '../firestore';
 import { journeyData } from '../../data';
 
@@ -24,6 +24,7 @@ export default function JourneyManager() {
   const [editForm, setEditForm] = useState<Partial<FSJourneyItem>>({});
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState('');
+  const [error, setError] = useState('');
 
   const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(''), 3000); };
 
@@ -31,36 +32,63 @@ export default function JourneyManager() {
 
   const load = async () => {
     setLoading(true);
-    const data = await getJourney();
-    setItems(data);
-    setLoading(false);
+    try {
+      const data = await getJourney({ throwOnError: true });
+      setItems(data);
+      setError('');
+    } catch (e) {
+      console.error('Journey load failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAdd = async () => {
     if (!addForm.titleBn) return;
     setSaving(true);
-    await addJourneyItem({ ...addForm, order: items.length });
-    await load();
-    setAddForm({ ...EMPTY });
-    setShowAdd(false);
-    setSaving(false);
-    showToast('✅ যোগ হয়েছে!');
+    setError('');
+    try {
+      await addJourneyItem({ ...addForm, order: items.length });
+      await load();
+      setAddForm({ ...EMPTY });
+      setShowAdd(false);
+      showToast('✅ যোগ হয়েছে!');
+    } catch (e) {
+      console.error('Journey add failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleUpdate = async (id: string) => {
     setSaving(true);
-    await updateJourneyItem(id, editForm);
-    await load();
-    setEditId(null); setEditForm({});
-    setSaving(false);
-    showToast('✅ আপডেট হয়েছে!');
+    setError('');
+    try {
+      await updateJourneyItem(id, editForm);
+      await load();
+      setEditId(null); setEditForm({});
+      showToast('✅ আপডেট হয়েছে!');
+    } catch (e) {
+      console.error('Journey update failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm('এই আইটেমটি মুছে ফেলবেন?')) return;
-    await deleteJourneyItem(id);
-    await load();
-    showToast('🗑️ মুছে ফেলা হয়েছে!');
+    setError('');
+    try {
+      await deleteJourneyItem(id);
+      await load();
+      showToast('🗑️ মুছে ফেলা হয়েছে!');
+    } catch (e) {
+      console.error('Journey delete failed:', e);
+      setError(adminErrorMessage(e));
+    }
   };
 
   const set = (key: keyof typeof addForm) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
@@ -80,6 +108,8 @@ export default function JourneyManager() {
       />
 
       {toast && <div className="mb-4 px-4 py-3 bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 rounded-xl text-sm font-semibold">{toast}</div>}
+
+      {error && <div className="mb-4"><AdminError message={error} onDismiss={() => setError('')} /></div>}
 
       {usingDefault && !loading && (
         <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-400/80 text-xs">

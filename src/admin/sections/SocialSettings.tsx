@@ -43,7 +43,7 @@ export default function SocialSettings({ data, onSave }: Props) {
         <p className="text-xs text-purple-400/40">
           💡 যদি কোনো অ্যাকাউন্ট না থাকে, # দিয়ে রাখুন। লিংক দেখাবে কিন্তু কোথাও যাবে না।
         </p>
-        <SaveButton onClick={async () => { setSaving(true); await onSave(form); setSaving(false); }} loading={saving} />
+        <SaveButton onClick={() => onSave(form)} />
       </div>
     </div>
   );

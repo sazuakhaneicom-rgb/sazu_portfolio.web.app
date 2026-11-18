@@ -101,10 +101,32 @@ export const DEFAULT_SETTINGS: GlobalSettings = {
 // FIRESTORE HELPERS
 // ============================================================
 
-const SETTINGS_DOC = 'settings/global';
-const CACHE_DOC = 'settings/cache';
+/**
+ * পাবলিক সাইট আর অ্যাডমিন প্যানেল — দুই জায়গায় এরর দুইভাবে সামলানো দরকার।
+ *
+ *  • পাবলিক সাইট: Firestore পড়তে না পারলে স্ট্যাটিক ডেটা দেখাবে (opts নেই)।
+ *  • অ্যাডমিন প্যানেল: এরর লুকানো যাবে না, নইলে অ্যাডমিন ভাববে কোলেকশন খালি
+ *    আর না জেনেই ভুল ডেটার উপর কাজ করবে (`throwOnError: true`)।
+ */
+export interface LoadOpts {
+  throwOnError?: boolean;
+}
 
-export async function loadSettings(): Promise<GlobalSettings> {
+function emptyOrThrow<T>(e: unknown, opts?: LoadOpts): T[] {
+  if (opts?.throwOnError) throw e;
+  console.warn('Firestore read failed, falling back to static data:', e);
+  return [];
+}
+
+/**
+ * গ্লোবাল সেটিংস লোড করে।
+ *
+ * পাবলিক সাইটে (App.tsx) Firestore-এ পৌঁছানো না গেলে ডিফল্ট দেখানোই ভালো,
+ * কিন্তু অ্যাডমিন প্যানেলে সেটা বিপজ্জনক — অ্যাডমিন ভাববে এগুলোই আসল ডেটা,
+ * এডিট করে সেভ দিলে আসল ডেটা মুছে যাবে। তাই অ্যাডমিন `throwOnError: true`
+ * দিয়ে ডাকে, যাতে এরর দেখানো যায়।
+ */
+export async function loadSettings(opts?: { throwOnError?: boolean }): Promise<GlobalSettings> {
   try {
     const snap = await getDoc(doc(db, 'settings', 'global'));
     if (snap.exists()) {
@@ -113,13 +135,18 @@ export async function loadSettings(): Promise<GlobalSettings> {
     await setDoc(doc(db, 'settings', 'global'), DEFAULT_SETTINGS);
     return DEFAULT_SETTINGS;
   } catch (e) {
+    if (opts?.throwOnError) throw e;
     console.warn('Firestore unavailable, using defaults:', e);
     return DEFAULT_SETTINGS;
   }
 }
 
+/**
+ * setDoc + merge ব্যবহার করা হচ্ছে, updateDoc নয়।
+ * updateDoc ডকুমেন্ট না থাকলে "not-found" দিয়ে ফেল করত।
+ */
 export async function saveSettings(settings: Partial<GlobalSettings>): Promise<void> {
-  await updateDoc(doc(db, 'settings', 'global'), settings as Record<string, unknown>);
+  await setDoc(doc(db, 'settings', 'global'), settings as Record<string, unknown>, { merge: true });
 }
 
 export function subscribeToCacheVersion(callback: (version: number) => void): () => void {
@@ -217,12 +244,12 @@ export interface FSProject {
   order: number;
 }
 
-export async function getProjects(): Promise<FSProject[]> {
+export async function getProjects(opts?: LoadOpts): Promise<FSProject[]> {
   try {
     const snap = await getDocs(collection(db, 'projects'));
     const items = snap.docs.map(d => ({ id: d.id, ...d.data() } as FSProject));
     return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-  } catch { return []; }
+  } catch (e) { return emptyOrThrow<FSProject>(e, opts); }
 }
 
 export async function addProject(p: Omit<FSProject, 'id'>): Promise<string> {
@@ -258,12 +285,12 @@ export interface FSService {
   items: FSServiceItem[];
 }
 
-export async function getServices(): Promise<FSService[]> {
+export async function getServices(opts?: LoadOpts): Promise<FSService[]> {
   try {
     const snap = await getDocs(collection(db, 'services'));
     const items = snap.docs.map(d => ({ id: d.id, ...d.data() } as FSService));
     return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-  } catch { return []; }
+  } catch (e) { return emptyOrThrow<FSService>(e, opts); }
 }
 
 export async function saveService(id: string, s: FSService): Promise<void> {
@@ -285,12 +312,12 @@ export interface FSJourneyItem {
   order: number;
 }
 
-export async function getJourney(): Promise<FSJourneyItem[]> {
+export async function getJourney(opts?: LoadOpts): Promise<FSJourneyItem[]> {
   try {
     const snap = await getDocs(collection(db, 'journey'));
     const items = snap.docs.map(d => ({ id: d.id, ...d.data() } as FSJourneyItem));
     return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-  } catch { return []; }
+  } catch (e) { return emptyOrThrow<FSJourneyItem>(e, opts); }
 }
 
 export async function addJourneyItem(j: Omit<FSJourneyItem, 'id'>): Promise<string> {
@@ -319,12 +346,12 @@ export interface FSSkillCategory {
   skills: { name: string; level: number }[];
 }
 
-export async function getSkillCategories(): Promise<FSSkillCategory[]> {
+export async function getSkillCategories(opts?: LoadOpts): Promise<FSSkillCategory[]> {
   try {
     const snap = await getDocs(collection(db, 'skills'));
     const items = snap.docs.map(d => ({ id: d.id, ...d.data() } as FSSkillCategory));
     return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-  } catch { return []; }
+  } catch (e) { return emptyOrThrow<FSSkillCategory>(e, opts); }
 }
 
 export async function saveSkillCategory(id: string, s: FSSkillCategory): Promise<void> {

@@ -62,7 +62,7 @@ export default function AboutSettings({ data, onSave }: Props) {
         <p className="text-xs text-purple-400/40">
           💡 পরিবর্তন সেভ করার পর "Force Refresh" বাটনে চাপ দিলে সব ভিজিটর নতুন Bio দেখতে পাবে।
         </p>
-        <SaveButton onClick={async () => { setSaving(true); await onSave(form); setSaving(false); }} loading={saving} />
+        <SaveButton onClick={() => onSave(form)} />
       </div>
     </div>
   );

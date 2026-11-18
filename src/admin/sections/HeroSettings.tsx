@@ -10,7 +10,6 @@ interface Props {
 
 export default function HeroSettings({ data, onSave }: Props) {
   const [form, setForm] = useState({ ...data });
-  const [saving, setSaving] = useState(false);
   const [previewError, setPreviewError] = useState(false);
 
   const set = (key: keyof typeof form) => (v: string) => {
@@ -18,11 +17,7 @@ export default function HeroSettings({ data, onSave }: Props) {
     setForm(f => ({ ...f, [key]: v }));
   };
 
-  const handleSave = async () => {
-    setSaving(true);
-    await onSave(form);
-    setSaving(false);
-  };
+  // সেভের try/catch ও স্পিনার এখন SaveButton নিজেই সামলায়।
 
   return (
     <div>
@@ -128,7 +123,7 @@ export default function HeroSettings({ data, onSave }: Props) {
           </div>
         </AdminCard>
 
-        <SaveButton onClick={handleSave} loading={saving} />
+        <SaveButton onClick={() => onSave(form)} />
       </div>
     </div>
   );

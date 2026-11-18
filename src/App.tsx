@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, FormEvent } from 'react';
+import React, { useState, useEffect, useRef, useMemo, FormEvent } from 'react';
 import {
   loadSettings,
   subscribeToCacheVersion,
@@ -12,7 +12,9 @@ import {
   FSProject,
   FSJourneyItem,
   FSService,
+  FSSkillCategory,
   getServices,
+  getSkillCategories,
 } from './admin/firestore';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import {
@@ -89,6 +91,83 @@ import marketingMockup from './assets/marketing_mockup.png';
 // ============================================================
 // HELPERS
 // ============================================================
+
+/**
+ * অ্যাডমিন প্যানেলের স্কিল ক্যাটাগরিকে সাইটের স্কিল-কার্ডে রূপান্তরের ম্যাপিং।
+ * অ্যাডমিনে iconType / colorTheme বেছে নেওয়া হয়, সাইটে ফিল্টার আর
+ * গ্রেডিয়েন্ট দরকার — এই তিনটা টেবিল সেই অনুবাদটা করে।
+ */
+const SKILL_FILTER_BY_TYPE: Record<string, 'design' | 'marketing' | 'development' | 'ai'> = {
+  graphic: 'design',
+  uiux: 'design',
+  web: 'development',
+  app: 'development',
+  tools: 'development',
+  marketing: 'marketing',
+  ai: 'ai',
+};
+
+const SKILL_ICON_BY_TYPE: Record<string, string> = {
+  graphic: '🎨',
+  uiux: '🖌️',
+  web: '🌐',
+  app: '📱',
+  tools: '🛠️',
+  marketing: '📢',
+  ai: '🤖',
+};
+
+const SKILL_GRADIENT_BY_THEME: Record<string, string> = {
+  rose: 'from-rose-500 to-pink-600',
+  purple: 'from-purple-500 to-indigo-600',
+  blue: 'from-blue-500 to-indigo-600',
+  emerald: 'from-emerald-500 to-teal-600',
+  amber: 'from-amber-500 to-orange-600',
+  violet: 'from-violet-500 to-purple-600',
+  sky: 'from-sky-500 to-cyan-600',
+  pink: 'from-pink-500 to-rose-600',
+};
+
+/**
+ * Bio লেখা Firestore থেকে আসে এবং HTML হিসেবে রেন্ডার হয় (<strong> ইত্যাদির জন্য)।
+ * কাঁচা HTML বসালে stored-XSS হতে পারত, তাই শুধু নিরাপদ ইনলাইন ট্যাগগুলো
+ * রাখা হয় — বাকি সব (script, iframe, on* অ্যাট্রিবিউট, javascript: লিংক) ফেলে দেওয়া হয়।
+ */
+const ALLOWED_BIO_TAGS = ['strong', 'b', 'em', 'i', 'u', 'br', 'span', 'mark', 'small'];
+
+function sanitizeBioHtml(html: string): string {
+  if (!html) return '';
+  if (typeof window === 'undefined' || typeof window.DOMParser === 'undefined') {
+    // DOMParser না থাকলে সব ট্যাগ ফেলে দিয়ে শুধু টেক্সট রাখা হয়
+    return html.replace(/<[^>]*>/g, '');
+  }
+
+  const docFragment = new DOMParser().parseFromString(`<div>${html}</div>`, 'text/html');
+  const root = docFragment.body.firstElementChild;
+  if (!root) return '';
+
+  const walk = (node: Element) => {
+    for (const child of Array.from(node.children)) {
+      const tag = child.tagName.toLowerCase();
+
+      if (!ALLOWED_BIO_TAGS.includes(tag)) {
+        // অনুমোদিত নয় — ট্যাগটা সরিয়ে ভেতরের লেখাটা রেখে দেওয়া হয়
+        child.replaceWith(...Array.from(child.childNodes));
+        continue;
+      }
+
+      // সব অ্যাট্রিবিউট সরিয়ে দেওয়া হয় (onclick, style, href ইত্যাদি)
+      for (const attr of Array.from(child.attributes)) {
+        child.removeAttribute(attr.name);
+      }
+
+      walk(child);
+    }
+  };
+
+  walk(root);
+  return root.innerHTML;
+}
 
 function getProjectMockup(mockupType: string) {
   switch (mockupType) {
@@ -214,6 +293,7 @@ export default function App() {
   const [fsProjects, setFsProjects] = useState<FSProject[]>([]);
   const [fsJourney, setFsJourney] = useState<FSJourneyItem[]>([]);
   const [fsServices, setFsServices] = useState<FSService[]>([]);
+  const [fsSkills, setFsSkills] = useState<FSSkillCategory[]>([]);
   const [initialCacheVersion, setInitialCacheVersion] = useState<number | null>(null);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -233,6 +313,7 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [statsVisible, setStatsVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
 
   // Scroll progress
   const { scrollYProgress } = useScroll();
@@ -250,13 +331,14 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [s, tests, pricing, proj, journey, servicesData] = await Promise.all([
+        const [s, tests, pricing, proj, journey, servicesData, skillsData] = await Promise.all([
           loadSettings(),
           getTestimonials(),
           getPricingPlans(),
           getProjects(),
           getJourney(),
           getServices(),
+          getSkillCategories(),
         ]);
 
         if (s) setGlobalData(s);
@@ -270,6 +352,7 @@ export default function App() {
         if (proj && proj.length > 0) setFsProjects(proj);
         if (journey && journey.length > 0) setFsJourney(journey);
         if (servicesData && servicesData.length > 0) setFsServices(servicesData as FSService[]);
+        if (skillsData && skillsData.length > 0) setFsSkills(skillsData);
       } catch (err) {
         console.error("Error loading data:", err);
       }
@@ -334,19 +417,62 @@ export default function App() {
   const filteredProjects = projects.filter(p =>
     projectFilter === 'all' || p.category === projectFilter
   );
-  const filteredSkillCards = skillCards.filter(s =>
+  /**
+   * অ্যাডমিন প্যানেলের Skills ম্যানেজার Firestore-এর `skills` কোলেকশনে
+   * ক্যাটাগরি + লেভেল সেভ করে, কিন্তু সাইট শুধু স্ট্যাটিক skillCards দেখাত —
+   * তাই অ্যাডমিনের কোনো পরিবর্তন সাইটে উঠত না। এখন Firestore-এ ডেটা
+   * থাকলে সেটা কার্ডে রূপান্তর করে দেখানো হয়, না থাকলে স্ট্যাটিক ফলব্যাক।
+   */
+  const liveSkillCards = useMemo(() => {
+    if (fsSkills.length === 0) return skillCards;
+    return fsSkills.flatMap(cat =>
+      (cat.skills ?? []).map(s => ({
+        name: s.name,
+        category: SKILL_FILTER_BY_TYPE[cat.iconType] ?? 'development',
+        icon: SKILL_ICON_BY_TYPE[cat.iconType] ?? '⭐',
+        color: SKILL_GRADIENT_BY_THEME[cat.colorTheme] ?? 'from-purple-500 to-indigo-600',
+        proficiency: s.level,
+      }))
+    );
+  }, [fsSkills]);
+
+  const resumeUrl = (globalData.hero.resumeUrl || '').trim();
+  const hasResume = resumeUrl !== '' && resumeUrl !== '#';
+
+  /**
+   * হিরো সেকশনে মাউসের পেছনে নরম আলো — CSS ভ্যারিয়েবল দুটো সরাসরি
+   * এলিমেন্টে বসানো হয়, তাই প্রতি মুভে React রি-রেন্ডার হয় না।
+   */
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const el = heroRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+    el.style.setProperty('--my', `${e.clientY - rect.top}px`);
+  };
+
+  const filteredSkillCards = liveSkillCards.filter(s =>
     skillFilter === 'all' || s.category === skillFilter
   );
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!formName || !formEmail || !formMsg) return;
-    setFormSubmitted(true);
     const messageBody = lang === 'bn'
       ? `হ্যালো সাজু! আমি আপনার পোর্টফোলিও থেকে যোগাযোগ করছি।\n\nনাম: ${formName}\nইমেইল: ${formEmail}\nবিষয়: ${formSubject || 'সাধারণ জিজ্ঞাসা'}\n\nবার্তা:\n${formMsg}\n\nধন্যবাদ!`
       : `Hello Sazu! I'm reaching out from your portfolio.\n\nName: ${formName}\nEmail: ${formEmail}\nSubject: ${formSubject || 'General Inquiry'}\n\nMessage:\n${formMsg}\n\nThank you!`;
     const waUrl = `https://wa.me/${globalData.contact.whatsappNumber}?text=${encodeURIComponent(messageBody)}`;
-    setTimeout(() => window.open(waUrl, '_blank'), 500);
+
+    // আগে setTimeout-এর ভেতরে window.open করা হত। ইউজারের ক্লিকের বাইরে
+    // window.open ব্রাউজারের পপ-আপ ব্লকার আটকে দেয়, তাই ফর্ম "পাঠানো হয়েছে"
+    // দেখালেও WhatsApp খুলত না। এখন ক্লিকের একই টিকেই খোলা হয়।
+    const win = window.open(waUrl, '_blank', 'noopener,noreferrer');
+    if (!win) {
+      // পপ-আপ তবুও ব্লক হলে একই ট্যাবে পাঠানো হয়
+      window.location.href = waUrl;
+      return;
+    }
+    setFormSubmitted(true);
   };
 
   const handleResetForm = () => {
@@ -376,7 +502,7 @@ export default function App() {
       >
 
         {/* ==================== NAVIGATION ==================== */}
-        <header className="sticky top-[3px] z-50 bg-white/80 dark:bg-[#090514]/80 backdrop-blur-md border-b border-purple-100 dark:border-purple-950/40 transition-colors duration-300">
+        <header className="sticky top-[3px] z-50 bg-white/70 dark:bg-[#090514]/70 backdrop-blur-xl backdrop-saturate-150 border-b border-purple-100/70 dark:border-purple-950/40 transition-colors duration-300">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <motion.a
               initial={{ opacity: 0, x: -20 }}
@@ -415,7 +541,7 @@ export default function App() {
                   className="relative hover:text-purple-700 dark:hover:text-purple-300 transition-colors group"
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 group-hover:w-full transition-all duration-300 rounded-full" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-600 to-fuchsia-500 group-hover:w-full transition-all duration-300 rounded-full" />
                 </motion.a>
               ))}
             </nav>
@@ -504,12 +630,17 @@ export default function App() {
         </AnimatePresence>
 
         {/* ==================== HERO ==================== */}
-        <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-          {/* Animated gradient background */}
+        <section
+          id="hero"
+          ref={heroRef}
+          onMouseMove={handleHeroMouseMove}
+          className="relative min-h-screen flex items-center overflow-hidden spotlight grain"
+        >
+          {/* স্তরে স্তরে ব্যাকগ্রাউন্ড: বেস গ্রেডিয়েন্ট → অরোরা → গ্রিড → ডট */}
           <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-indigo-50 dark:from-[#090514] dark:via-[#0f0a22] dark:to-[#0c0718]" />
-          <div className="absolute inset-0 dot-matrix opacity-40" />
-          <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-purple-400/20 dark:bg-purple-600/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-400/15 dark:bg-indigo-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="aurora" />
+          <div className="absolute inset-0 grid-lines" />
+          <div className="absolute inset-0 dot-matrix opacity-25" />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left: Text */}
@@ -537,9 +668,9 @@ export default function App() {
                   <span>{typedText}</span>
                   <span className="animate-pulse text-purple-500">|</span>
                 </div>
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-black leading-[1.05] text-slate-950 dark:text-white">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-black leading-[1.05] tracking-[-0.02em] text-slate-950 dark:text-white">
                   {lang === 'bn' ? 'ব্র্যান্ডকে ' : 'Brands into '}
-                  <span className="purple-highlight text-purple-600 dark:text-purple-400">
+                  <span className="purple-highlight text-gradient">
                     {t.hero.headlineHighlight1}
                   </span>
                   {lang === 'bn' ? ' বানাই,' : ','}
@@ -547,10 +678,10 @@ export default function App() {
                   <span className="text-slate-700 dark:text-purple-100">
                     {lang === 'bn' ? 'গল্পকে ' : 'stories into '}
                   </span>
-                  <span className="purple-highlight text-purple-600 dark:text-purple-400">
+                  <span className="purple-highlight text-gradient">
                     {t.hero.headlineHighlight2}
                   </span>
-                  <span className="text-purple-600">.</span>
+                  <span className="text-purple-600 dark:text-purple-400">.</span>
                 </h1>
               </motion.div>
 
@@ -572,24 +703,28 @@ export default function App() {
               >
                 <a
                   href="#projects"
-                  className="group px-7 py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-lg shadow-purple-600/30 hover:shadow-purple-600/50 transition-all flex items-center gap-2"
+                  className="group btn-shimmer px-7 py-3.5 bg-gradient-to-r from-purple-600 via-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white font-bold rounded-2xl shadow-lg shadow-purple-600/30 hover:shadow-xl hover:shadow-purple-600/40 hover:-translate-y-0.5 transition-all flex items-center gap-2"
                 >
                   {t.hero.ctaPrimary}
                   <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
                 <a
                   href="#contact"
-                  className="px-7 py-3.5 border border-purple-200 dark:border-purple-800/60 text-purple-700 dark:text-purple-300 font-bold rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-all"
+                  className="px-7 py-3.5 border border-purple-200 dark:border-purple-800/60 text-purple-700 dark:text-purple-300 font-bold rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:border-purple-400 dark:hover:border-purple-600 hover:-translate-y-0.5 transition-all"
                 >
                   {t.hero.ctaSecondary}
                 </a>
-                <a
-                  href={globalData.hero.resumeUrl}
-                  target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 py-3.5 bg-slate-100 dark:bg-purple-950/40 text-slate-700 dark:text-purple-200 font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-purple-900/30 transition-all text-sm border border-slate-200 dark:border-purple-900/40"
-                >
-                  <Download className="w-4 h-4" />
-                  {t.hero.ctaResume}
-                </a>
+                {/* Resume লিংক সেট না থাকলে ('#' বা খালি) বাটনটা দেখানো হয় না —
+                    আগে ক্লিক করলে কোথাও যেত না। */}
+                {hasResume && (
+                  <a
+                    href={globalData.hero.resumeUrl}
+                    target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 py-3.5 bg-slate-100 dark:bg-purple-950/40 text-slate-700 dark:text-purple-200 font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-purple-900/30 transition-all text-sm border border-slate-200 dark:border-purple-900/40"
+                  >
+                    <Download className="w-4 h-4" />
+                    {t.hero.ctaResume}
+                  </a>
+                )}
               </motion.div>
 
               {/* Side notes */}
@@ -615,15 +750,19 @@ export default function App() {
               transition={{ delay: 0.3, type: "spring", stiffness: 80 }}
               className="flex justify-center order-1 lg:order-2"
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-[2.5rem] blur-2xl scale-110" />
-                <div className="relative w-72 h-72 sm:w-96 sm:h-96 rounded-[2.5rem] overflow-hidden border-2 border-purple-200/50 dark:border-purple-800/30 shadow-2xl shadow-purple-600/20">
-                  <img src={globalData.hero.profilePictureUrl || sazuProfile} alt="M. Asaduzzaman Sazu" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent" />
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/25 to-fuchsia-500/20 rounded-[2.5rem] blur-3xl scale-110 group-hover:scale-[1.18] transition-transform duration-700" />
+                {/* photo-ring: চারপাশে ধীরে ঘুরতে থাকা কনিক গ্রেডিয়েন্ট */}
+                <div className="photo-ring relative w-72 h-72 sm:w-96 sm:h-96 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-purple-600/25">
+                  <img src={globalData.hero.profilePictureUrl || sazuProfile} alt="M. Asaduzzaman Sazu" className="w-full h-full object-cover scale-[1.01] group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-purple-950/45 via-transparent to-transparent" />
                 </div>
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-purple-950/90 backdrop-blur-md rounded-2xl px-5 py-3 shadow-xl border border-purple-100 dark:border-purple-800/30 text-center w-56">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 glass rounded-2xl px-5 py-3 shadow-xl text-center w-56">
                   <p className="font-bold text-slate-900 dark:text-white text-sm">M. Asaduzzaman Sazu</p>
-                  <p className="text-purple-600 dark:text-purple-400 text-xs font-semibold mt-0.5">Digital Strategist</p>
+                  <p className="text-xs font-semibold mt-0.5 flex items-center justify-center gap-1.5 text-purple-600 dark:text-purple-400">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 pulse-dot" />
+                    Digital Strategist
+                  </p>
                 </div>
                 {/* Floating badges */}
                 <motion.div
@@ -648,8 +787,10 @@ export default function App() {
         </section>
 
         {/* ==================== STATS ==================== */}
-        <div ref={statsRef} className="bg-purple-600 dark:bg-purple-700 py-10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div ref={statsRef} className="relative overflow-hidden grain bg-gradient-to-r from-purple-700 via-purple-600 to-fuchsia-700 dark:from-purple-900 dark:via-purple-800 dark:to-fuchsia-900 py-12">
+          {/* ব্যান্ডের ভেতরে সূক্ষ্ম আলোর আভা */}
+          <div className="absolute inset-0 opacity-50 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.22),transparent_62%)]" />
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, idx) => (
                 <StatCard key={idx} stat={stat} statsVisible={statsVisible} idx={idx} />
@@ -668,9 +809,9 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center max-w-2xl mx-auto mb-16"
             >
-              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase mb-3">{t.about.title}</div>
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">{t.about.subtitle}</h2>
-              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" />
+              <div className="eyebrow mb-4">{t.about.title}</div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold tracking-[-0.02em] text-slate-950 dark:text-white">{t.about.subtitle}</h2>
+              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-gradient-to-r from-purple-600 to-fuchsia-500 mx-auto rounded-full mt-5" />
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -697,11 +838,11 @@ export default function App() {
 
                 <div
                   className="prose prose-slate dark:prose-invert text-slate-600 dark:text-purple-200/80 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: lang === 'bn' ? globalData.about.bioParagraph1Bn : globalData.about.bioParagraph1En }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeBioHtml(lang === 'bn' ? globalData.about.bioParagraph1Bn : globalData.about.bioParagraph1En) }}
                 />
                 <div
                   className="prose prose-slate dark:prose-invert text-slate-600 dark:text-purple-200/80 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: lang === 'bn' ? globalData.about.bioParagraph2Bn : globalData.about.bioParagraph2En }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeBioHtml(lang === 'bn' ? globalData.about.bioParagraph2Bn : globalData.about.bioParagraph2En) }}
                 />
 
                 {/* Quick info chips */}
@@ -769,9 +910,9 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center max-w-2xl mx-auto mb-16"
             >
-              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase mb-3">{t.services.title}</div>
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">{t.services.subtitle}</h2>
-              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" />
+              <div className="eyebrow mb-4">{t.services.title}</div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold tracking-[-0.02em] text-slate-950 dark:text-white">{t.services.subtitle}</h2>
+              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-gradient-to-r from-purple-600 to-fuchsia-500 mx-auto rounded-full mt-5" />
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -782,10 +923,10 @@ export default function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: catIdx * 0.15 }}
-                  className="p-8 rounded-3xl bg-[#faf8fc] dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 shadow-sm hover:shadow-md hover:border-purple-300/50 dark:hover:border-purple-700/40 transition-all"
+                  className="card-ring lift p-8 rounded-3xl bg-[#faf8fc] dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 shadow-sm"
                 >
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="text-3xl">{category.icon}</span>
+                    <span className="text-3xl grid place-items-center w-12 h-12 rounded-2xl bg-white dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50 shadow-sm">{category.icon}</span>
                     <h3 className="font-bold text-lg text-slate-900 dark:text-white">{category.title}</h3>
                   </div>
                   <div className="space-y-5">
@@ -814,9 +955,9 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center max-w-2xl mx-auto mb-12"
             >
-              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase mb-3">{t.skills.title}</div>
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">{t.skills.subtitle}</h2>
-              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" />
+              <div className="eyebrow mb-4">{t.skills.title}</div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold tracking-[-0.02em] text-slate-950 dark:text-white">{t.skills.subtitle}</h2>
+              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-gradient-to-r from-purple-600 to-fuchsia-500 mx-auto rounded-full mt-5" />
             </motion.div>
 
             {/* Filter tabs */}
@@ -847,14 +988,14 @@ export default function App() {
               <AnimatePresence mode="popLayout">
                 {filteredSkillCards.map((skill, idx) => (
                   <motion.div
-                    key={skill.name}
+                    key={`${skill.category}-${skill.name}`}
                     layout
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{ delay: idx * 0.03 }}
                     whileHover={{ y: -6, scale: 1.03 }}
-                    className="p-5 rounded-2xl bg-white dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 shadow-sm hover:shadow-lg hover:shadow-purple-600/10 hover:border-purple-300/50 dark:hover:border-purple-700/40 transition-all cursor-default flex flex-col items-center gap-3 text-center group"
+                    className="card-ring p-5 rounded-2xl bg-white dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 shadow-sm hover:shadow-lg hover:shadow-purple-600/10 transition-all cursor-default flex flex-col items-center gap-3 text-center group"
                   >
                     <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${skill.color} flex items-center justify-center text-2xl shadow-md group-hover:scale-110 transition-transform`}>
                       {skill.icon}
@@ -889,9 +1030,9 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center max-w-2xl mx-auto mb-12"
             >
-              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase mb-3">{t.projects.title}</div>
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">{t.projects.subtitle}</h2>
-              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" />
+              <div className="eyebrow mb-4">{t.projects.title}</div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold tracking-[-0.02em] text-slate-950 dark:text-white">{t.projects.subtitle}</h2>
+              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-gradient-to-r from-purple-600 to-fuchsia-500 mx-auto rounded-full mt-5" />
             </motion.div>
 
             {/* Filter */}
@@ -927,12 +1068,14 @@ export default function App() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ delay: idx * 0.08 }}
-                    whileHover={{ y: -6, boxShadow: "0 20px 40px -10px rgba(168, 85, 247, 0.2)" }}
-                    className="rounded-3xl bg-[#faf8fc] dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 overflow-hidden cursor-pointer transition-all group"
+                    whileHover={{ y: -6, boxShadow: "0 24px 48px -14px rgba(168, 85, 247, 0.28)" }}
+                    className="card-ring rounded-3xl bg-[#faf8fc] dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 overflow-hidden cursor-pointer transition-all group"
                     onClick={() => setSelectedProject(project)}
                   >
                     {/* Thumbnail */}
                     <div className={`h-52 bg-gradient-to-br ${project.bgGradient} relative overflow-hidden`}>
+                      {/* ছবির উপর সূক্ষ্ম দানা — ফ্ল্যাট মকআপে গভীরতা আনে */}
+                      <div className="absolute inset-0 grain z-10 pointer-events-none" />
                       <img
                         src={getProjectMockup(project.mockupType)}
                         alt={project.titleEn}
@@ -1010,9 +1153,9 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center max-w-2xl mx-auto mb-16"
             >
-              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase mb-3">{t.experience.title}</div>
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">{t.experience.subtitle}</h2>
-              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" />
+              <div className="eyebrow mb-4">{t.experience.title}</div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold tracking-[-0.02em] text-slate-950 dark:text-white">{t.experience.subtitle}</h2>
+              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-gradient-to-r from-purple-600 to-fuchsia-500 mx-auto rounded-full mt-5" />
             </motion.div>
 
             <div className="max-w-3xl mx-auto relative">
@@ -1090,9 +1233,9 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center max-w-2xl mx-auto mb-16"
             >
-              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase mb-3">{t.testimonials.title}</div>
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">{t.testimonials.subtitle}</h2>
-              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" />
+              <div className="eyebrow mb-4">{t.testimonials.title}</div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold tracking-[-0.02em] text-slate-950 dark:text-white">{t.testimonials.subtitle}</h2>
+              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-gradient-to-r from-purple-600 to-fuchsia-500 mx-auto rounded-full mt-5" />
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1104,7 +1247,7 @@ export default function App() {
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
                   whileHover={{ y: -8, borderColor: "#a855f7", boxShadow: "0 15px 30px -10px rgba(168, 85, 247, 0.15)" }}
-                  className="p-6 rounded-3xl bg-white dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 shadow-sm flex flex-col justify-between transition-all duration-300"
+                  className="card-ring lift p-6 rounded-3xl bg-white dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 shadow-sm flex flex-col justify-between"
                 >
                   <div className="space-y-3">
                     <div className="flex gap-1 text-amber-400">
@@ -1141,13 +1284,13 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center max-w-2xl mx-auto mb-12"
             >
-              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase mb-3">
+              <div className="eyebrow mb-4">
                 {lang === 'bn' ? 'প্যাকেজ ও মূল্য' : 'Pricing & Packages'}
               </div>
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold tracking-[-0.02em] text-slate-950 dark:text-white">
                 {lang === 'bn' ? 'স্বচ্ছ মূল্য, সেরা মান' : 'Transparent Pricing, Best Value'}
               </h2>
-              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" />
+              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-gradient-to-r from-purple-600 to-fuchsia-500 mx-auto rounded-full mt-5" />
             </motion.div>
 
             <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -1237,10 +1380,10 @@ export default function App() {
               viewport={{ once: true }}
               className="text-center max-w-2xl mx-auto mb-16"
             >
-              <div className="text-purple-600 dark:text-purple-400 font-mono text-sm font-bold tracking-wider uppercase mb-3">{t.contact.title}</div>
-              <h2 className="text-4xl sm:text-5xl font-serif font-bold text-slate-950 dark:text-white">{t.contact.subtitle}</h2>
+              <div className="eyebrow mb-4">{t.contact.title}</div>
+              <h2 className="text-4xl sm:text-5xl font-serif font-bold tracking-[-0.02em] text-slate-950 dark:text-white">{t.contact.subtitle}</h2>
               <p className="text-slate-600 dark:text-purple-200/70 mt-4">{t.contact.tagline}</p>
-              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full mt-4" />
+              <motion.div initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.5 }} className="h-1 bg-gradient-to-r from-purple-600 to-fuchsia-500 mx-auto rounded-full mt-5" />
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -1260,7 +1403,7 @@ export default function App() {
                     key={i}
                     href={info.href}
                     whileHover={{ scale: 1.02, x: 4 }}
-                    className="flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 hover:border-purple-300/50 dark:hover:border-purple-700/40 transition-all group"
+                    className="flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-[#110c28] border border-purple-100/50 dark:border-purple-950/60 transition-all group card-ring"
                   >
                     <div className="w-11 h-11 rounded-xl bg-purple-600/10 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
                       {info.icon}

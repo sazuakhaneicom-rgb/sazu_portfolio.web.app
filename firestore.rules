@@ -1,27 +1,87 @@
 rules_version = '2';
+
+// =============================================================
+//  Sazu Portfolio — Firestore Security Rules
+//
+//  নিয়ম:
+//   • সব কনটেন্ট যে কেউ পড়তে পারবে (পাবলিক পোর্টফোলিও সাইট)।
+//   • লেখা/মোছা শুধু অ্যাডমিন অ্যাকাউন্ট করতে পারবে।
+//
+//  গুরুত্বপূর্ণ: আগে isAdmin() শুধু "লগইন করা আছে কি না" দেখত, তাই
+//  যে কেউ নিজে sign-up করে অ্যাডমিন হয়ে যেতে পারত। এখন নির্দিষ্ট
+//  ইমেইল ছাড়া কেউ কিছু লিখতে পারবে না।
+//
+//  অ্যাডমিন ইমেইল বদলালে নিচের ADMIN_EMAIL-ও বদলাতে হবে।
+// =============================================================
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Helper function: Check if user is authenticated (Admin)
+
+    // অ্যাডমিন অ্যাকাউন্ট — Firebase Auth-এ যাচাই করা (২০২৬-১১-১৯):
+    //   ইমেইল : freelancersazu03@gmail.com   ← মাঝে শূন্য আছে
+    //   UID   : rlWlSA0eZhU6prkewSQbCe0uCBa2
+    //
+    // ⚠️ সাবধান: freelancersazu3@gmail.com (শূন্য ছাড়া) হলো Google/Firebase
+    //    প্রজেক্টের মালিক অ্যাকাউন্ট — অ্যাডমিন প্যানেলের লগইন নয়। ওটা
+    //    এখানে বসালে প্যানেল থেকে লক আউট হয়ে যাবেন।
+    //
+    // UID আর ইমেইল — যেকোনো একটা মিললেই চলবে, তাই ইমেইল বদলালেও
+    // অ্যাক্সেস হারাবেন না।
     function isAdmin() {
-      return request.auth != null;
+      return request.auth != null
+        && (
+          request.auth.uid == 'rlWlSA0eZhU6prkewSQbCe0uCBa2'
+          || request.auth.token.email in [
+            'freelancersazu03@gmail.com'
+          ]
+        );
     }
 
-    // Settings Collection (global & cache)
+    // ---- Global settings (hero, contact, social, stats, about, cache) ----
     match /settings/{document=**} {
-      allow read: if true;         // Anyone can read
-      allow write: if isAdmin();   // Only admin can write
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
-    // Testimonials Collection
+    // ---- Testimonials ----
     match /testimonials/{document=**} {
       allow read: if true;
       allow write: if isAdmin();
     }
 
-    // Pricing Collection
+    // ---- Pricing packages ----
     match /pricing/{document=**} {
       allow read: if true;
       allow write: if isAdmin();
+    }
+
+    // ---- Projects gallery ----
+    match /projects/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ---- Services ----
+    match /services/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ---- Career journey / timeline ----
+    match /journey/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ---- Skills & levels ----
+    match /skills/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ---- বাকি সবকিছু সম্পূর্ণ বন্ধ ----
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

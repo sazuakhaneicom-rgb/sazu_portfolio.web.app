@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# অ্যাডমিন প্যানেল সার্চ ইঞ্জিনে ইনডেক্স করার দরকার নেই
+Disallow: /admin
+
+Sitemap: https://sazu-portfolio.web.app/sitemap.xml

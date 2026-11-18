@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, Plus, Trash2, Check, X, MoveUp, MoveDown } from 'lucide-react';
-import { SectionHeader, AdminCard, SaveButton } from '../components';
+import { SectionHeader, AdminCard, SaveButton, AdminError, adminErrorMessage } from '../components';
 import { getServices, saveService, FSService, FSServiceItem } from '../firestore';
 import { servicesBn, servicesEn } from '../../data';
 
@@ -9,6 +9,7 @@ export default function ServicesManager() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
   const [toast, setToast] = useState('');
+  const [error, setError] = useState('');
   const [editForms, setEditForms] = useState<Record<string, FSService>>({});
 
   const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(''), 3000); };
@@ -17,7 +18,15 @@ export default function ServicesManager() {
 
   const load = async () => {
     setLoading(true);
-    const data = await getServices();
+    let data: FSService[] = [];
+    try {
+      data = await getServices({ throwOnError: true });
+    } catch (e) {
+      console.error('Services load failed:', e);
+      setError(adminErrorMessage(e));
+      setLoading(false);
+      return;
+    }
     if (data.length > 0) {
       setServices(data);
       const forms: Record<string, FSService> = {};
@@ -50,10 +59,18 @@ export default function ServicesManager() {
   const handleSave = async (svc: FSService) => {
     if (!svc.id) return;
     setSaving(svc.id);
-    await saveService(svc.id, editForms[svc.id]);
-    await load();
-    setSaving(null);
-    showToast('✅ সার্ভিস সেভ হয়েছে!');
+    setError('');
+    try {
+      await saveService(svc.id, editForms[svc.id]);
+      await load();
+      showToast('✅ সার্ভিস সেভ হয়েছে!');
+    } catch (e) {
+      console.error('Service save failed:', e);
+      setError(adminErrorMessage(e));
+    } finally {
+      // আগে এই লাইনে পৌঁছাতো না, তাই ফেল করলে স্পিনার চিরকাল ঘুরত
+      setSaving(null);
+    }
   };
 
   const updateForm = (id: string, key: keyof FSService, value: unknown) => {
@@ -98,6 +115,8 @@ export default function ServicesManager() {
       />
 
       {toast && <div className="mb-4 px-4 py-3 bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 rounded-xl text-sm font-semibold">{toast}</div>}
+
+      {error && <div className="mb-4"><AdminError message={error} onDismiss={() => setError('')} /></div>}
 
       <div className="space-y-6">
         {services.map(svc => {
